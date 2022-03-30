@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Kotak Film</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">TV Show</string>
+    <string name="film_poster">film poster</string>
+    <string name="genre">Genre</string>
+    <string name="film_duration">Film Duration</string>
+    <string name="duration">Duration</string>
+    <string name="rating_sample">9.9</string>
+    <string name="genre1_genre2_genre3">Genre 1 / Genre 2 / Genre 3</string>
+    <string name="user_score">User\nScore</string>
+    <string name="release_date">Release Date</string>
+    <string name="back_button">Back Button</string>
+
+    <string name="share_button">Share Button</string>
+    <string name="category">Category: %s</string>
+    <string name="connecting">Menghubungkan ke Internet</string>
+    <string name="try_again">Try Again</string>
+    <string name="please_check_your_internet">Anda sedang offline. Periksa koneksi anda</string>
+    <string name="please_connect_to_internet">Sambungkan ke Internet</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="movie_tv_show_backdrop">movie / tv show backdrop</string>
+    <string name="movie_tv_show_poster">movie / tv show poster</string>
+    <string name="star_symbol">star symbol</string>
+    <string name="runtime">%dh %dm</string>
+    <string name="episodeRuntime">%dmin</string>
+    <string name="no_data">-No Data-</string>
+    <string name="favorite">FAVORITE</string>
+    <string name="user_didnt_add_fav">Anda belum menambahkan item ke favorite.</string>
+    <string name="no_favorite">Tidak ada Favorite</string>
+    <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
+    <string name="message_ok">OK</string>
+    <string name="overview">Overview</string>
+
+    <string name="random">Random</string>
+    <string name="latest_release">Latest Release</string>
+    <string name="oldest_release">Oldest Release</string>
+    <string name="best_vote">Best Vote</string>
+    <string name="worst_vote">Worst Vote</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

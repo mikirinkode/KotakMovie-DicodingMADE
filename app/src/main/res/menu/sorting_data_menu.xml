@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_latest_release"
+            android:checked="true"
+            android:title="@string/latest_release" />
+
+        <item
+            android:id="@+id/action_oldest_release"
+            android:checked="false"
+            android:title="@string/oldest_release" />
+
+        <item
+            android:id="@+id/action_best_vote"
+            android:checked="false"
+            android:title="@string/best_vote" />
+
+        <item
+            android:id="@+id/action_worst_vote"
+            android:checked="false"
+            android:title="@string/worst_vote" />
+
+
+        <item
+            android:id="@+id/action_random"
+            android:checked="false"
+            android:title="@string/random" />
+    </group>
+</menu>

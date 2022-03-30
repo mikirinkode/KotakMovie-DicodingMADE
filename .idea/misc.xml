@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/ic_heart_unselected.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/activity_detail_catalogue.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_favorite_movie.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_favorite_tv_show.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_movie.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_tv_show.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/items_film.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
