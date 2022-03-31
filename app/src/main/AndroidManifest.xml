@@ -13,7 +13,8 @@
         android:theme="@style/Theme.KotakFilm">
         <activity
             android:name=".ui.detail.DetailCatalogueActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.KotakFilm.NoActionBar"/>
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
