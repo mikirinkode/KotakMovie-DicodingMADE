@@ -40,4 +40,9 @@
     <string name="oldest_release">Oldest Release</string>
     <string name="best_vote">Best Vote</string>
     <string name="worst_vote">Worst Vote</string>
+    <string name="tv_shows_airing_today">Tv Shows Airing Today</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="upcoming_tv_shows">Upcoming TV Shows</string>
+    <string name="home">Home</string>
+
 </resources>
