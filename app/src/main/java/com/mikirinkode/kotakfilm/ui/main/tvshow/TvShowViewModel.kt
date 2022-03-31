@@ -13,25 +13,25 @@ import javax.inject.Inject
 @HiltViewModel
 class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    private val tvShowId = MutableLiveData<Int>()
+    private val selectedTvShow = MutableLiveData<TvShowEntity>()
 
-    fun setSelectedTvShow(tvShowId: Int){
-        this.tvShowId.value = tvShowId
+    fun setSelectedTvShow(tvShow: TvShowEntity){
+        this.selectedTvShow.value = tvShow
     }
     
     fun getPopularTvShowsList(sort: String): LiveData<Resource<List<TvShowEntity>>>{
-        return movieRepository.getPopularTvShowsList(sort)
+        return movieRepository.getPopularTvShows(sort)
 
     }
 
-    var tvShow: LiveData<Resource<TvShowEntity>> = Transformations.switchMap(tvShowId) { tvShowId ->
-        movieRepository.getTvShowDetail(tvShowId)
+    var tvShowDetail: LiveData<Resource<TvShowEntity>> = Transformations.switchMap(selectedTvShow) { tvShow ->
+        movieRepository.getTvShowDetail(tvShow)
     }
     
 
 
     fun setFavoriteTvShow(){
-        val tvShowValue = tvShow.value
+        val tvShowValue = tvShowDetail.value
         if (tvShowValue != null){
             if (tvShowValue.data != null){
                 val newState = !tvShowValue.data.isFavorite

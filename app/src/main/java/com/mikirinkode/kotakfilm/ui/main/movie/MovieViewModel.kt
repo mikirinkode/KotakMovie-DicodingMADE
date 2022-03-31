@@ -13,23 +13,23 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    private val movieId = MutableLiveData<Int>()
+    private val selectedMovie = MutableLiveData<MovieEntity>()
 
-    fun setSelectedMovie(movieId: Int){
-        this.movieId.value = movieId
+    fun setSelectedMovie(movie: MovieEntity){
+        this.selectedMovie.value = movie
     }
 
 
-    var movie: LiveData<Resource<MovieEntity>> = Transformations.switchMap(movieId) { mMovieId ->
-        movieRepository.getMovieDetail(mMovieId)
+    var movieDetail: LiveData<Resource<MovieEntity>> = Transformations.switchMap(selectedMovie) { movie ->
+        movieRepository.getMovieDetail(movie)
     }
 
     fun getPopularMoviesList(sort: String): LiveData<Resource<List<MovieEntity>>>{
-        return movieRepository.getPopularMoviesList(sort)
+        return movieRepository.getPopularMovies(sort)
     }
 
     fun setFavoriteMovie(){
-        val movieValue = movie.value
+        val movieValue = movieDetail.value
         if (movieValue != null){
             if (movieValue.data != null){
                 val newState = !movieValue.data.isFavorite
