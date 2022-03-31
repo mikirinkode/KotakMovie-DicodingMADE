@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
 import com.mikirinkode.kotakfilm.data.MovieRepository
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.vo.Resource
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    val movieId = MutableLiveData<Int>()
+    private val movieId = MutableLiveData<Int>()
 
     fun setSelectedMovie(movieId: Int){
         this.movieId.value = movieId

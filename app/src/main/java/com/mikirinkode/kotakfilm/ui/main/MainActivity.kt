@@ -3,6 +3,7 @@ package com.mikirinkode.kotakfilm.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             val navView: BottomNavigationView = navBottom
-            val navController = findNavController(R.id.nav_host_fragment_activity_home)
+            val navController =
+                navHostFragmentActivityHome.getFragment<NavHostFragment>().navController
             val appBarConfiguration = AppBarConfiguration.Builder(
                 R.id.nav_movie, R.id.nav_tv_show, R.id.nav_favorite
             ).build()

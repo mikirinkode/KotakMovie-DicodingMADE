@@ -79,7 +79,8 @@
                         android:src="@drawable/ic_arrow_left"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        android:focusable="true" />
 
                     <TextView
                         android:id="@+id/tv_detail_category"

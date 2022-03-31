@@ -2,7 +2,6 @@ package com.mikirinkode.kotakfilm.ui.main.favorite.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
 import com.mikirinkode.kotakfilm.data.MovieRepository
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import dagger.hilt.android.lifecycle.HiltViewModel

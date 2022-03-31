@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
 import com.mikirinkode.kotakfilm.data.MovieRepository
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.vo.Resource
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    val tvShowId = MutableLiveData<Int>()
+    private val tvShowId = MutableLiveData<Int>()
 
     fun setSelectedTvShow(tvShowId: Int){
         this.tvShowId.value = tvShowId

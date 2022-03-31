@@ -40,6 +40,4 @@
     <string name="oldest_release">Oldest Release</string>
     <string name="best_vote">Best Vote</string>
     <string name="worst_vote">Worst Vote</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
