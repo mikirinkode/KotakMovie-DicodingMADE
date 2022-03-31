@@ -35,8 +35,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
             itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_ID, movie.id)
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "MOVIE")
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_MOVIE, movie)
                 itemView.context.startActivity(moveToDetail)
             }
         }

@@ -35,8 +35,8 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
             itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_ID, tvShow.id)
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "TV SHOW")
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TV_SHOW, tvShow)
                 itemView.context.startActivity(moveToDetail)
             }
         }
