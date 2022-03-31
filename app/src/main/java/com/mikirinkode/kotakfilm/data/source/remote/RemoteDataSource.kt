@@ -17,10 +17,9 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
 
     private val apiKey = Constants.API_KEY
 
-    fun getMovieList(): LiveData<ApiResponse<MovieListResponse>>{
+    fun getPopularMovieList(): LiveData<ApiResponse<MovieListResponse>>{
         val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
-
-        api.getPopularMoviesList(apiKey).enqueue(object : Callback<MovieListResponse> {
+        api.getPopularMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {
             override fun onResponse(
                 call: Call<MovieListResponse>,
                 response: Response<MovieListResponse>
@@ -33,7 +32,25 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
                 Log.e("RemoteDataSource", "Failed to Get Popular Movie List", t)
                 Log.e("RemoteDataSource", t.message.toString())
             }
+        })
+        return movieListResult
+    }
 
+    fun getUpcomingMovieList(): LiveData<ApiResponse<MovieListResponse>>{
+        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
+        api.getUpcomingMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {
+            override fun onResponse(
+                call: Call<MovieListResponse>,
+                response: Response<MovieListResponse>
+            ) {
+                if(response.isSuccessful){
+                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+                }
+            }
+            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
+                Log.e("RemoteDataSource", "Failed to Get Upcoming Movie List", t)
+                Log.e("RemoteDataSource", t.message.toString())
+            }
         })
         return movieListResult
     }
@@ -61,10 +78,9 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
     }
 
 
-    fun getTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
+    fun getPopularTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
         val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
-
-        api.getPopularTvShowsList(apiKey).enqueue(object : Callback<TvShowListResponse> {
+        api.getPopularTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
             override fun onResponse(
                 call: Call<TvShowListResponse>,
                 response: Response<TvShowListResponse>
@@ -77,7 +93,25 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
                 Log.e("RemoteDataSource", "Failed to Get Popular TvShow List", t)
                 Log.e("RemoteDataSource", t.message.toString())
             }
+        })
+        return tvShowListResult
+    }
 
+    fun getAiringTodayTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
+        val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
+        api.getAiringTodayTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
+            override fun onResponse(
+                call: Call<TvShowListResponse>,
+                response: Response<TvShowListResponse>
+            ) {
+                if(response.isSuccessful){
+                    tvShowListResult.value = response.body()?.let { ApiResponse.success(it) }
+                }
+            }
+            override fun onFailure(call: Call<TvShowListResponse>, t: Throwable) {
+                Log.e("RemoteDataSource", "Failed to Get TvShow List that Airing Today", t)
+                Log.e("RemoteDataSource", t.message.toString())
+            }
         })
         return tvShowListResult
     }

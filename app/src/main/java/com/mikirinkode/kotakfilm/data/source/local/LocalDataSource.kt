@@ -17,8 +17,9 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
             INSTANCE ?: LocalDataSource(movieDao)
     }
 
-    fun getMovieList(sort: String): LiveData<List<MovieEntity>> = mMovieDao.getMovies(
+    fun getMovieList(sort: String): LiveData<List<MovieEntity>> = mMovieDao.getPopularMovies(
         SortUtils.getSortedQuery(sort, MOVIE_TABLE))
+    fun getUpcomingMovies(): LiveData<List<MovieEntity>> = mMovieDao.getUpcomingMovies()
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 
@@ -35,10 +36,12 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
 
 
-    fun getTvShowList(sort: String): LiveData<List<TvShowEntity>> = mMovieDao.getTvShows(
+    fun getTvShowList(sort: String): LiveData<List<TvShowEntity>> = mMovieDao.getPopularTvShows(
         SortUtils.getSortedQuery(sort, TV_TABLE))
 
     fun getTvShowDetail(tvShowId: Int): LiveData<TvShowEntity> = mMovieDao.getTvShowDetail(tvShowId)
+
+    fun getAiringTodayTvShows(): LiveData<List<TvShowEntity>> = mMovieDao.getAiringTodayTvShows()
 
     fun getFavoriteTvShowList(): LiveData<List<TvShowEntity>> = mMovieDao.getFavoriteTvShows()
 

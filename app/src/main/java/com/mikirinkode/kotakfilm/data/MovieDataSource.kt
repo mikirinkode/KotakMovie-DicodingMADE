@@ -7,18 +7,22 @@ import com.mikirinkode.kotakfilm.vo.Resource
 
 interface MovieDataSource {
 
-    fun getPopularMoviesList(sort: String): LiveData<Resource<List<MovieEntity>>>
+    fun getPopularMovies(sort: String): LiveData<Resource<List<MovieEntity>>>
 
-    fun getMovieDetail(movieId: Int): LiveData<Resource<MovieEntity>>
+    fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>>
+
+    fun getMovieDetail(movie: MovieEntity): LiveData<Resource<MovieEntity>>
 
     fun getFavoriteMovies(): LiveData<List<MovieEntity>>
 
     fun setFavoriteMovie(movie: MovieEntity, state: Boolean)
 
 
-    fun getPopularTvShowsList(sort: String): LiveData<Resource<List<TvShowEntity>>>
+    fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>>
 
-    fun getTvShowDetail(tvShowId: Int): LiveData<Resource<TvShowEntity>>
+    fun getAiringTodayTvShows(): LiveData<Resource<List<TvShowEntity>>>
+
+    fun getTvShowDetail(tvShow: TvShowEntity): LiveData<Resource<TvShowEntity>>
 
     fun getFavoriteTvShows(): LiveData<List<TvShowEntity>>
 
