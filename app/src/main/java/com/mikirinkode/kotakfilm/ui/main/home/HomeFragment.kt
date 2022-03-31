@@ -18,7 +18,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val movieAdapter = UpcomingMovieAdapter()
-    private val tvShowAdapter = UpcomingTvShowAdapter()
+    private val tvShowAdapter = TodayTvShowAdapter()
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
