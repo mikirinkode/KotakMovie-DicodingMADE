@@ -45,7 +45,7 @@ class FavoriteTvShowFragment : Fragment() {
             }
 
             viewModel.getFavoriteTvShowList().observe(viewLifecycleOwner) { tvShowList ->
-                tvShowAdapter.submitList(tvShowList)
+                tvShowAdapter.setData(tvShowList)
                 if (tvShowList.isNotEmpty()) {
                     binding.apply { onEmptyData.visibility = View.GONE }
                 } else {
@@ -78,4 +78,9 @@ class FavoriteTvShowFragment : Fragment() {
             }
         }
     })
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

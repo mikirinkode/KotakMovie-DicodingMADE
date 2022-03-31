@@ -40,4 +40,9 @@ class FavoriteFragment : Fragment() {
             R.string.tv_show
         )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

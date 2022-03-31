@@ -1,8 +1,6 @@
 package com.mikirinkode.kotakfilm.data
 
 import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.data.source.local.LocalDataSource
@@ -21,18 +19,13 @@ class MovieRepository private constructor(
     private val appExecutors: AppExecutors
 ): MovieDataSource {
 
-    override fun getPopularMoviesList(sort: String): LiveData<Resource<PagedList<MovieEntity>>> {
-        return object : NetworkBoundResource<PagedList<MovieEntity>, MovieListResponse>(appExecutors){
-            override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
-                val config = PagedList.Config.Builder()
-                    .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(5)
-                    .setPageSize(5)
-                    .build()
-                return LivePagedListBuilder(localDataSource.getMovieList(sort), config).build()
+    override fun getPopularMoviesList(sort: String): LiveData<Resource<List<MovieEntity>>> {
+        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors){
+            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+                return localDataSource.getMovieList(sort)
             }
 
-            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -85,13 +78,8 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(5)
-            .setPageSize(5)
-            .build()
-        return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
+    override fun getFavoriteMovies(): LiveData<List<MovieEntity>> {
+        return localDataSource.getFavoriteMovieList()
     }
 
     override fun setFavoriteMovie(movie: MovieEntity, state: Boolean) {
@@ -99,18 +87,13 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getPopularTvShowsList(sort: String): LiveData<Resource<PagedList<TvShowEntity>>> {
-        return object : NetworkBoundResource<PagedList<TvShowEntity>, TvShowListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {
-                val config = PagedList.Config.Builder()
-                    .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(5)
-                    .setPageSize(5)
-                    .build()
-                return LivePagedListBuilder(localDataSource.getTvShowList(sort), config).build()
+    override fun getPopularTvShowsList(sort: String): LiveData<Resource<List<TvShowEntity>>> {
+        return object : NetworkBoundResource<List<TvShowEntity>, TvShowListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<TvShowEntity>> {
+                return localDataSource.getTvShowList(sort)
             }
 
-            override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean {
+            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -165,13 +148,8 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>> {
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(5)
-            .setPageSize(5)
-            .build()
-        return LivePagedListBuilder(localDataSource.getFavoriteTvShows(), config).build()
+    override fun getFavoriteTvShows(): LiveData<List<TvShowEntity>> {
+        return localDataSource.getFavoriteTvShowList()
     }
 
     override fun setFavoriteTvShow(tvShow: TvShowEntity, state: Boolean) {

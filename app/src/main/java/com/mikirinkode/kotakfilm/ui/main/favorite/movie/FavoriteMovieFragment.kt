@@ -1,11 +1,11 @@
 package com.mikirinkode.kotakfilm.ui.main.favorite.movie
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +47,7 @@ class FavoriteMovieFragment : Fragment() {
             }
 
             viewModel.getFavoriteMovieList().observe(viewLifecycleOwner) { movieList ->
-                movieAdapter.submitList(movieList)
+                movieAdapter.setData(movieList)
                 if (movieList.isNotEmpty()) {
                     binding.apply { onEmptyData.visibility = View.GONE }
                 } else {
@@ -80,4 +80,9 @@ class FavoriteMovieFragment : Fragment() {
             }
         }
     })
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

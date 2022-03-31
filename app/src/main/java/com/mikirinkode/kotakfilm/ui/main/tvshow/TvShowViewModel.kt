@@ -20,7 +20,7 @@ class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepo
         this.tvShowId.value = tvShowId
     }
     
-    fun getPopularTvShowsList(sort: String): LiveData<Resource<PagedList<TvShowEntity>>>{
+    fun getPopularTvShowsList(sort: String): LiveData<Resource<List<TvShowEntity>>>{
         return movieRepository.getPopularTvShowsList(sort)
 
     }

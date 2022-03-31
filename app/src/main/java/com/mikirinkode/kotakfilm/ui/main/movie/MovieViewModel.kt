@@ -25,7 +25,7 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         movieRepository.getMovieDetail(mMovieId)
     }
 
-    fun getPopularMoviesList(sort: String): LiveData<Resource<PagedList<MovieEntity>>>{
+    fun getPopularMoviesList(sort: String): LiveData<Resource<List<MovieEntity>>>{
         return movieRepository.getPopularMoviesList(sort)
     }
 

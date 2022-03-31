@@ -63,7 +63,7 @@ class TvShowFragment : Fragment() {
         }
     }
 
-    private val tvShowObserver = Observer<Resource<PagedList<TvShowEntity>>> { tvShowList ->
+    private val tvShowObserver = Observer<Resource<List<TvShowEntity>>> { tvShowList ->
         binding.apply {
             if(tvShowList != null) {
                 when (tvShowList.status){
@@ -72,7 +72,7 @@ class TvShowFragment : Fragment() {
                     }
                     Status.SUCCESS -> {
                         icLoading.visibility = View.GONE
-                        tvShowList.data?.let { tvShowAdapter.submitList(it) }
+                        tvShowList.data?.let { tvShowAdapter.setData(it) }
                     }
                     Status.ERROR -> {
                         icLoading.visibility = View.GONE

@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteMovieViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    fun getFavoriteMovieList(): LiveData<PagedList<MovieEntity>> {
+    fun getFavoriteMovieList(): LiveData<List<MovieEntity>> {
         return movieRepository.getFavoriteMovies()
     }
 

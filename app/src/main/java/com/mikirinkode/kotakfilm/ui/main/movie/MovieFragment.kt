@@ -61,7 +61,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private val movieObserver = Observer<Resource<PagedList<MovieEntity>>> { movieList ->
+    private val movieObserver = Observer<Resource<List<MovieEntity>>> { movieList ->
         binding.apply {
             if(movieList != null){
                 when(movieList.status){
@@ -69,7 +69,7 @@ class MovieFragment : Fragment() {
                         icLoading.visibility = View.VISIBLE
                     }
                     Status.SUCCESS -> {
-                        movieList.data?.let { movieAdapter.submitList(it) }
+                        movieList.data?.let { movieAdapter.setData(it) }
                         icLoading.visibility = View.GONE
                     }
                     Status.ERROR -> {

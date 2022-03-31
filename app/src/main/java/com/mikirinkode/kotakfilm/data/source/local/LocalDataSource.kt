@@ -1,7 +1,6 @@
 package com.mikirinkode.kotakfilm.data.source.local
 
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.utils.SortUtils
@@ -18,12 +17,12 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
             INSTANCE ?: LocalDataSource(movieDao)
     }
 
-    fun getMovieList(sort: String): DataSource.Factory<Int, MovieEntity> = mMovieDao.getMovies(
+    fun getMovieList(sort: String): LiveData<List<MovieEntity>> = mMovieDao.getMovies(
         SortUtils.getSortedQuery(sort, MOVIE_TABLE))
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 
-    fun getFavoriteMovies(): DataSource.Factory<Int, MovieEntity> = mMovieDao.getFavoriteMovies()
+    fun getFavoriteMovieList(): LiveData<List<MovieEntity>> = mMovieDao.getFavoriteMovies()
 
     fun insertMovieList(movies: List<MovieEntity>) = mMovieDao.insertMovieList(movies)
 
@@ -36,12 +35,12 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
 
 
-    fun getTvShowList(sort: String): DataSource.Factory<Int, TvShowEntity> = mMovieDao.getTvShows(
+    fun getTvShowList(sort: String): LiveData<List<TvShowEntity>> = mMovieDao.getTvShows(
         SortUtils.getSortedQuery(sort, TV_TABLE))
 
     fun getTvShowDetail(tvShowId: Int): LiveData<TvShowEntity> = mMovieDao.getTvShowDetail(tvShowId)
 
-    fun getFavoriteTvShows(): DataSource.Factory<Int, TvShowEntity> = mMovieDao.getFavoriteTvShows()
+    fun getFavoriteTvShowList(): LiveData<List<TvShowEntity>> = mMovieDao.getFavoriteTvShows()
 
     fun insertTvShowList(tvShows: List<TvShowEntity>) = mMovieDao.insertTvShowList(tvShows)
 

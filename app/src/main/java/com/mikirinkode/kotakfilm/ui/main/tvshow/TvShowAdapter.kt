@@ -3,7 +3,6 @@ package com.mikirinkode.kotakfilm.ui.main.tvshow
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,23 +12,13 @@ import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.databinding.ItemsFilmBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakfilm.utils.Constants
+import com.mikirinkode.kotakfilm.utils.TvShowDiffUtil
 
-class TvShowAdapter: PagedListAdapter<TvShowEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
+class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
-            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
+    private var tvShowsList = ArrayList<TvShowEntity>()
 
-            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
-
-    class TvShowViewHolder(private val binding: ItemsFilmBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class TvShowViewHolder(private val binding: ItemsFilmBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: TvShowEntity) {
             binding.apply {
                 tvItemTitle.text = tvShow.title
@@ -40,12 +29,11 @@ class TvShowAdapter: PagedListAdapter<TvShowEntity, TvShowAdapter.TvShowViewHold
                 Glide.with(itemView.context)
                     .load("${Constants.IMAGE_BASE_URL}${tvShow.posterPath}")
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_refresh))
-                    .error(R.drawable.ic_broken_image)
-                    .centerCrop()
+                    .error(R.drawable.ic_error)
                     .into(ivPoster)
             }
 
-            itemView.setOnClickListener {
+            itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_ID, tvShow.id)
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "TV SHOW")
@@ -56,18 +44,25 @@ class TvShowAdapter: PagedListAdapter<TvShowEntity, TvShowAdapter.TvShowViewHold
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
-        val itemsFilmBinding =
-            ItemsFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemsFilmBinding = ItemsFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvShowViewHolder(itemsFilmBinding)
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        val tvShow = getItem(position)
-        if (tvShow != null) {
-            holder.bind(tvShow)
-        }
+        val tvShow = tvShowsList[position]
+        holder.bind(tvShow)
     }
 
-    fun getSwipedData(swipedPosition: Int): TvShowEntity? = getItem(swipedPosition)
+    override fun getItemCount(): Int = tvShowsList.size
+
+    fun setData(newTvShowList: List<TvShowEntity>){
+        val diffUtil = TvShowDiffUtil(tvShowsList, newTvShowList)
+        val diffResults = DiffUtil.calculateDiff(diffUtil)
+        this.tvShowsList.clear()
+        this.tvShowsList.addAll(newTvShowList)
+        diffResults.dispatchUpdatesTo(this)
+    }
+
+    fun getSwipedData(swipedPosition: Int): TvShowEntity? = tvShowsList[swipedPosition]
 
 }
