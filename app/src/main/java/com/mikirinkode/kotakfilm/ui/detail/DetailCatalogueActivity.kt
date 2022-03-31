@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
+import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakfilm.ui.main.movie.MovieViewModel
 import com.mikirinkode.kotakfilm.ui.main.tvshow.TvShowViewModel
@@ -35,9 +37,10 @@ class DetailCatalogueActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val extra = intent.extras
-        val id = extra?.getInt(EXTRA_ID)
         val type = extra?.getString(EXTRA_TYPE).toString()
-        id?.let { findDetail(it, type) }
+        val movie = intent.getParcelableExtra<MovieEntity>(EXTRA_MOVIE)
+        val tvShow = intent.getParcelableExtra<TvShowEntity>(EXTRA_TV_SHOW)
+        if (type == "MOVIE") getDetailMovie(movie, type) else getDetailTvShow(tvShow, type)
 
         with(binding) {
             btnBack.setOnClickListener {
@@ -53,9 +56,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
             }
 
             btnTryAgain.setOnClickListener {
-                if (id != null) {
-                    findDetail(id, type)
-                }
+                    if (type == "MOVIE") getDetailMovie(movie, type) else getDetailTvShow(tvShow, type)
             }
 
             toggleFavorite.setOnClickListener {
@@ -73,19 +74,14 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun findDetail(id: Int, type: String) {
+
+    private fun getDetailMovie(movie: MovieEntity?, type: String) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             tvLabelRelease.visibility = View.GONE
-        }
-        if (type == "MOVIE") getDetailMovie(id, type) else getDetailTvShow(id, type)
-    }
-
-    private fun getDetailMovie(id: Int, type: String) {
-        binding.apply {
-            movieViewModel.setSelectedMovie(id)
-            movieViewModel.movie.observe(this@DetailCatalogueActivity) { movie ->
+            movie?.let { movieViewModel.setSelectedMovie(it) }
+            movieViewModel.movieDetail.observe(this@DetailCatalogueActivity) { movie ->
                 if (movie != null) {
                     when (movie.status) {
                         Status.LOADING -> {
@@ -122,10 +118,13 @@ class DetailCatalogueActivity : AppCompatActivity() {
     }
 
 
-    private fun getDetailTvShow(id: Int, type: String) {
+    private fun getDetailTvShow(tvShow: TvShowEntity?, type: String) {
         binding.apply {
-            tvShowViewModel.setSelectedTvShow(id)
-            tvShowViewModel.tvShow.observe(this@DetailCatalogueActivity) { tvShow ->
+            icLoading.visibility = View.VISIBLE
+            onFailMsg.visibility = View.GONE
+            tvLabelRelease.visibility = View.GONE
+            tvShow?.let { tvShowViewModel.setSelectedTvShow(it) }
+            tvShowViewModel.tvShowDetail.observe(this@DetailCatalogueActivity) { tvShow ->
                 if (tvShow != null) {
                     when (tvShow.status) {
                         Status.LOADING -> {
@@ -211,7 +210,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
 
     companion object {
-        const val EXTRA_ID = "extra_id"
         const val EXTRA_TYPE = "extra_type"
+        const val EXTRA_MOVIE = "extra_movie"
+        const val EXTRA_TV_SHOW = "extra_tv_show"
     }
 }
