@@ -211,7 +211,8 @@
                         app:cardCornerRadius="16dp"
                         android:backgroundTint="@color/placeholder"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
+                        android:layout_marginTop="16dp">
 
                         <ImageView
                             android:id="@+id/iv_detail_poster"
@@ -228,7 +229,6 @@
                         android:id="@+id/tv_detail_genre"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:ellipsize="end"
@@ -237,7 +237,7 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/poster_parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/poster_parent"
                         tools:text="@string/genre1_genre2_genre3" />
 
                     <TextView
@@ -280,7 +280,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:textAlignment="center"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="16dp"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"
                         android:textStyle="italic"
@@ -296,27 +296,26 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:textColor="@color/white"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_detail_quote"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="@string/title" />
 
                     <TextView
                         android:id="@+id/tv_detail_description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/tv_detail_title"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_quote"
                         tools:text="@string/description" />
 
                     <TextView
