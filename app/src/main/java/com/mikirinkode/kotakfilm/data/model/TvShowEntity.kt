@@ -4,8 +4,10 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "TvShowEntities")
 data class TvShowEntity(
     @PrimaryKey
@@ -41,5 +43,8 @@ data class TvShowEntity(
     val backdropPath: String?,
 
     @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean = false
-)
+    var isFavorite: Boolean = false,
+
+    @ColumnInfo(name = "isAiringToday")
+    var isAiringToday: Boolean = false
+): Parcelable

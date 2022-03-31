@@ -1,10 +1,13 @@
 package com.mikirinkode.kotakfilm.data.model
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "MovieEntities")
 data class MovieEntity(
     @PrimaryKey
@@ -41,5 +44,8 @@ data class MovieEntity(
     val backdropPath: String?,
 
     @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean = false
-)
+    var isFavorite: Boolean = false,
+
+    @ColumnInfo(name = "isUpcoming")
+    var isUpcoming: Boolean = false
+):Parcelable
