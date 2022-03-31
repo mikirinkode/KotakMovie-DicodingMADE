@@ -56,7 +56,7 @@ class MovieFragment : Fragment() {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularMoviesList(SortUtils.LATEST).observe(viewLifecycleOwner, movieObserver)
+            viewModel.getPopularMoviesList(SortUtils.BEST).observe(viewLifecycleOwner, movieObserver)
         }
     }
 

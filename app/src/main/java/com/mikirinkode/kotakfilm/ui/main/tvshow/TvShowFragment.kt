@@ -58,7 +58,7 @@ class TvShowFragment : Fragment() {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularTvShowsList(SortUtils.LATEST).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularTvShowsList(SortUtils.BEST).observe(viewLifecycleOwner, tvShowObserver)
         }
     }
 
