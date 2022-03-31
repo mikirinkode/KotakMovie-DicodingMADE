@@ -69,6 +69,7 @@
                     android:paddingBottom="16dp">
 
                     <ImageView
+                        android:clickable="true"
                         android:id="@+id/btn_back"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -471,5 +472,6 @@
 
 
     </androidx.core.widget.NestedScrollView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
