@@ -17,6 +17,25 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
 
     private val apiKey = Constants.API_KEY
 
+    fun searchMovies(query: String): LiveData<ApiResponse<MovieListResponse>>{
+        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
+        api.searchMovies(apiKey, query).enqueue(object : Callback<MovieListResponse> {
+            override fun onResponse(
+                call: Call<MovieListResponse>,
+                response: Response<MovieListResponse>
+            ) {
+                if(response.isSuccessful){
+                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+                }
+            }
+            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
+                Log.e("RemoteDataSource", "Failed to Get Search Movie Results", t)
+                Log.e("RemoteDataSource", t.message.toString())
+            }
+        })
+        return movieListResult
+    }
+
     fun getPopularMovieList(): LiveData<ApiResponse<MovieListResponse>>{
         val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
         api.getPopularMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {

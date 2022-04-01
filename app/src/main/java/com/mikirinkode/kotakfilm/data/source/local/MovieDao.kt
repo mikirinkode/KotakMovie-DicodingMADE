@@ -18,6 +18,9 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntities WHERE isUpcoming = 1 ORDER BY releaseDate DESC")
     fun getUpcomingMovies(): LiveData<List<MovieEntity>>
 
+    @Query("SELECT * FROM MovieEntities WHERE title LIKE '%' ||:search || '%'")
+    fun searchMovies(search: String): LiveData<List<MovieEntity>>
+
     @Query("SELECT * FROM MovieEntities WHERE isOnTrending = 1")
     fun getTrendingMovies(): LiveData<List<MovieEntity>>
 
@@ -26,6 +29,9 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovieList(movies: List<MovieEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertSearchResult(movies: MovieEntity)
 
     @Update
     fun updateMovie(movie: MovieEntity)

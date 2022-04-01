@@ -7,6 +7,8 @@ import com.mikirinkode.kotakfilm.vo.Resource
 
 interface MovieDataSource {
 
+    fun searchMovies(query: String): LiveData<Resource<List<MovieEntity>>>
+
     fun getPopularMovies(sort: String): LiveData<Resource<List<MovieEntity>>>
 
     fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>>

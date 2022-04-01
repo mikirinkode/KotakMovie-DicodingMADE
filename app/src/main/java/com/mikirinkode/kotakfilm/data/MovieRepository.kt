@@ -1,6 +1,8 @@
 package com.mikirinkode.kotakfilm.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.data.source.local.LocalDataSource
@@ -18,6 +20,35 @@ class MovieRepository private constructor(
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : MovieDataSource {
+
+    override fun searchMovies(query: String): LiveData<Resource<List<MovieEntity>>> {
+        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+                return localDataSource.searchMovies(query)
+            }
+
+            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+                return data == null || data.isEmpty() || data.size < 5
+            }
+
+            override fun createCall(): LiveData<ApiResponse<MovieListResponse>> {
+                return remoteDataSource.searchMovies(query)
+            }
+
+            override fun saveCallResult(movieResponses: MovieListResponse) {
+                if (movieResponses != null) {
+                    movieResponses.results.forEach {
+                        val movie = MovieEntity(
+                            it.id, it.title, it.releaseDate, it.overview, null,
+                            null, null, it.voteAverage, it.posterPath, it.backdropPath
+                        )
+                        localDataSource.insertSearchResult(movie)
+                    }
+                }
+            }
+        }.asLiveData()
+    }
+
 
     override fun getPopularMovies(sort: String): LiveData<Resource<List<MovieEntity>>> {
         return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
