@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.KotakFilm" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primary_700</item>
+        <item name="colorPrimary">@color/primary_900</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <!-- Background -->
@@ -20,5 +20,35 @@
         <item name="android:colorBackground">@color/dark_500</item>
         <item name="colorPrimarySurface">@color/dark_400</item>
         <item name="android:color">@color/primary_500</item>
+
+
+    </style>
+
+    <style name="MyDarkToolbar" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/dark_400</item>
+        <item name="android:textColor">@color/light_200</item>
+    </style>
+
+    <style name="Theme.KotakFilm.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_900</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <!-- Background -->
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary_200</item>
+        <item name="colorSecondaryVariant">@color/secondary_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_500</item>
+        <!-- Neutral color. -->
+        <item name="colorSurface">@color/dark_500</item>
+        <item name="android:textColorPrimary">@color/light_200</item>
+        <item name="android:textColorSecondary">@color/light_500</item>
+        <item name="colorOnPrimarySurface">@color/light_200</item>
+        <item name="android:colorBackground">@color/dark_500</item>
+        <item name="colorPrimarySurface">@color/dark_400</item>
+        <item name="android:color">@color/primary_500</item>
+
     </style>
 </resources>
