@@ -66,7 +66,7 @@ class FavoriteTvShowFragment : Fragment() {
                 tvShowEntity?.let { viewModel.setFavorite(tvShowEntity) }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
                 snackbar.apply {
-                    setActionTextColor(ContextCompat.getColor(context, R.color.primary_500))
+                    setActionTextColor(ContextCompat.getColor(context, R.color.secondary_200))
                     setTextColor(ContextCompat.getColor(context, R.color.light_200))
                     setBackgroundTint(ContextCompat.getColor(context, R.color.dark_400))
                     setAction(R.string.message_ok) {
