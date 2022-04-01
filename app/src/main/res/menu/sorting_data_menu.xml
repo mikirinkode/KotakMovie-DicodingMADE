@@ -4,7 +4,7 @@
 
         <item
             android:id="@+id/action_latest_release"
-            android:checked="true"
+            android:checked="false"
             android:title="@string/latest_release" />
 
         <item
@@ -14,7 +14,7 @@
 
         <item
             android:id="@+id/action_best_vote"
-            android:checked="false"
+            android:checked="true"
             android:title="@string/best_vote" />
 
         <item
