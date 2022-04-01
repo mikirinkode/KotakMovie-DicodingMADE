@@ -7,6 +7,10 @@
         android:icon="@drawable/home_toggle"
         android:title="@string/home"/>
 
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/search_toggle"
+        android:title="@string/search"/>
 
     <item
         android:id="@+id/nav_movie"
