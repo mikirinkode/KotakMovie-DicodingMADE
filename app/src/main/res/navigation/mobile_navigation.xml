@@ -8,14 +8,21 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.mikirinkode.kotakfilm.ui.main.home.HomeFragment"
-        android:label="Home"
+        android:label="KotakFilm"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.mikirinkode.kotakfilm.ui.main.search.SearchFragment"
+        android:label=""
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/nav_movie"
         android:name="com.mikirinkode.kotakfilm.ui.main.movie.MovieFragment"
         android:label="Movie"
         tools:layout="@layout/fragment_movie"/>
+
     <fragment
         android:id="@+id/nav_tv_show"
         android:name="com.mikirinkode.kotakfilm.ui.main.tvshow.TvShowFragment"
@@ -27,6 +34,5 @@
         android:name="com.mikirinkode.kotakfilm.ui.main.favorite.FavoriteFragment"
         android:label="Favorite"
         tools:layout="@layout/fragment_favorite"/>
-
 
 </navigation>
