@@ -17,6 +17,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val trendingAdapter = TrendingAdapter()
     private val movieAdapter = UpcomingMovieAdapter()
     private val tvShowAdapter = TodayTvShowAdapter()
     private val viewModel: HomeViewModel by viewModels()
@@ -33,19 +34,59 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            binding.rvUpcomingMovies.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = movieAdapter
+            binding.apply {
+                rvUpcomingMovies.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = movieAdapter
+                }
+
+                findMovieList()
+
+                rvUpcomingTvShows.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = tvShowAdapter
+                }
+
+                findTvShowList()
+
+                rvTrending.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = trendingAdapter
+                }
+
+                findTrendingList()
+
+                btnTryAgain.setOnClickListener {
+                    findMovieList()
+                    findTvShowList()
+                    findTrendingList()
+                }
             }
+        }
+    }
 
-            findMovieList()
-
-            binding.rvUpcomingTvShows.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = tvShowAdapter
-            }
-
-            findTvShowList()
+    private fun findTrendingList() {
+        binding.apply {
+            loadingUpcomingMovie.visibility = View.VISIBLE
+            onFailMsg.visibility = View.GONE
+            viewModel.getTrendingMovies()
+                .observe(viewLifecycleOwner, Observer { movieList ->
+                    if (movieList != null) {
+                        when (movieList.status) {
+                            Status.LOADING -> {
+                                loadingTrending.visibility = View.VISIBLE
+                            }
+                            Status.SUCCESS -> {
+                                movieList.data?.let { trendingAdapter.setData(it) }
+                                loadingTrending.visibility = View.GONE
+                            }
+                            Status.ERROR -> {
+                                loadingTrending.visibility = View.GONE
+                                onFailMsg.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                })
         }
     }
 

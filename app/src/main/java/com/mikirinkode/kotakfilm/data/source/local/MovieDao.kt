@@ -18,6 +18,9 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntities WHERE isUpcoming = 1 ORDER BY releaseDate DESC")
     fun getUpcomingMovies(): LiveData<List<MovieEntity>>
 
+    @Query("SELECT * FROM MovieEntities WHERE isOnTrending = 1")
+    fun getTrendingMovies(): LiveData<List<MovieEntity>>
+
     @Query("SELECT * FROM MovieEntities WHERE isFavorite = 1")
     fun getFavoriteMovies(): LiveData<List<MovieEntity>>
 

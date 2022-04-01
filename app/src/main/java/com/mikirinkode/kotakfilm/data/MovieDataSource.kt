@@ -11,6 +11,8 @@ interface MovieDataSource {
 
     fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>>
 
+    fun getTrendingMovies(): LiveData<Resource<List<MovieEntity>>>
+
     fun getMovieDetail(movie: MovieEntity): LiveData<Resource<MovieEntity>>
 
     fun getFavoriteMovies(): LiveData<List<MovieEntity>>

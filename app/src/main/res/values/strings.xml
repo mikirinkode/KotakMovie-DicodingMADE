@@ -44,5 +44,6 @@
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="upcoming_tv_shows">Upcoming TV Shows</string>
     <string name="home">Home</string>
+    <string name="trending_this_week">Trending this Week</string>
 
 </resources>

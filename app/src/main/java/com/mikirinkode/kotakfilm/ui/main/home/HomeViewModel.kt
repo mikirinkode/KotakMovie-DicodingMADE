@@ -11,6 +11,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
+    fun getTrendingMovies(): LiveData<Resource<List<MovieEntity>>> {
+        return movieRepository.getTrendingMovies()
+    }
+
     fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>> {
         return movieRepository.getUpcomingMovies()
     }

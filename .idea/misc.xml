@@ -7,6 +7,7 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/ic_error.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/ic_heart_unselected.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/ic_home_unselected.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/ic_refresh.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/movie_toggle.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/drawable/rounded_rectangle.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/activity_detail_catalogue.xml" value="0.264" />
@@ -18,8 +19,10 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_movie.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/fragment_tv_show.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/items_film.xml" value="0.2" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/trending_items.xml" value="0.2" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/layout/upcoming_items.xml" value="0.4" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DicodingMade/MaSabmission/KotakFilm/app/src/main/res/menu/sorting_data_menu.xml" value="0.23645833333333333" />
       </map>
     </option>
   </component>

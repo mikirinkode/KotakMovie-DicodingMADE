@@ -21,6 +21,12 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): Call<MovieListResponse>
 
+
+    @GET("trending/movie/week")
+    fun getTrendingMovieList(
+        @Query("api_key") apiKey: String
+    ): Call<MovieListResponse>
+
     @GET("movie/{movieId}")
     fun getDetailMovie(
         @Path("movieId") movieId: Int,

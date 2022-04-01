@@ -19,7 +19,10 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun getMovieList(sort: String): LiveData<List<MovieEntity>> = mMovieDao.getPopularMovies(
         SortUtils.getSortedQuery(sort, MOVIE_TABLE))
+
     fun getUpcomingMovies(): LiveData<List<MovieEntity>> = mMovieDao.getUpcomingMovies()
+
+    fun getTrendingMovies(): LiveData<List<MovieEntity>> = mMovieDao.getTrendingMovies()
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 

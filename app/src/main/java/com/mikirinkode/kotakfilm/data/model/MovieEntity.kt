@@ -47,5 +47,8 @@ data class MovieEntity(
     var isFavorite: Boolean = false,
 
     @ColumnInfo(name = "isUpcoming")
-    var isUpcoming: Boolean = false
+    var isUpcoming: Boolean = false,
+
+    @ColumnInfo(name = "isOnTrending")
+    var isOnTrending: Boolean = false
 ):Parcelable

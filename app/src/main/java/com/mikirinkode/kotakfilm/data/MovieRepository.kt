@@ -49,6 +49,46 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
+    override fun getTrendingMovies(): LiveData<Resource<List<MovieEntity>>> {
+        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+                return localDataSource.getTrendingMovies()
+            }
+
+            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+                return data == null || data.isEmpty()
+            }
+
+            override fun createCall(): LiveData<ApiResponse<MovieListResponse>> {
+                return remoteDataSource.getTrendingMovieList()
+            }
+
+            override fun saveCallResult(movieResponses: MovieListResponse) {
+                val movieList = ArrayList<MovieEntity>()
+                if (movieResponses != null) {
+                    movieResponses.results.forEach {
+                        val movie = MovieEntity(
+                            it.id,
+                            it.title,
+                            it.releaseDate,
+                            it.overview,
+                            null,
+                            null,
+                            null,
+                            it.voteAverage,
+                            it.posterPath,
+                            it.backdropPath,
+                            isOnTrending = true
+                        )
+                        movieList.add(movie)
+                    }
+                }
+                localDataSource.insertMovieList(movieList)
+            }
+        }.asLiveData()
+    }
+
+
     override fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>> {
         return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<List<MovieEntity>> {
@@ -121,7 +161,8 @@ class MovieRepository private constructor(
                             voteAverage,
                             posterPath,
                             backdropPath,
-                            isUpcoming = movie.isUpcoming
+                            isUpcoming = movie.isUpcoming,
+                            isOnTrending = movie.isOnTrending,
                         )
                         localDataSource.updateMovieData(movieDetail)
                     }

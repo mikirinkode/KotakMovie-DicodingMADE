@@ -46,5 +46,9 @@ data class TvShowEntity(
     var isFavorite: Boolean = false,
 
     @ColumnInfo(name = "isAiringToday")
-    var isAiringToday: Boolean = false
+    var isAiringToday: Boolean = false,
+
+    @ColumnInfo(name = "isOnTrending")
+    var isOnTrending: Boolean = false
+
 ): Parcelable
