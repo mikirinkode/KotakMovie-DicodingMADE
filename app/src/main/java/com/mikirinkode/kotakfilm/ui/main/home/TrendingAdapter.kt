@@ -21,6 +21,8 @@ class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
     class MovieViewHolder(private val binding: TrendingItemsBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
             binding.apply {
+                tvItemTitle.text = movie.title
+                rateBar.rating = movie.voteAverage.toFloat() / 2
                 Glide.with(itemView.context)
                     .load("${Constants.IMAGE_BASE_URL}${movie.backdropPath}")
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_refresh))
