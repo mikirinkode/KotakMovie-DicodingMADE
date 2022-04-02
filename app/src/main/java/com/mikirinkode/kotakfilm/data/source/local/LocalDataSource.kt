@@ -28,7 +28,7 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 
-    fun getFavoriteMovieList(): LiveData<List<MovieEntity>> = mMovieDao.getFavoriteMovies()
+    fun getMoviePlaylist(): LiveData<List<MovieEntity>> = mMovieDao.getMoviePlaylist()
 
     fun insertMovieList(movies: List<MovieEntity>) = mMovieDao.insertMovieList(movies)
 
@@ -36,8 +36,8 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun updateMovieData(movie: MovieEntity) = mMovieDao.updateMovie(movie)
 
-    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
-        movie.isFavorite = newState
+    fun setMoviePlaylist(movie: MovieEntity, newState: Boolean) {
+        movie.isOnPlaylist = newState
         mMovieDao.updateMovie(movie)
     }
 
@@ -50,14 +50,14 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun getAiringTodayTvShows(): LiveData<List<TvShowEntity>> = mMovieDao.getAiringTodayTvShows()
 
-    fun getFavoriteTvShowList(): LiveData<List<TvShowEntity>> = mMovieDao.getFavoriteTvShows()
+    fun getTvShowPlaylist(): LiveData<List<TvShowEntity>> = mMovieDao.getTvShowPlaylist()
 
     fun insertTvShowList(tvShows: List<TvShowEntity>) = mMovieDao.insertTvShowList(tvShows)
 
     fun updateTvShowData(tvShow: TvShowEntity) = mMovieDao.updateTvShow(tvShow)
 
-    fun setFavoriteTvShow(tvShow: TvShowEntity, newState: Boolean) {
-        tvShow.isFavorite = newState
+    fun setTvShowPlaylist(tvShow: TvShowEntity, newState: Boolean) {
+        tvShow.isOnPlaylist = newState
         mMovieDao.updateTvShow(tvShow)
     }
 }

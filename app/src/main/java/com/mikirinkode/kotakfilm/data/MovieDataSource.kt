@@ -17,9 +17,9 @@ interface MovieDataSource {
 
     fun getMovieDetail(movie: MovieEntity): LiveData<Resource<MovieEntity>>
 
-    fun getFavoriteMovies(): LiveData<List<MovieEntity>>
+    fun getMoviePlaylist(): LiveData<List<MovieEntity>>
 
-    fun setFavoriteMovie(movie: MovieEntity, state: Boolean)
+    fun setMoviePlaylist(movie: MovieEntity, state: Boolean)
 
 
     fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>>
@@ -28,7 +28,7 @@ interface MovieDataSource {
 
     fun getTvShowDetail(tvShow: TvShowEntity): LiveData<Resource<TvShowEntity>>
 
-    fun getFavoriteTvShows(): LiveData<List<TvShowEntity>>
+    fun getTvShowPlaylist(): LiveData<List<TvShowEntity>>
 
-    fun setFavoriteTvShow(tvShow: TvShowEntity, state: Boolean)
+    fun setTvShowPlaylist(tvShow: TvShowEntity, state: Boolean)
 }

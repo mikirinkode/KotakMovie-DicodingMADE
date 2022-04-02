@@ -58,17 +58,6 @@
             app:layout_constraintStart_toStartOf="@+id/label_connect"
             app:layout_constraintTop_toBottomOf="@id/label_connect" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/label_swipe_to_refresh"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:text="@string/swipe_to_refresh"-->
-<!--            android:textColor="@color/light_200"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/label_please_check"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/label_please_check"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/label_please_check" />-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -81,13 +70,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swipe_to_refresh"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"">-->
-
-
-<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
     <TextView
         android:visibility="gone"
@@ -133,7 +115,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/connecting"
+                android:text="@string/searching_the_movie"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@id/progress_bar"

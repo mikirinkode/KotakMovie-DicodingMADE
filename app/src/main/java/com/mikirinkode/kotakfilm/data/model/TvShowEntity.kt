@@ -42,8 +42,8 @@ data class TvShowEntity(
     @ColumnInfo(name = "backdropPath")
     val backdropPath: String?,
 
-    @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean = false,
+    @ColumnInfo(name = "isOnPlaylist")
+    var isOnPlaylist: Boolean = false,
 
     @ColumnInfo(name = "isAiringToday")
     var isAiringToday: Boolean = false,

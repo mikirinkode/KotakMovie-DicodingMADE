@@ -23,7 +23,7 @@
         android:title="@string/tv_show"/>
 
     <item
-        android:id="@+id/nav_favorite"
-        android:icon="@drawable/favorite_toggle"
-        android:title="@string/favorite"/>
+        android:id="@+id/nav_playlist"
+        android:icon="@drawable/playlist_toggle"
+        android:title="@string/playlist"/>
 </menu>

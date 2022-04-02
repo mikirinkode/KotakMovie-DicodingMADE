@@ -43,8 +43,8 @@ data class MovieEntity(
     @ColumnInfo(name = "backdropPath")
     val backdropPath: String?,
 
-    @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean = false,
+    @ColumnInfo(name = "isOnPlaylist")
+    var isOnPlaylist: Boolean = false,
 
     @ColumnInfo(name = "isUpcoming")
     var isUpcoming: Boolean = false,

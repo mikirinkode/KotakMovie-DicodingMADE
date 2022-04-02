@@ -1,9 +1,9 @@
-package com.mikirinkode.kotakfilm.ui.main.favorite
+package com.mikirinkode.kotakfilm.ui.main.playlist
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.mikirinkode.kotakfilm.ui.main.favorite.movie.FavoriteMovieFragment
-import com.mikirinkode.kotakfilm.ui.main.favorite.tvshow.FavoriteTvShowFragment
+import com.mikirinkode.kotakfilm.ui.main.playlist.movie.MoviePlaylistFragment
+import com.mikirinkode.kotakfilm.ui.main.playlist.tvshow.TvShowPlaylistFragment
 
 class SectionsPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
@@ -13,8 +13,8 @@ class SectionsPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when(position) {
-            0 -> fragment = FavoriteMovieFragment()
-            1 -> fragment = FavoriteTvShowFragment()
+            0 -> fragment = MoviePlaylistFragment()
+            1 -> fragment = TvShowPlaylistFragment()
         }
         return fragment as Fragment
     }

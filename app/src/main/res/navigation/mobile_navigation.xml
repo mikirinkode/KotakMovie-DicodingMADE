@@ -30,9 +30,9 @@
         tools:layout="@layout/fragment_tv_show"/>
 
     <fragment
-        android:id="@+id/nav_favorite"
-        android:name="com.mikirinkode.kotakfilm.ui.main.favorite.FavoriteFragment"
-        android:label="Favorite"
-        tools:layout="@layout/fragment_favorite"/>
+        android:id="@+id/nav_playlist"
+        android:name="com.mikirinkode.kotakfilm.ui.main.playlist.PlaylistFragment"
+        android:label="Playlist"
+        tools:layout="@layout/fragment_playlist"/>
 
 </navigation>

@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.ui.main.favorite
+package com.mikirinkode.kotakfilm.ui.main.playlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,25 +8,25 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.databinding.FragmentFavoriteBinding
+import com.mikirinkode.kotakfilm.databinding.FragmentPlaylistBinding
 
-class FavoriteFragment : Fragment() {
+class PlaylistFragment : Fragment() {
 
-    private var _binding: FragmentFavoriteBinding? = null
+    private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            val sectionsPagerAdapter = SectionsPagerAdapter(this@FavoriteFragment)
+            val sectionsPagerAdapter = SectionsPagerAdapter(this@PlaylistFragment)
             viewPager.adapter = sectionsPagerAdapter
             TabLayoutMediator(tabs, viewPager) { tab, position ->
                 tab.text = resources.getString(TAB_TITLES[position])

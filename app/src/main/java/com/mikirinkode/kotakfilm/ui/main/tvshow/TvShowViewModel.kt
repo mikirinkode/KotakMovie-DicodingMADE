@@ -30,12 +30,12 @@ class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepo
     
 
 
-    fun setFavoriteTvShow(){
+    fun setTvShowPlaylist(){
         val tvShowValue = tvShowDetail.value
         if (tvShowValue != null){
             if (tvShowValue.data != null){
-                val newState = !tvShowValue.data.isFavorite
-                movieRepository.setFavoriteTvShow(tvShowValue.data, newState)
+                val newState = !tvShowValue.data.isOnPlaylist
+                movieRepository.setTvShowPlaylist(tvShowValue.data, newState)
             }
         }
     }

@@ -28,12 +28,12 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         return movieRepository.getPopularMovies(sort)
     }
 
-    fun setFavoriteMovie(){
+    fun setMoviePlaylist(){
         val movieValue = movieDetail.value
         if (movieValue != null){
             if (movieValue.data != null){
-                val newState = !movieValue.data.isFavorite
-                movieRepository.setFavoriteMovie(movieValue.data, newState)
+                val newState = !movieValue.data.isOnPlaylist
+                movieRepository.setMoviePlaylist(movieValue.data, newState)
             }
         }
     }

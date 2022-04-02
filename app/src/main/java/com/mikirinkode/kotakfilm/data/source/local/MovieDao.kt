@@ -24,8 +24,8 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntities WHERE isOnTrending = 1")
     fun getTrendingMovies(): LiveData<List<MovieEntity>>
 
-    @Query("SELECT * FROM MovieEntities WHERE isFavorite = 1")
-    fun getFavoriteMovies(): LiveData<List<MovieEntity>>
+    @Query("SELECT * FROM MovieEntities WHERE isOnPlaylist = 1")
+    fun getMoviePlaylist(): LiveData<List<MovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovieList(movies: List<MovieEntity>)
@@ -43,8 +43,8 @@ interface MovieDao {
     @Query("SELECT * FROM TvShowEntities WHERE id = :id")
     fun getTvShowDetail(id: Int): LiveData<TvShowEntity>
 
-    @Query("SELECT * FROM TvShowEntities WHERE isFavorite = 1")
-    fun getFavoriteTvShows(): LiveData<List<TvShowEntity>>
+    @Query("SELECT * FROM TvShowEntities WHERE isOnPlaylist = 1")
+    fun getTvShowPlaylist(): LiveData<List<TvShowEntity>>
 
     @Query("SELECT * FROM TvShowEntities WHERE isAiringToday = 1")
     fun getAiringTodayTvShows(): LiveData<List<TvShowEntity>>

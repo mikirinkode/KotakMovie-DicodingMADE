@@ -47,28 +47,20 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 onBackPressed()
             }
 
-            btnShare.setOnClickListener {
-                val shareIntent = Intent()
-                shareIntent.action = Intent.ACTION_SEND
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on KotakFilm")
-                shareIntent.type = "text/plain"
-                startActivity(Intent.createChooser(shareIntent, "Share To:"))
-            }
-
             btnTryAgain.setOnClickListener {
                     if (type == "MOVIE") getDetailMovie(movie, type) else getDetailTvShow(tvShow, type)
             }
 
-            toggleFavorite.setOnClickListener {
+            toggleAddItem.setOnClickListener {
                 isFavorite = !isFavorite
-                toggleFavorite.isChecked = isFavorite
-                if (isFavorite) Toast.makeText(this@DetailCatalogueActivity, "Added to Favorite", Toast.LENGTH_SHORT).show()
-                else Toast.makeText(this@DetailCatalogueActivity, "Removed from Favorite", Toast.LENGTH_SHORT).show()
+                toggleAddItem.isChecked = isFavorite
+                if (isFavorite) Toast.makeText(this@DetailCatalogueActivity, getString(R.string.added_to_playlist), Toast.LENGTH_SHORT).show()
+                else Toast.makeText(this@DetailCatalogueActivity, getString(R.string.removed_from_playlist), Toast.LENGTH_SHORT).show()
 
                 if (type == "MOVIE"){
-                    movieViewModel.setFavoriteMovie()
+                    movieViewModel.setMoviePlaylist()
                 } else if (type == "TV SHOW"){
-                    tvShowViewModel.setFavoriteTvShow()
+                    tvShowViewModel.setTvShowPlaylist()
                 }
             }
         }
@@ -90,8 +82,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             movie.data?.let {
-                                isFavorite = it.isFavorite
-                                toggleFavorite.isChecked = isFavorite
+                                isFavorite = it.isOnPlaylist
+                                toggleAddItem.isChecked = isFavorite
                                 movieTitle = it.title
                                 setData(
                                     it.title,
@@ -133,8 +125,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             tvShow.data?.let {
-                                isFavorite = it.isFavorite
-                                toggleFavorite.isChecked = isFavorite
+                                isFavorite = it.isOnPlaylist
+                                toggleAddItem.isChecked = isFavorite
                                 movieTitle = it.title
                                 setData(
                                     it.title,

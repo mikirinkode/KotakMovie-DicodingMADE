@@ -29,7 +29,7 @@
     <string name="episodeRuntime">%dmin</string>
     <string name="no_data">-No Data-</string>
     <string name="favorite">FAVORITE</string>
-    <string name="user_didnt_add_fav">You haven not added an item to favorites.</string>
+    <string name="user_didnt_add_fav">You haven not added an item to playlist.</string>
     <string name="no_favorite">No Favorite, yet.</string>
     <string name="message_undo">Undo delete previous item?</string>
     <string name="message_ok">OK</string>
@@ -51,5 +51,12 @@
     <string name="you_are_offline">You are offline. Please check your connection</string>
     <string name="swipe_to_refresh">Swipe down to Refresh</string>
     <string name="star_icon">Star Icon</string>
+    <string name="searching_the_movie">Searching the Movie…</string>
+    <string name="empty_playlist_illustration">Empty Playlist Illustration</string>
+    <string name="playlist">Playlist</string>
+    <string name="empty_playlist">Empty Playlist.</string>
+    <string name="empty_playlist_desc">You haven not added an item to playlist.</string>
+    <string name="removed_from_playlist">Removed from Playlist</string>
+    <string name="added_to_playlist">Added to Playlist</string>
 
 </resources>

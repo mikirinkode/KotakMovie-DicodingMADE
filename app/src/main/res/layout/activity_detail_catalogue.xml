@@ -15,7 +15,7 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/primary_700"
+            app:contentScrim="@color/primary_900"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +78,7 @@
                         android:contentDescription="@string/back_button"
                         android:elevation="2dp"
                         android:focusable="true"
-                        app:srcCompat="@drawable/ic_arrow_left"
+                        app:srcCompat="@drawable/ic_back"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/white" />
@@ -92,16 +92,16 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                        app:layout_constraintEnd_toStartOf="@id/btn_share"
+                        app:layout_constraintEnd_toStartOf="@id/toggle_add_item"
                         app:layout_constraintStart_toEndOf="@id/btn_back"
                         app:layout_constraintTop_toTopOf="@id/btn_back" />
 
                     <ToggleButton
-                        android:id="@+id/toggle_favorite"
+                        android:id="@+id/toggle_add_item"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/favorite_toggle"
+                        android:background="@drawable/add_item_toggle"
                         android:backgroundTint="@color/white"
                         android:elevation="2dp"
                         android:focusable="false"
@@ -109,21 +109,9 @@
                         android:textOff=""
                         android:textOn=""
                         app:layout_constraintBottom_toBottomOf="@+id/tv_detail_category"
-                        app:layout_constraintEnd_toStartOf="@+id/btn_share"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_detail_category" />
 
-                    <ImageView
-                        android:id="@+id/btn_share"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/share_button"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_share"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_detail_category"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_detail_category"
-                        app:tint="@color/white" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
