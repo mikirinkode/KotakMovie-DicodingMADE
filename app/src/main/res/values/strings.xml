@@ -58,5 +58,10 @@
     <string name="empty_playlist_desc">You haven not added an item to playlist.</string>
     <string name="removed_from_playlist">Removed from Playlist</string>
     <string name="added_to_playlist">Added to Playlist</string>
+    <string name="search_empty_result_illustration">Search Empty Result Illustration</string>
+    <string name="please_try_searching_with_another_term">Please try searching with another term</string>
+    <string name="no_matching_data">Sorry we couldn\'t find any matching data</string>
+    <string name="movie_are_you_looking">What movie are you looking for?</string>
+    <string name="search_your_favorite_movie">You can search your favorite movies or find similar results.</string>
 
 </resources>

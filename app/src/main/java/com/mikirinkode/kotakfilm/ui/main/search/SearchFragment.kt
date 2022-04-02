@@ -1,8 +1,12 @@
 package com.mikirinkode.kotakfilm.ui.main.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.marginStart
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,7 +18,7 @@ import com.mikirinkode.kotakfilm.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(){
+class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -40,8 +44,16 @@ class SearchFragment : Fragment(){
                     adapter = movieAdapter
                 }
             }
+
             observeSearchResult()
 
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (movieAdapter.itemCount > 0){
+            binding.onInitialSearchStateMessage.visibility = View.GONE
         }
     }
 
@@ -52,6 +64,7 @@ class SearchFragment : Fragment(){
         search.expandActionView()
 
         val searchView = search.actionView as SearchView
+
         searchView.apply {
             onActionViewExpanded()
             setIconifiedByDefault(true)
@@ -59,7 +72,7 @@ class SearchFragment : Fragment(){
             isIconified = false
             requestFocusFromTouch()
             requestFocus()
-            setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     clearFocus()
                     return true
@@ -67,7 +80,12 @@ class SearchFragment : Fragment(){
 
                 override fun onQueryTextChange(query: String?): Boolean {
                     if (query != null) {
-                        binding.icLoading.visibility = View.VISIBLE
+                        binding.apply {
+                            icLoading.visibility = View.VISIBLE
+                            onEmptyStateMessage.visibility = View.GONE
+                            onFailMsg.visibility = View.GONE
+                            onInitialSearchStateMessage.visibility = View.GONE
+                        }
                         searchViewModel.setSearchQuery(query)
                         observeSearchResult()
                     }
@@ -78,7 +96,7 @@ class SearchFragment : Fragment(){
     }
 
 
-    private fun observeSearchResult(){
+    private fun observeSearchResult() {
         binding.apply {
             searchViewModel.searchResult.observe(viewLifecycleOwner, Observer { results ->
                 if (results != null) {
@@ -87,8 +105,12 @@ class SearchFragment : Fragment(){
                             icLoading.visibility = View.VISIBLE
                         }
                         Status.SUCCESS -> {
-                            results.data?.let { movieAdapter.setData(it) }
                             icLoading.visibility = View.GONE
+                            results.data?.let { movieAdapter.setData(it) }
+                            if (results.data == null || results.data.isEmpty()) {
+                                onEmptyStateMessage.visibility = View.VISIBLE
+                                onInitialSearchStateMessage.visibility = View.GONE
+                            }
                         }
                         Status.ERROR -> {
                             icLoading.visibility = View.GONE
