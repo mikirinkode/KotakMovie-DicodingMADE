@@ -67,6 +67,6 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         diffResults.dispatchUpdatesTo(this)
     }
 
-    fun getSwipedData(swipedPosition: Int): TvShowEntity? = tvShowsList[swipedPosition]
+    fun getSwipedData(swipedPosition: Int): TvShowEntity = tvShowsList[swipedPosition]
 
 }

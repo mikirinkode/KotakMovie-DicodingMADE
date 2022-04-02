@@ -10,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.databinding.TrendingItemsBinding
-import com.mikirinkode.kotakfilm.databinding.UpcomingItemsBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakfilm.utils.Constants
 import com.mikirinkode.kotakfilm.utils.MovieDiffUtil

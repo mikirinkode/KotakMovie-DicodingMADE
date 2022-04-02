@@ -67,7 +67,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         diffResults.dispatchUpdatesTo(this)
     }
 
-    fun getSwipedData(swipedPosition: Int): MovieEntity? {
+    fun getSwipedData(swipedPosition: Int): MovieEntity {
         return moviesList[swipedPosition]
     }
 }

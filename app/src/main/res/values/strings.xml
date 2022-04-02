@@ -15,7 +15,6 @@
     <string name="release_date">Release Date</string>
     <string name="back_button">Back Button</string>
 
-    <string name="share_button">Share Button</string>
     <string name="category">Category: %s</string>
     <string name="connecting">Connecting to Internet</string>
     <string name="try_again">Try Again</string>
@@ -28,12 +27,8 @@
     <string name="runtime">%dh %dm</string>
     <string name="episodeRuntime">%dmin</string>
     <string name="no_data">-No Data-</string>
-    <string name="favorite">FAVORITE</string>
-    <string name="user_didnt_add_fav">You haven not added an item to playlist.</string>
-    <string name="no_favorite">No Favorite, yet.</string>
     <string name="message_undo">Undo delete previous item?</string>
     <string name="message_ok">OK</string>
-    <string name="overview">Overview</string>
 
     <string name="random">Random</string>
     <string name="latest_release">Latest Release</string>
@@ -42,14 +37,11 @@
     <string name="worst_vote">Worst Vote</string>
     <string name="tv_shows_airing_today">Tv Shows Airing Today</string>
     <string name="upcoming_movies">Upcoming Movies</string>
-    <string name="upcoming_tv_shows">Upcoming TV Shows</string>
     <string name="home">Home</string>
     <string name="trending_this_week">Trending this Week</string>
     <string name="search">Search</string>
     <string name="no_data_match">Sorry, no matching data</string>
-    <string name="connect_to_internet">Connect to internet</string>
     <string name="you_are_offline">You are offline. Please check your connection</string>
-    <string name="swipe_to_refresh">Swipe down to Refresh</string>
     <string name="star_icon">Star Icon</string>
     <string name="searching_the_movie">Searching the Movie…</string>
     <string name="empty_playlist_illustration">Empty Playlist Illustration</string>

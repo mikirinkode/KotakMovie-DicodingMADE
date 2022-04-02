@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.databinding.FragmentHomeBinding
 import com.mikirinkode.kotakfilm.vo.Status
@@ -25,7 +24,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -56,6 +55,7 @@ class HomeFragment : Fragment() {
 
                 findTrendingList()
 
+
                 btnTryAgain.setOnClickListener {
                     findMovieList()
                     findTvShowList()
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
             loadingUpcomingMovie.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             viewModel.getTrendingMovies()
-                .observe(viewLifecycleOwner, Observer { movieList ->
+                .observe(viewLifecycleOwner) { movieList ->
                     if (movieList != null) {
                         when (movieList.status) {
                             Status.LOADING -> {
@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                     }
-                })
+                }
         }
     }
 
@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
             loadingUpcomingMovie.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             viewModel.getUpcomingMovies()
-                .observe(viewLifecycleOwner, Observer { movieList ->
+                .observe(viewLifecycleOwner) { movieList ->
                     if (movieList != null) {
                         when (movieList.status) {
                             Status.LOADING -> {
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                     }
-                })
+                }
         }
     }
 
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
             viewModel.getAiringTodayTvShows()
-                .observe(viewLifecycleOwner, Observer { tvShowList ->
+                .observe(viewLifecycleOwner) { tvShowList ->
                     if (tvShowList != null) {
                         when (tvShowList.status) {
                             Status.LOADING -> {
@@ -138,7 +138,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                     }
-                })
+                }
         }
     }
 

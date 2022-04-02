@@ -24,11 +24,6 @@
 
     </style>
 
-    <style name="MyDarkToolbar" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:colorBackground">@color/dark_400</item>
-        <item name="android:textColor">@color/light_200</item>
-    </style>
-
     <style name="Theme.KotakFilm.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary_900</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
