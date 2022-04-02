@@ -48,18 +48,26 @@ class DetailCatalogueActivity : AppCompatActivity() {
             }
 
             btnTryAgain.setOnClickListener {
-                    if (type == "MOVIE") getDetailMovie(movie, type) else getDetailTvShow(tvShow, type)
+                if (type == "MOVIE") getDetailMovie(movie, type) else getDetailTvShow(tvShow, type)
             }
 
             toggleAddItem.setOnClickListener {
                 isFavorite = !isFavorite
                 toggleAddItem.isChecked = isFavorite
-                if (isFavorite) Toast.makeText(this@DetailCatalogueActivity, getString(R.string.added_to_playlist), Toast.LENGTH_SHORT).show()
-                else Toast.makeText(this@DetailCatalogueActivity, getString(R.string.removed_from_playlist), Toast.LENGTH_SHORT).show()
+                if (isFavorite) Toast.makeText(
+                    this@DetailCatalogueActivity,
+                    getString(R.string.added_to_playlist),
+                    Toast.LENGTH_SHORT
+                ).show()
+                else Toast.makeText(
+                    this@DetailCatalogueActivity,
+                    getString(R.string.removed_from_playlist),
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                if (type == "MOVIE"){
+                if (type == "MOVIE") {
                     movieViewModel.setMoviePlaylist()
-                } else if (type == "TV SHOW"){
+                } else if (type == "TV SHOW") {
                     tvShowViewModel.setTvShowPlaylist()
                 }
             }
@@ -69,6 +77,23 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
     private fun getDetailMovie(movie: MovieEntity?, type: String) {
         binding.apply {
+            movie?.let { it ->
+                isFavorite = it.isOnPlaylist
+                toggleAddItem.isChecked = isFavorite
+                movieTitle = it.title
+                setData(
+                    it.title,
+                    it.overview,
+                    it.genres,
+                    it.releaseDate,
+                    it.tagline,
+                    it.voteAverage,
+                    it.runtime,
+                    it.posterPath,
+                    it.backdropPath,
+                    type,
+                )
+            }
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             tvLabelRelease.visibility = View.GONE
@@ -82,9 +107,6 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             movie.data?.let {
-                                isFavorite = it.isOnPlaylist
-                                toggleAddItem.isChecked = isFavorite
-                                movieTitle = it.title
                                 setData(
                                     it.title,
                                     it.overview,
@@ -93,8 +115,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                     it.tagline,
                                     it.voteAverage,
                                     it.runtime,
-                                    it.posterPath.toString(),
-                                    it.backdropPath.toString(),
+                                    it.posterPath,
+                                    it.backdropPath,
                                     type
                                 )
                             }
@@ -112,6 +134,23 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
     private fun getDetailTvShow(tvShow: TvShowEntity?, type: String) {
         binding.apply {
+            tvShow?.let { it ->
+                isFavorite = it.isOnPlaylist
+                toggleAddItem.isChecked = isFavorite
+                movieTitle = it.title
+                setData(
+                    it.title,
+                    it.overview,
+                    it.genres,
+                    it.releaseDate,
+                    it.tagline,
+                    it.voteAverage,
+                    it.runtime,
+                    it.posterPath,
+                    it.backdropPath,
+                    type,
+                )
+            }
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             tvLabelRelease.visibility = View.GONE
@@ -125,9 +164,6 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             tvShow.data?.let {
-                                isFavorite = it.isOnPlaylist
-                                toggleAddItem.isChecked = isFavorite
-                                movieTitle = it.title
                                 setData(
                                     it.title,
                                     it.overview,
@@ -156,7 +192,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         title: String,
         overview: String?,
         genres: String?,
-        releaseDate: String,
+        releaseDate: String?,
         tagline: String?,
         voteAverage: Double,
         runtime: Int?,
@@ -166,13 +202,14 @@ class DetailCatalogueActivity : AppCompatActivity() {
     ) {
         binding.apply {
             tvDetailTitle.text = title
-            if (overview == "" || overview == null) getString(R.string.no_data) else tvDetailDescription.text = overview
+            if (overview == "" || overview == null) getString(R.string.no_data) else tvDetailDescription.text =
+                overview
             tvDetailRelease.text = releaseDate ?: "-No Data-"
             tvDetailQuote.text = tagline ?: ""
             tvDetailRating.text = voteAverage.toString()
             tvDetailCategory.text = getString(R.string.category, category)
-            if (runtime != null){
-                if (category == "MOVIE"){
+            if (runtime != null) {
+                if (category == "MOVIE") {
                     val hours = runtime.div(60)
                     val minutes = runtime.rem(60)
                     tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
