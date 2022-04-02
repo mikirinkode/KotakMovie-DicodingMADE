@@ -23,9 +23,13 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             binding.apply {
                 tvItemTitle.text = movie.title
                 tvItemVote.text = movie.voteAverage.toString()
-                val date: List<String> = movie.releaseDate.split("-")
-                val year = date[0]
-                tvItemReleaseDate.text = year
+                if (movie.releaseDate == null){
+                    tvItemReleaseDate.text = itemView.context.getString(R.string.no_data)
+                } else {
+                    val date: List<String> = movie.releaseDate.split("-")
+                    val year = date[0]
+                    tvItemReleaseDate.text = year
+                }
                 Glide.with(itemView.context)
                     .load("${IMAGE_BASE_URL}${movie.posterPath}")
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_refresh))

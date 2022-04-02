@@ -23,9 +23,13 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
             binding.apply {
                 tvItemTitle.text = tvShow.title
                 tvItemVote.text = tvShow.voteAverage.toString()
-                val date: List<String> = tvShow.releaseDate.split("-")
-                val year = date[0]
-                tvItemReleaseDate.text = year
+                if (tvShow.releaseDate == null){
+                    tvItemReleaseDate.text = itemView.context.getString(R.string.no_data)
+                } else {
+                    val date: List<String> = tvShow.releaseDate.split("-")
+                    val year = date[0]
+                    tvItemReleaseDate.text = year
+                }
                 Glide.with(itemView.context)
                     .load("${Constants.IMAGE_BASE_URL}${tvShow.posterPath}")
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_refresh))
