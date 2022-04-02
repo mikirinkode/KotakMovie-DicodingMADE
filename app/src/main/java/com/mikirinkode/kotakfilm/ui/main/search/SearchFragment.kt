@@ -1,10 +1,7 @@
 package com.mikirinkode.kotakfilm.ui.main.search
 
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +14,7 @@ import com.mikirinkode.kotakfilm.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), SearchView.OnQueryTextListener{
+class SearchFragment : Fragment(){
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -62,27 +59,29 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener{
             isIconified = false
             requestFocusFromTouch()
             requestFocus()
-            setOnQueryTextListener(this@SearchFragment)
+            setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    clearFocus()
+                    return true
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    if (query != null) {
+                        binding.icLoading.visibility = View.VISIBLE
+                        searchViewModel.setSearchQuery(query)
+                        observeSearchResult()
+                    }
+                    return true;
+                }
+            })
         }
-    }
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            binding.icLoading.visibility = View.VISIBLE
-            searchViewModel.setSearchQuery(query)
-            observeSearchResult()
-        }
-        return true
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return true;
-    }
 
     private fun observeSearchResult(){
         binding.apply {
             searchViewModel.searchResult.observe(viewLifecycleOwner, Observer { results ->
                 if (results != null) {
-//                    movieAdapter.setData(results)
                     when (results.status) {
                         Status.LOADING -> {
                             icLoading.visibility = View.VISIBLE
