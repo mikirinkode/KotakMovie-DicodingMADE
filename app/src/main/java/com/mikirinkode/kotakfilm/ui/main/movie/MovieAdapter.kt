@@ -57,7 +57,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bind(movie)
     }
 
-    override fun getItemCount(): Int = moviesList.size
+    override fun getItemCount(): Int = if (moviesList.size >= 30) 30 else moviesList.size
 
     fun setData(newMovieList: List<MovieEntity>){
         val diffUtil = MovieDiffUtil(moviesList,newMovieList)

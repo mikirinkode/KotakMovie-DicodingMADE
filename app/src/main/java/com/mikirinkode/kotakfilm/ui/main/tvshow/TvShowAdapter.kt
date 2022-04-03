@@ -57,7 +57,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         holder.bind(tvShow)
     }
 
-    override fun getItemCount(): Int = tvShowsList.size
+    override fun getItemCount(): Int = if (tvShowsList.size >= 30) 30 else tvShowsList.size
 
     fun setData(newTvShowList: List<TvShowEntity>){
         val diffUtil = TvShowDiffUtil(tvShowsList, newTvShowList)
