@@ -84,11 +84,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/ic_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/primary_900"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,8 +137,8 @@
 
         <ImageView
             android:id="@+id/iv_initial_search_state"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
             android:src="@drawable/ic_initial_search_state_illustration"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -166,6 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/light_200"
+            android:textAlignment="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/search_your_favorite_movie"
@@ -223,6 +225,7 @@
             android:layout_marginEnd="16dp"
             android:text="@string/please_try_searching_with_another_term"
             android:layout_marginTop="8dp"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/label_search_empty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

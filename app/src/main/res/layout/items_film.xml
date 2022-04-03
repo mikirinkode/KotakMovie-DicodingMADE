@@ -35,8 +35,9 @@
                 android:layout_height="150dp"
                 android:contentDescription="@string/film_poster"
                 android:elevation="2dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@color/placeholder"
+                tools:src="@tools:sample/avatars"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,13 +95,13 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/star_symbol"
             app:tint="@color/secondary_200"
-            android:src="@drawable/ic_star"
+            android:src="@drawable/ic_star_fill"
             app:layout_constraintStart_toEndOf="@+id/layout_poster"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_title" />
 
