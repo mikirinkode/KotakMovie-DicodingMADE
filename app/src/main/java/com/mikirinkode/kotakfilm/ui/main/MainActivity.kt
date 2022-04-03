@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
+            setSupportActionBar(toolbar)
             val navView: BottomNavigationView = navBottom
             val navController =
                 navHostFragmentActivityHome.getFragment<NavHostFragment>().navController
