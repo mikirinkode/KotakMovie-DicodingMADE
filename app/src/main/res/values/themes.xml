@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.KotakFilm" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primary_900</item>
+        <item name="colorPrimary">@color/secondary_700</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <!-- Background -->
@@ -20,12 +20,19 @@
         <item name="android:colorBackground">@color/dark_500</item>
         <item name="colorPrimarySurface">@color/dark_400</item>
         <item name="android:color">@color/primary_500</item>
-
-
     </style>
 
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/placeholder</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+
     <style name="Theme.KotakFilm.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary_900</item>
+        <item name="colorPrimary">@color/secondary_700</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <!-- Background -->
