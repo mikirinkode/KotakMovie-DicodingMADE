@@ -12,8 +12,8 @@ data class TrailerVideoEntity(
     @ColumnInfo(name = "trailerId")
     val trailerId: String,
 
-    @ColumnInfo(name = "movieId")
-    val movieId: Int,
+    @ColumnInfo(name = "catalogueId")
+    val catalogueId: Int,
 
     @ColumnInfo(name = "key")
     val key: String,
