@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 
 @Dao
@@ -14,6 +15,12 @@ interface MovieDao {
 
     @Query("SELECT * FROM MovieEntities WHERE id = :id")
     fun getMovieDetail(id: Int): LiveData<MovieEntity>
+
+    @Query("SELECT * FROM TrailerVideoEntities WHERE movieId = :movieId")
+    fun getMovieTrailer(movieId: Int): LiveData<List<TrailerVideoEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovieTrailer(trailer: TrailerVideoEntity)
 
     @Query("SELECT * FROM MovieEntities WHERE isUpcoming = 1 ORDER BY releaseDate DESC")
     fun getUpcomingMovies(): LiveData<List<MovieEntity>>

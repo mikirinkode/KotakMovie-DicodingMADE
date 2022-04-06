@@ -1,9 +1,6 @@
 package com.mikirinkode.kotakfilm.data.source.remote
 
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieListResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowListResponse
+import com.mikirinkode.kotakfilm.data.source.remote.response.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,7 +24,6 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): Call<MovieListResponse>
 
-
     @GET("trending/movie/week")
     fun getTrendingMovieList(
         @Query("api_key") apiKey: String
@@ -38,6 +34,12 @@ interface ApiService {
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
     ): Call<MovieDetailResponse>
+
+    @GET("movie/{movieId}/videos")
+    fun getMovieTrailer(
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<TrailerVideoResponse>
 
     @GET("tv/popular")
     fun getPopularTvShowList(

@@ -2,14 +2,12 @@ package com.mikirinkode.kotakfilm.data
 
 import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.data.source.local.LocalDataSource
 import com.mikirinkode.kotakfilm.data.source.remote.ApiResponse
 import com.mikirinkode.kotakfilm.data.source.remote.RemoteDataSource
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieListResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowListResponse
+import com.mikirinkode.kotakfilm.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.utils.AppExecutors
 import com.mikirinkode.kotakfilm.vo.Resource
 
@@ -201,6 +199,43 @@ class MovieRepository private constructor(
     }
 
 
+    override fun getMovieTrailer(movie: MovieEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
+        return object :
+            NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
+                return localDataSource.getMovieTrailer(movie.id)
+            }
+
+            override fun shouldFetch(data: List<TrailerVideoEntity>?): Boolean {
+                return data == null || data.isEmpty()
+            }
+
+            override fun createCall(): LiveData<ApiResponse<TrailerVideoResponse>> {
+                return remoteDataSource.getMovieTrailer(movie.id)
+            }
+
+            override fun saveCallResult(trailerVideoResponse: TrailerVideoResponse) {
+                if (trailerVideoResponse != null) {
+                    trailerVideoResponse.results.forEach {
+                        if (it.official && it.site == "YouTube" && it.type == "Trailer") {
+                            localDataSource.insertMovieTrailer(
+                                TrailerVideoEntity(
+                                    it.id,
+                                    movie.id,
+                                    it.key,
+                                    it.name,
+                                    it.site,
+                                    it.type,
+                                    it.official
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }.asLiveData()
+    }
+
     override fun getMoviePlaylist(): LiveData<List<MovieEntity>> {
         return localDataSource.getMoviePlaylist()
     }
@@ -208,7 +243,6 @@ class MovieRepository private constructor(
     override fun setMoviePlaylist(movie: MovieEntity, state: Boolean) {
         appExecutors.diskIO().execute { localDataSource.setMoviePlaylist(movie, state) }
     }
-
 
     override fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>> {
         return object : NetworkBoundResource<List<TvShowEntity>, TvShowListResponse>(appExecutors) {

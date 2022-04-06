@@ -2,6 +2,7 @@ package com.mikirinkode.kotakfilm.data.source.local
 
 import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.utils.SortUtils
 import com.mikirinkode.kotakfilm.utils.SortUtils.MOVIE_TABLE
@@ -28,9 +29,13 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 
+    fun getMovieTrailer(movieId: Int): LiveData<List<TrailerVideoEntity>> = mMovieDao.getMovieTrailer(movieId)
+
     fun getMoviePlaylist(): LiveData<List<MovieEntity>> = mMovieDao.getMoviePlaylist()
 
     fun insertMovieList(movies: List<MovieEntity>) = mMovieDao.insertMovieList(movies)
+
+    fun insertMovieTrailer(trailer: TrailerVideoEntity) = mMovieDao.insertMovieTrailer(trailer)
 
     fun insertSearchResult(movie: MovieEntity) = mMovieDao.insertSearchResult(movie)
 

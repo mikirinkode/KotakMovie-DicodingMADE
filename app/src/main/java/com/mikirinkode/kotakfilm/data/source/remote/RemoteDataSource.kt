@@ -3,10 +3,7 @@ package com.mikirinkode.kotakfilm.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.MovieListResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowDetailResponse
-import com.mikirinkode.kotakfilm.data.source.remote.response.TvShowListResponse
+import com.mikirinkode.kotakfilm.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
@@ -105,16 +102,32 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
                     movieResult.value = response.body()?.let { ApiResponse.success(it) }
                 }
             }
-
             override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
                 Log.e("RemoteDataSource", "Failed to Get Movie Detail", t)
                 Log.e("RemoteDataSource", t.message.toString())
             }
-
         })
         return movieResult
     }
 
+    fun getMovieTrailer(movieId: Int): LiveData<ApiResponse<TrailerVideoResponse>>{
+        val trailerResult = MutableLiveData<ApiResponse<TrailerVideoResponse>>()
+        api.getMovieTrailer(movieId, apiKey).enqueue(object : Callback<TrailerVideoResponse>{
+            override fun onResponse(
+                call: Call<TrailerVideoResponse>,
+                response: Response<TrailerVideoResponse>
+            ) {
+                if (response.isSuccessful){
+                    trailerResult.value = response.body()?.let { ApiResponse.success(it) }
+                }
+            }
+            override fun onFailure(call: Call<TrailerVideoResponse>, t: Throwable) {
+                Log.e("RemoteDataSource", "Failed to Get Movie Trailer Video", t)
+                Log.e("RemoteDataSource", t.message.toString())
+            }
+        })
+        return trailerResult
+    }
 
     fun getPopularTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
         val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()

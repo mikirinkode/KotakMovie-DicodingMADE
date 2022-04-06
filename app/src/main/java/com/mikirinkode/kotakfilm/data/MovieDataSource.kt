@@ -2,6 +2,7 @@ package com.mikirinkode.kotakfilm.data
 
 import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.vo.Resource
 
@@ -20,6 +21,8 @@ interface MovieDataSource {
     fun getMoviePlaylist(): LiveData<List<MovieEntity>>
 
     fun setMoviePlaylist(movie: MovieEntity, state: Boolean)
+
+    fun getMovieTrailer(movie: MovieEntity): LiveData<Resource<List<TrailerVideoEntity>>>
 
 
     fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>>
