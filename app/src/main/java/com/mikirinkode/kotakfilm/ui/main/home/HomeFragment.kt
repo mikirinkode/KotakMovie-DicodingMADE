@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
 
                 findMovieList()
 
-                rvUpcomingTvShows.apply {
+                rvTopTv.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = tvShowAdapter
                 }
@@ -117,22 +117,22 @@ class HomeFragment : Fragment() {
 
     private fun findTvShowList() {
         binding.apply {
-            loadingAiringTvShow.visibility = View.VISIBLE
+            loadingTopRatedTvShow.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getAiringTodayTvShows()
+            viewModel.getTopTvShowList()
                 .observe(viewLifecycleOwner) { tvShowList ->
                     if (tvShowList != null) {
                         when (tvShowList.status) {
                             Status.LOADING -> {
-                                loadingAiringTvShow.visibility = View.VISIBLE
+                                loadingTopRatedTvShow.visibility = View.VISIBLE
                             }
                             Status.SUCCESS -> {
-                                loadingAiringTvShow.visibility = View.GONE
+                                loadingTopRatedTvShow.visibility = View.GONE
                                 tvShowList.data?.let { tvShowAdapter.setData(it) }
                             }
                             Status.ERROR -> {
-                                loadingAiringTvShow.visibility = View.GONE
+                                loadingTopRatedTvShow.visibility = View.GONE
                                 btnTryAgain.visibility = View.VISIBLE
                                 onFailMsg.visibility = View.VISIBLE
                             }

@@ -45,8 +45,8 @@ data class TvShowEntity(
     @ColumnInfo(name = "isOnPlaylist")
     var isOnPlaylist: Boolean = false,
 
-    @ColumnInfo(name = "isAiringToday")
-    var isAiringToday: Boolean = false,
+    @ColumnInfo(name = "isTopRated")
+    var isTopRated: Boolean = false,
 
     @ColumnInfo(name = "isOnTrending")
     var isOnTrending: Boolean = false

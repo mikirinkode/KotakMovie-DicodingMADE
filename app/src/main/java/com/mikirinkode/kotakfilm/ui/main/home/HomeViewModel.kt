@@ -19,8 +19,8 @@ class HomeViewModel @Inject constructor(private val movieRepository: MovieReposi
         return movieRepository.getUpcomingMovies()
     }
 
-    fun getAiringTodayTvShows(): LiveData<Resource<List<TvShowEntity>>> {
-        return movieRepository.getAiringTodayTvShows()
+    fun getTopTvShowList(): LiveData<Resource<List<TvShowEntity>>> {
+        return movieRepository.getTopTvShowList()
     }
 
 }
