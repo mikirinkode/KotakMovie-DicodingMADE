@@ -26,7 +26,9 @@
     <string name="star_symbol">star symbol</string>
     <string name="runtime">%dh %dm</string>
     <string name="episodeRuntime">%dmin</string>
+    <string name="quote">\"%s\"</string>
     <string name="no_data">-No Data-</string>
+    <string name="no_genre_data">-No Genre Data-</string>
     <string name="message_undo">Undo delete previous item?</string>
     <string name="message_ok">OK</string>
 
@@ -55,5 +57,10 @@
     <string name="no_matching_data">Sorry we couldn\'t find any matching data</string>
     <string name="movie_are_you_looking">What movie are you looking for?</string>
     <string name="search_your_favorite_movie">You can search your favorite movies or find similar results.</string>
+    <string name="play_trailer">Play Trailer</string>
+    <string name="share">Share</string>
+    <string name="add_to_playlist">Add to Playlist</string>
+    <string name="on_playlist">On Playlist</string>
+    <string name="overview">Overview</string>
 
 </resources>

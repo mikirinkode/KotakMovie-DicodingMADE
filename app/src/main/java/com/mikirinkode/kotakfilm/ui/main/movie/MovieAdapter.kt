@@ -64,10 +64,17 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.moviesList.clear()
         this.moviesList.addAll(newMovieList)
+        notifyDataSetChanged()
         diffResults.dispatchUpdatesTo(this)
     }
 
     fun getSwipedData(swipedPosition: Int): MovieEntity {
         return moviesList[swipedPosition]
+    }
+
+    fun clearList(){
+        val size = moviesList.size
+        moviesList.clear()
+        notifyItemRangeRemoved(0, size)
     }
 }
