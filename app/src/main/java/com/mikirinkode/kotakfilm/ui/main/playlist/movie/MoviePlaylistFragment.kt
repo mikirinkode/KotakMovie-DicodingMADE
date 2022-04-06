@@ -66,14 +66,14 @@ class MoviePlaylistFragment : Fragment() {
             if (view != null) {
                 val swipedPosition = viewHolder.bindingAdapterPosition
                 val movieEntity = movieAdapter.getSwipedData(swipedPosition)
-                movieEntity?.let { playlistViewModel.setMoviePlaylist(movieEntity) }
+                movieEntity.let { playlistViewModel.setMoviePlaylist(movieEntity) }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
                 snackbar.apply {
                     setActionTextColor(ContextCompat.getColor(context, R.color.secondary_200))
                     setTextColor(ContextCompat.getColor(context, R.color.light_200))
                     setBackgroundTint(ContextCompat.getColor(context, R.color.dark_400))
                     setAction(R.string.message_ok) {
-                        movieEntity?.let { playlistViewModel.setMoviePlaylist(movieEntity) }
+                        movieEntity.let { playlistViewModel.setMoviePlaylist(movieEntity) }
                     }
                     show()
                 }

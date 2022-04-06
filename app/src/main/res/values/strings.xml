@@ -6,13 +6,9 @@
     <string name="movie">Movie</string>
     <string name="tv_show">TV Show</string>
     <string name="film_poster">film poster</string>
-    <string name="genre">Genre</string>
     <string name="film_duration">Film Duration</string>
-    <string name="duration">Duration</string>
     <string name="rating_sample">9.9</string>
     <string name="genre1_genre2_genre3">Genre 1 / Genre 2 / Genre 3</string>
-    <string name="user_score">Vote Average</string>
-    <string name="release_date">Release Date</string>
     <string name="back_button">Back Button</string>
 
     <string name="category">Category: %s</string>
@@ -37,7 +33,6 @@
     <string name="oldest_release">Oldest Release</string>
     <string name="best_vote">Best Vote</string>
     <string name="worst_vote">Worst Vote</string>
-    <string name="tv_shows_airing_today">Tv Shows Airing Today</string>
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="home">Home</string>
     <string name="trending_this_week">Trending this Week</string>

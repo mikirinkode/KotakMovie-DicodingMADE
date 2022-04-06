@@ -63,14 +63,14 @@ class TvShowPlaylistFragment : Fragment() {
             if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
                 val tvShowEntity = tvShowAdapter.getSwipedData(swipedPosition)
-                tvShowEntity?.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
+                tvShowEntity.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
                 snackbar.apply {
                     setActionTextColor(ContextCompat.getColor(context, R.color.secondary_200))
                     setTextColor(ContextCompat.getColor(context, R.color.light_200))
                     setBackgroundTint(ContextCompat.getColor(context, R.color.dark_400))
                     setAction(R.string.message_ok) {
-                        tvShowEntity?.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
+                        tvShowEntity.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
                     }
                     show()
                 }

@@ -140,9 +140,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            popupBinding.youTubePlayerView.enterFullScreen();
+            popupBinding.youTubePlayerView.enterFullScreen()
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            popupBinding.youTubePlayerView.exitFullScreen();
+            popupBinding.youTubePlayerView.exitFullScreen()
         }
     }
 

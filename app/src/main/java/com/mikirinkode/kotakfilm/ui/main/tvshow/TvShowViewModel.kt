@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.mikirinkode.kotakfilm.data.MovieRepository
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
 import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.vo.Resource
