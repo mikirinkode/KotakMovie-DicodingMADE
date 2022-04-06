@@ -129,6 +129,25 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
         return trailerResult
     }
 
+    fun getTvTrailer(tvShowId: Int): LiveData<ApiResponse<TrailerVideoResponse>>{
+        val trailerResult = MutableLiveData<ApiResponse<TrailerVideoResponse>>()
+        api.getTvShowTrailer(tvShowId, apiKey).enqueue(object : Callback<TrailerVideoResponse>{
+            override fun onResponse(
+                call: Call<TrailerVideoResponse>,
+                response: Response<TrailerVideoResponse>
+            ) {
+                if (response.isSuccessful){
+                    trailerResult.value = response.body()?.let { ApiResponse.success(it) }
+                }
+            }
+            override fun onFailure(call: Call<TrailerVideoResponse>, t: Throwable) {
+                Log.e("RemoteDataSource", "Failed to Get TV Show Trailer Video", t)
+                Log.e("RemoteDataSource", t.message.toString())
+            }
+        })
+        return trailerResult
+    }
+
     fun getPopularTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
         val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
         api.getPopularTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
@@ -148,9 +167,9 @@ class RemoteDataSource @Inject constructor(private val api: ApiService){
         return tvShowListResult
     }
 
-    fun getAiringTodayTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
+    fun getTopTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
         val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
-        api.getAiringTodayTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
+        api.getTopTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
             override fun onResponse(
                 call: Call<TvShowListResponse>,
                 response: Response<TvShowListResponse>

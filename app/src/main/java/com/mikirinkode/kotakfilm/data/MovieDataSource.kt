@@ -25,9 +25,11 @@ interface MovieDataSource {
     fun getMovieTrailer(movie: MovieEntity): LiveData<Resource<List<TrailerVideoEntity>>>
 
 
+    fun getTvTrailer(tvShow: TvShowEntity): LiveData<Resource<List<TrailerVideoEntity>>>
+
     fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>>
 
-    fun getAiringTodayTvShows(): LiveData<Resource<List<TvShowEntity>>>
+    fun getTopTvShowList(): LiveData<Resource<List<TvShowEntity>>>
 
     fun getTvShowDetail(tvShow: TvShowEntity): LiveData<Resource<TvShowEntity>>
 

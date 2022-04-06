@@ -58,6 +58,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
             observeMovieTrailer(movie)
         } else {
             getDetailTvShow(tvShow, type)
+            observeTvTrailer(tvShow)
         }
 
         with(binding) {
@@ -91,6 +92,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                     observeMovieTrailer(movie)
                 } else {
                     getDetailTvShow(tvShow, type)
+                    observeTvTrailer(tvShow)
                 }
             }
         }
@@ -233,6 +235,34 @@ class DetailCatalogueActivity : AppCompatActivity() {
             icLoading.visibility = View.VISIBLE
             if (movie != null) {
                 movieViewModel.getMovieTrailer(movie)
+                    .observe(this@DetailCatalogueActivity) { trailer ->
+                        if (trailer != null) {
+                            when (trailer.status) {
+                                Status.LOADING -> {
+                                    icLoading.visibility = View.VISIBLE
+                                }
+                                Status.SUCCESS -> {
+                                    icLoading.visibility = View.GONE
+                                    if (trailer.data != null && trailer.data.isNotEmpty()) {
+                                        trailerVideoKey = trailer.data[0].key
+                                    }
+                                }
+                                Status.ERROR -> {
+                                    icLoading.visibility = View.GONE
+                                    onFailMsg.visibility = View.VISIBLE
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun observeTvTrailer(tvShow: TvShowEntity?) {
+        binding.apply {
+            icLoading.visibility = View.VISIBLE
+            if (tvShow != null) {
+                tvShowViewModel.getTvTrailer(tvShow)
                     .observe(this@DetailCatalogueActivity) { trailer ->
                         if (trailer != null) {
                             when (trailer.status) {

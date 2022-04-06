@@ -203,7 +203,7 @@ class MovieRepository private constructor(
         return object :
             NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
-                return localDataSource.getMovieTrailer(movie.id)
+                return localDataSource.getVideoTrailer(movie.id)
             }
 
             override fun shouldFetch(data: List<TrailerVideoEntity>?): Boolean {
@@ -217,8 +217,8 @@ class MovieRepository private constructor(
             override fun saveCallResult(trailerVideoResponse: TrailerVideoResponse) {
                 if (trailerVideoResponse != null) {
                     trailerVideoResponse.results.forEach {
-                        if (it.official && it.site == "YouTube" && it.type == "Trailer") {
-                            localDataSource.insertMovieTrailer(
+                        if (it.site == "YouTube" && it.type == "Trailer") {
+                            localDataSource.insertVideoTrailer(
                                 TrailerVideoEntity(
                                     it.id,
                                     movie.id,
@@ -235,6 +235,44 @@ class MovieRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun getTvTrailer(tvShow: TvShowEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
+        return object :
+            NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
+                return localDataSource.getVideoTrailer(tvShow.id)
+            }
+
+            override fun shouldFetch(data: List<TrailerVideoEntity>?): Boolean {
+                return data == null || data.isEmpty()
+            }
+
+            override fun createCall(): LiveData<ApiResponse<TrailerVideoResponse>> {
+                return remoteDataSource.getTvTrailer(tvShow.id)
+            }
+
+            override fun saveCallResult(trailerVideoResponse: TrailerVideoResponse) {
+                if (trailerVideoResponse != null) {
+                    trailerVideoResponse.results.forEach {
+                        if (it.official && it.site == "YouTube" && it.type == "Trailer") {
+                            localDataSource.insertVideoTrailer(
+                                TrailerVideoEntity(
+                                    it.id,
+                                    tvShow.id,
+                                    it.key,
+                                    it.name,
+                                    it.site,
+                                    it.type,
+                                    it.official
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }.asLiveData()
+    }
+
 
     override fun getMoviePlaylist(): LiveData<List<MovieEntity>> {
         return localDataSource.getMoviePlaylist()
@@ -274,10 +312,10 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getAiringTodayTvShows(): LiveData<Resource<List<TvShowEntity>>> {
+    override fun getTopTvShowList(): LiveData<Resource<List<TvShowEntity>>> {
         return object : NetworkBoundResource<List<TvShowEntity>, TvShowListResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<List<TvShowEntity>> {
-                return localDataSource.getAiringTodayTvShows()
+                return localDataSource.getTopTvShowList()
             }
 
             override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
@@ -285,7 +323,7 @@ class MovieRepository private constructor(
             }
 
             override fun createCall(): LiveData<ApiResponse<TvShowListResponse>> {
-                return remoteDataSource.getAiringTodayTvShowList()
+                return remoteDataSource.getTopTvShowList()
             }
 
             override fun saveCallResult(tvShowResponses: TvShowListResponse) {
@@ -303,7 +341,7 @@ class MovieRepository private constructor(
                             it.voteAverage,
                             it.posterPath,
                             it.backdropPath,
-                            isAiringToday = true
+                            isTopRated = true
                         )
                         tvShowList.add(tvShow)
                     }
@@ -346,7 +384,7 @@ class MovieRepository private constructor(
                             voteAverage,
                             posterPath,
                             backdropPath,
-                            isAiringToday = tvShow.isAiringToday
+                            isTopRated = tvShow.isTopRated
                         )
                         localDataSource.updateTvShowData(tvShowDetail)
                     }

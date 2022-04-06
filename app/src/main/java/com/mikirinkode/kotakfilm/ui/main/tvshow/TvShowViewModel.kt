@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.mikirinkode.kotakfilm.data.MovieRepository
+import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,8 +29,10 @@ class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepo
     var tvShowDetail: LiveData<Resource<TvShowEntity>> = Transformations.switchMap(selectedTvShow) { tvShow ->
         movieRepository.getTvShowDetail(tvShow)
     }
-    
 
+    fun getTvTrailer(tvShow: TvShowEntity): LiveData<Resource<List<TrailerVideoEntity>>>{
+        return movieRepository.getTvTrailer(tvShow)
+    }
 
     fun setTvShowPlaylist(){
         val tvShowValue = tvShowDetail.value

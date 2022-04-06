@@ -16,12 +16,6 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntities WHERE id = :id")
     fun getMovieDetail(id: Int): LiveData<MovieEntity>
 
-    @Query("SELECT * FROM TrailerVideoEntities WHERE movieId = :movieId")
-    fun getMovieTrailer(movieId: Int): LiveData<List<TrailerVideoEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovieTrailer(trailer: TrailerVideoEntity)
-
     @Query("SELECT * FROM MovieEntities WHERE isUpcoming = 1 ORDER BY releaseDate DESC")
     fun getUpcomingMovies(): LiveData<List<MovieEntity>>
 
@@ -44,6 +38,13 @@ interface MovieDao {
     fun updateMovie(movie: MovieEntity)
 
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVideoTrailer(trailer: TrailerVideoEntity)
+
+    @Query("SELECT * FROM TrailerVideoEntities WHERE catalogueId = :catalogueId")
+    fun getVideoTrailer(catalogueId: Int): LiveData<List<TrailerVideoEntity>>
+
+
     @RawQuery(observedEntities = [MovieEntity::class])
     fun getPopularTvShows(query: SupportSQLiteQuery): LiveData<List<TvShowEntity>>
 
@@ -53,8 +54,8 @@ interface MovieDao {
     @Query("SELECT * FROM TvShowEntities WHERE isOnPlaylist = 1")
     fun getTvShowPlaylist(): LiveData<List<TvShowEntity>>
 
-    @Query("SELECT * FROM TvShowEntities WHERE isAiringToday = 1")
-    fun getAiringTodayTvShows(): LiveData<List<TvShowEntity>>
+    @Query("SELECT * FROM TvShowEntities WHERE isTopRated = 1 ORDER BY voteAverage DESC")
+    fun getTopTvShowList(): LiveData<List<TvShowEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShowList(tvShowList: List<TvShowEntity>)

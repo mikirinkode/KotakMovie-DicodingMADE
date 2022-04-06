@@ -29,13 +29,10 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity> = mMovieDao.getMovieDetail(movieId)
 
-    fun getMovieTrailer(movieId: Int): LiveData<List<TrailerVideoEntity>> = mMovieDao.getMovieTrailer(movieId)
 
     fun getMoviePlaylist(): LiveData<List<MovieEntity>> = mMovieDao.getMoviePlaylist()
 
     fun insertMovieList(movies: List<MovieEntity>) = mMovieDao.insertMovieList(movies)
-
-    fun insertMovieTrailer(trailer: TrailerVideoEntity) = mMovieDao.insertMovieTrailer(trailer)
 
     fun insertSearchResult(movie: MovieEntity) = mMovieDao.insertSearchResult(movie)
 
@@ -47,13 +44,18 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
     }
 
 
+    fun insertVideoTrailer(trailer: TrailerVideoEntity) = mMovieDao.insertVideoTrailer(trailer)
+
+    fun getVideoTrailer(catalogueId: Int): LiveData<List<TrailerVideoEntity>> = mMovieDao.getVideoTrailer(catalogueId)
+
+
 
     fun getTvShowList(sort: String): LiveData<List<TvShowEntity>> = mMovieDao.getPopularTvShows(
         SortUtils.getSortedQuery(sort, TV_TABLE))
 
     fun getTvShowDetail(tvShowId: Int): LiveData<TvShowEntity> = mMovieDao.getTvShowDetail(tvShowId)
 
-    fun getAiringTodayTvShows(): LiveData<List<TvShowEntity>> = mMovieDao.getAiringTodayTvShows()
+    fun getTopTvShowList(): LiveData<List<TvShowEntity>> = mMovieDao.getTopTvShowList()
 
     fun getTvShowPlaylist(): LiveData<List<TvShowEntity>> = mMovieDao.getTvShowPlaylist()
 

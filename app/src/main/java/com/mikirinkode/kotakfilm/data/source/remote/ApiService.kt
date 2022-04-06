@@ -29,15 +29,22 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): Call<MovieListResponse>
 
-    @GET("movie/{movieId}")
+    @GET("movie/{movie_id}")
     fun getDetailMovie(
-        @Path("movieId") movieId: Int,
+        @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Call<MovieDetailResponse>
 
-    @GET("movie/{movieId}/videos")
+    @GET("movie/{movie_id}/videos")
     fun getMovieTrailer(
-        @Path("movieId") movieId: Int,
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<TrailerVideoResponse>
+
+
+    @GET("tv/{tv_id}/videos")
+    fun getTvShowTrailer(
+        @Path("tv_id") tvShowId: Int,
         @Query("api_key") apiKey: String
     ): Call<TrailerVideoResponse>
 
@@ -46,14 +53,14 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): Call<TvShowListResponse>
 
-    @GET("tv/airing_today")
-    fun getAiringTodayTvShowList(
+    @GET("tv/top_rated")
+    fun getTopTvShowList(
         @Query("api_key") apiKey: String
     ): Call<TvShowListResponse>
 
-    @GET("tv/{tvShowId}")
+    @GET("tv/{tv_id}")
     fun getDetailTvShow(
-        @Path("tvShowId") tvShowId: Int,
+        @Path("tv_id") tvShowId: Int,
         @Query("api_key") apiKey: String
     ): Call<TvShowDetailResponse>
 
