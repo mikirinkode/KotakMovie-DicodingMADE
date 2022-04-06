@@ -82,7 +82,7 @@ class SearchFragment : Fragment() {
                         }
                         searchViewModel.setSearchQuery(query)
                         observeSearchResult()
-                    } else {
+                    } else if (query.equals("")){
                         movieAdapter.clearList()
                     }
                     return true
