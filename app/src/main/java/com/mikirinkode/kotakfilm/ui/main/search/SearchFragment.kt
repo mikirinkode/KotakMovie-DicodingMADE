@@ -39,9 +39,7 @@ class SearchFragment : Fragment() {
                     adapter = movieAdapter
                 }
             }
-
             observeSearchResult()
-
         }
     }
 
@@ -62,7 +60,7 @@ class SearchFragment : Fragment() {
 
         searchView.apply {
             onActionViewExpanded()
-            setIconifiedByDefault(true)
+            setIconifiedByDefault(false)
             isFocusable = true
             isIconified = false
             requestFocusFromTouch()
@@ -74,15 +72,18 @@ class SearchFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(query: String?): Boolean {
-                    if (query != null) {
+                    if (query != null && query.isNotEmpty()) {
                         binding.apply {
                             icLoading.visibility = View.VISIBLE
                             onEmptyStateMessage.visibility = View.GONE
                             onFailMsg.visibility = View.GONE
                             onInitialSearchStateMessage.visibility = View.GONE
+                            rvSearchResult.smoothScrollToPosition(0)
                         }
                         searchViewModel.setSearchQuery(query)
                         observeSearchResult()
+                    } else {
+                        movieAdapter.clearList()
                     }
                     return true
                 }
