@@ -61,7 +61,7 @@ class TvShowPlaylistFragment : Fragment() {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (view != null) {
-                val swipedPosition = viewHolder.adapterPosition
+                val swipedPosition = viewHolder.bindingAdapterPosition
                 val tvShowEntity = tvShowAdapter.getSwipedData(swipedPosition)
                 tvShowEntity.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)

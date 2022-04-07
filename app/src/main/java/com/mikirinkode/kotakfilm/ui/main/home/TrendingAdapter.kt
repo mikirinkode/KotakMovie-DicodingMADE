@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 import com.mikirinkode.kotakfilm.databinding.TrendingItemsBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakfilm.utils.Constants
-import com.mikirinkode.kotakfilm.utils.MovieDiffUtil
+import com.mikirinkode.kotakfilm.utils.CatalogueDiffUtil
 
 class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
-    private var moviesList = ArrayList<MovieEntity>()
+    private var moviesList = ArrayList<CatalogueEntity>()
 
     class MovieViewHolder(private val binding: TrendingItemsBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: CatalogueEntity) {
             binding.apply {
                 tvItemTitle.text = movie.title
                 rateBar.rating = movie.voteAverage.toFloat() / 2
@@ -32,8 +32,7 @@ class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
 
             itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_MOVIE, movie)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "MOVIE")
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, movie)
                 itemView.context.startActivity(moveToDetail)
             }
         }
@@ -52,8 +51,8 @@ class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
 
     override fun getItemCount(): Int = moviesList.size
 
-    fun setData(newMovieList: List<MovieEntity>){
-        val diffUtil = MovieDiffUtil(moviesList,newMovieList)
+    fun setData(newMovieList: List<CatalogueEntity>){
+        val diffUtil = CatalogueDiffUtil(moviesList,newMovieList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.moviesList.clear()
         this.moviesList.addAll(newMovieList)

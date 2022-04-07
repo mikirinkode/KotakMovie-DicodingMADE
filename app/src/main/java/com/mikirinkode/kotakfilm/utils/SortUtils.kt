@@ -8,11 +8,9 @@ object SortUtils {
     const val BEST = "Best"
     const val WORST = "Worst"
     const val RANDOM = "Random"
-    const val MOVIE_TABLE = "MovieEntities"
-    const val TV_TABLE = "TvShowEntities"
 
-    fun getSortedQuery(filter: String, tableName: String): SimpleSQLiteQuery {
-        val simpleQuery = StringBuilder().append("SELECT * FROM $tableName ")
+    fun getSortedQuery(filter: String, isTvShow: Boolean): SimpleSQLiteQuery {
+        val simpleQuery = StringBuilder().append("SELECT * FROM CatalogueEntities WHERE isTvShow = $isTvShow ")
         when (filter) {
             LATEST -> simpleQuery.append("ORDER BY releaseDate DESC")
             OLDEST -> simpleQuery.append("ORDER BY releaseDate ASC")

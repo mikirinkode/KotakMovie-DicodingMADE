@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.TvShowEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 import com.mikirinkode.kotakfilm.databinding.ItemsFilmBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
+import com.mikirinkode.kotakfilm.utils.CatalogueDiffUtil
 import com.mikirinkode.kotakfilm.utils.Constants
-import com.mikirinkode.kotakfilm.utils.TvShowDiffUtil
 
 class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
-    private var tvShowsList = ArrayList<TvShowEntity>()
+    private var tvShowsList = ArrayList<CatalogueEntity>()
 
     class TvShowViewHolder(private val binding: ItemsFilmBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: TvShowEntity) {
+        fun bind(tvShow: CatalogueEntity) {
             binding.apply {
                 tvItemTitle.text = tvShow.title
                 tvItemVote.text = tvShow.voteAverage.toString()
@@ -39,8 +39,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
             itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "TV SHOW")
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TV_SHOW, tvShow)
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, tvShow)
                 itemView.context.startActivity(moveToDetail)
             }
         }
@@ -57,16 +56,16 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         holder.bind(tvShow)
     }
 
-    override fun getItemCount(): Int = if (tvShowsList.size >= 30) 30 else tvShowsList.size
+    override fun getItemCount(): Int = tvShowsList.size
 
-    fun setData(newTvShowList: List<TvShowEntity>){
-        val diffUtil = TvShowDiffUtil(tvShowsList, newTvShowList)
+    fun setData(newTvShowList: List<CatalogueEntity>){
+        val diffUtil = CatalogueDiffUtil(tvShowsList, newTvShowList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.tvShowsList.clear()
         this.tvShowsList.addAll(newTvShowList)
         diffResults.dispatchUpdatesTo(this)
     }
 
-    fun getSwipedData(swipedPosition: Int): TvShowEntity = tvShowsList[swipedPosition]
+    fun getSwipedData(swipedPosition: Int): CatalogueEntity = tvShowsList[swipedPosition]
 
 }

@@ -1,7 +1,6 @@
 package com.mikirinkode.kotakfilm.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.mikirinkode.kotakfilm.data.model.GenresItem
 
 data class MovieDetailResponse(
     @SerializedName("id")

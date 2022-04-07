@@ -18,7 +18,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val trendingAdapter = TrendingAdapter()
     private val movieAdapter = UpcomingMovieAdapter()
-    private val tvShowAdapter = TodayTvShowAdapter()
+    private val tvShowAdapter = TopRatedTvAdapter()
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(

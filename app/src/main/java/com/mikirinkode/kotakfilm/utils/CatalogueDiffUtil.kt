@@ -1,11 +1,11 @@
 package com.mikirinkode.kotakfilm.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 
-class MovieDiffUtil(
-    private val oldList: List<MovieEntity>,
-    private val newList: List<MovieEntity>
+class CatalogueDiffUtil(
+    private val oldList: List<CatalogueEntity>,
+    private val newList: List<CatalogueEntity>
 ): DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

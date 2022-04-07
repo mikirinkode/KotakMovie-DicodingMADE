@@ -1,9 +1,8 @@
 package com.mikirinkode.kotakfilm.data
 
 import androidx.lifecycle.LiveData
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
-import com.mikirinkode.kotakfilm.data.model.TvShowEntity
 import com.mikirinkode.kotakfilm.data.source.local.LocalDataSource
 import com.mikirinkode.kotakfilm.data.source.remote.ApiResponse
 import com.mikirinkode.kotakfilm.data.source.remote.RemoteDataSource
@@ -17,13 +16,14 @@ class MovieRepository private constructor(
     private val appExecutors: AppExecutors
 ) : MovieDataSource {
 
-    override fun searchMovies(query: String): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+    override fun searchMovies(query: String): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.searchMovies(query)
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty() || data.size < 5
             }
 
@@ -34,7 +34,7 @@ class MovieRepository private constructor(
             override fun saveCallResult(movieResponses: MovieListResponse) {
                 if (movieResponses != null) {
                     movieResponses.results.forEach {
-                        val movie = MovieEntity(
+                        val movie = CatalogueEntity(
                             it.id, it.title, it.releaseDate, it.overview, null,
                             null, null, it.voteAverage, it.posterPath, it.backdropPath
                         )
@@ -46,13 +46,14 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getPopularMovies(sort: String): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+    override fun getPopularMovies(sort: String): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.getMovieList(sort)
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -61,10 +62,10 @@ class MovieRepository private constructor(
             }
 
             override fun saveCallResult(movieResponses: MovieListResponse) {
-                val movieList = ArrayList<MovieEntity>()
+                val movieList = ArrayList<CatalogueEntity>()
                 if (movieResponses != null) {
                     movieResponses.results.forEach {
-                        val movie = MovieEntity(
+                        val movie = CatalogueEntity(
                             it.id, it.title, it.releaseDate, it.overview, null,
                             null, null, it.voteAverage, it.posterPath, it.backdropPath
                         )
@@ -76,13 +77,14 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTrendingMovies(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+    override fun getTrendingMovies(): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.getTrendingMovies()
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -91,10 +93,10 @@ class MovieRepository private constructor(
             }
 
             override fun saveCallResult(movieResponses: MovieListResponse) {
-                val movieList = ArrayList<MovieEntity>()
+                val movieList = ArrayList<CatalogueEntity>()
                 if (movieResponses != null) {
                     movieResponses.results.forEach {
-                        val movie = MovieEntity(
+                        val movie = CatalogueEntity(
                             it.id,
                             it.title,
                             it.releaseDate,
@@ -105,7 +107,7 @@ class MovieRepository private constructor(
                             it.voteAverage,
                             it.posterPath,
                             it.backdropPath,
-                            isOnTrending = true
+                            isOnTrending = true,
                         )
                         movieList.add(movie)
                     }
@@ -116,13 +118,14 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource<List<MovieEntity>, MovieListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<MovieEntity>> {
+    override fun getUpcomingMovies(): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, MovieListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.getUpcomingMovies()
             }
 
-            override fun shouldFetch(data: List<MovieEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -131,10 +134,10 @@ class MovieRepository private constructor(
             }
 
             override fun saveCallResult(movieResponses: MovieListResponse) {
-                val movieList = ArrayList<MovieEntity>()
+                val movieList = ArrayList<CatalogueEntity>()
                 if (movieResponses != null) {
                     movieResponses.results.forEach {
-                        val movie = MovieEntity(
+                        val movie = CatalogueEntity(
                             it.id,
                             it.title,
                             it.releaseDate,
@@ -145,7 +148,7 @@ class MovieRepository private constructor(
                             it.voteAverage,
                             it.posterPath,
                             it.backdropPath,
-                            isUpcoming = true
+                            isUpcoming = true,
                         )
                         movieList.add(movie)
                     }
@@ -156,13 +159,13 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getMovieDetail(movie: MovieEntity): LiveData<Resource<MovieEntity>> {
-        return object : NetworkBoundResource<MovieEntity, MovieDetailResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<MovieEntity> {
+    override fun getMovieDetail(movie: CatalogueEntity): LiveData<Resource<CatalogueEntity>> {
+        return object : NetworkBoundResource<CatalogueEntity, MovieDetailResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<CatalogueEntity> {
                 return localDataSource.getMovieDetail(movie.id)
             }
 
-            override fun shouldFetch(data: MovieEntity?): Boolean {
+            override fun shouldFetch(data: CatalogueEntity?): Boolean {
                 return data?.genres == null && data?.runtime == null && data?.tagline == null
             }
 
@@ -177,7 +180,7 @@ class MovieRepository private constructor(
                         genres.forEach { genreList.add(it.name) }
                         val genre = genreList.joinToString(separator = ", ")
 
-                        val movieDetail = MovieEntity(
+                        val movieDetail = CatalogueEntity(
                             id,
                             title,
                             releaseDate,
@@ -199,7 +202,7 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getMovieTrailer(movie: MovieEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
+    override fun getMovieTrailer(movie: CatalogueEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
         return object :
             NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
@@ -236,7 +239,7 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTvTrailer(tvShow: TvShowEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
+    override fun getTvTrailer(tvShow: CatalogueEntity): LiveData<Resource<List<TrailerVideoEntity>>> {
         return object :
             NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
@@ -274,21 +277,22 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getMoviePlaylist(): LiveData<List<MovieEntity>> {
+    override fun getMoviePlaylist(): LiveData<List<CatalogueEntity>> {
         return localDataSource.getMoviePlaylist()
     }
 
-    override fun setMoviePlaylist(movie: MovieEntity, state: Boolean) {
+    override fun setMoviePlaylist(movie: CatalogueEntity, state: Boolean) {
         appExecutors.diskIO().execute { localDataSource.setMoviePlaylist(movie, state) }
     }
 
-    override fun getPopularTvShows(sort: String): LiveData<Resource<List<TvShowEntity>>> {
-        return object : NetworkBoundResource<List<TvShowEntity>, TvShowListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TvShowEntity>> {
+    override fun getPopularTvShows(sort: String): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, TvShowListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.getTvShowList(sort)
             }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -297,12 +301,13 @@ class MovieRepository private constructor(
             }
 
             override fun saveCallResult(tvShowResponses: TvShowListResponse) {
-                val tvShowList = ArrayList<TvShowEntity>()
+                val tvShowList = ArrayList<CatalogueEntity>()
                 if (tvShowResponses != null) {
                     tvShowResponses.results.forEach {
-                        val tvShow = TvShowEntity(
+                        val tvShow = CatalogueEntity(
                             it.id, it.name, it.firstAirDate, it.overview, null,
-                            null, null, it.voteAverage, it.posterPath, it.backdropPath
+                            null, null, it.voteAverage, it.posterPath, it.backdropPath,
+                            isTvShow = true
                         )
                         tvShowList.add(tvShow)
                     }
@@ -312,13 +317,14 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTopTvShowList(): LiveData<Resource<List<TvShowEntity>>> {
-        return object : NetworkBoundResource<List<TvShowEntity>, TvShowListResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TvShowEntity>> {
+    override fun getTopTvShowList(): LiveData<Resource<List<CatalogueEntity>>> {
+        return object :
+            NetworkBoundResource<List<CatalogueEntity>, TvShowListResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<CatalogueEntity>> {
                 return localDataSource.getTopTvShowList()
             }
 
-            override fun shouldFetch(data: List<TvShowEntity>?): Boolean {
+            override fun shouldFetch(data: List<CatalogueEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -327,10 +333,10 @@ class MovieRepository private constructor(
             }
 
             override fun saveCallResult(tvShowResponses: TvShowListResponse) {
-                val tvShowList = ArrayList<TvShowEntity>()
+                val tvShowList = ArrayList<CatalogueEntity>()
                 if (tvShowResponses != null) {
                     tvShowResponses.results.forEach {
-                        val tvShow = TvShowEntity(
+                        val tvShow = CatalogueEntity(
                             it.id,
                             it.name,
                             it.firstAirDate,
@@ -341,7 +347,8 @@ class MovieRepository private constructor(
                             it.voteAverage,
                             it.posterPath,
                             it.backdropPath,
-                            isTopRated = true
+                            isTopRated = true,
+                            isTvShow = true
                         )
                         tvShowList.add(tvShow)
                     }
@@ -352,13 +359,13 @@ class MovieRepository private constructor(
     }
 
 
-    override fun getTvShowDetail(tvShow: TvShowEntity): LiveData<Resource<TvShowEntity>> {
-        return object : NetworkBoundResource<TvShowEntity, TvShowDetailResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<TvShowEntity> {
+    override fun getTvShowDetail(tvShow: CatalogueEntity): LiveData<Resource<CatalogueEntity>> {
+        return object : NetworkBoundResource<CatalogueEntity, TvShowDetailResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<CatalogueEntity> {
                 return localDataSource.getTvShowDetail(tvShow.id)
             }
 
-            override fun shouldFetch(data: TvShowEntity?): Boolean {
+            override fun shouldFetch(data: CatalogueEntity?): Boolean {
                 return data?.genres == null && data?.runtime == null && data?.tagline == null
             }
 
@@ -373,7 +380,7 @@ class MovieRepository private constructor(
                         genres.forEach { genreList.add(it.name) }
                         val genre = genreList.joinToString(separator = ", ")
 
-                        val tvShowDetail = TvShowEntity(
+                        val tvShowDetail = CatalogueEntity(
                             id,
                             name,
                             firstAirDate,
@@ -384,7 +391,8 @@ class MovieRepository private constructor(
                             voteAverage,
                             posterPath,
                             backdropPath,
-                            isTopRated = tvShow.isTopRated
+                            isTopRated = tvShow.isTopRated,
+                            isTvShow = true
                         )
                         localDataSource.updateTvShowData(tvShowDetail)
                     }
@@ -393,11 +401,11 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTvShowPlaylist(): LiveData<List<TvShowEntity>> {
+    override fun getTvShowPlaylist(): LiveData<List<CatalogueEntity>> {
         return localDataSource.getTvShowPlaylist()
     }
 
-    override fun setTvShowPlaylist(tvShow: TvShowEntity, state: Boolean) {
+    override fun setTvShowPlaylist(tvShow: CatalogueEntity, state: Boolean) {
         appExecutors.diskIO().execute { localDataSource.setTvShowPlaylist(tvShow, state) }
     }
 

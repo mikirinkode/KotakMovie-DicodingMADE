@@ -14,8 +14,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
-import com.mikirinkode.kotakfilm.data.model.TvShowEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 import com.mikirinkode.kotakfilm.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakfilm.databinding.YoutubePlayerPopupBinding
 import com.mikirinkode.kotakfilm.ui.main.movie.MovieViewModel
@@ -49,50 +48,50 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val extra = intent.extras
-        val type = extra?.getString(EXTRA_TYPE).toString()
-        val movie = intent.getParcelableExtra<MovieEntity>(EXTRA_MOVIE)
-        val tvShow = intent.getParcelableExtra<TvShowEntity>(EXTRA_TV_SHOW)
-        if (type == "MOVIE") {
-            getDetailMovie(movie, type)
-            observeMovieTrailer(movie)
-        } else {
-            getDetailTvShow(tvShow, type)
-            observeTvTrailer(tvShow)
-        }
+        val catalogueEntity = intent.getParcelableExtra<CatalogueEntity>(EXTRA_FILM)
 
-        with(binding) {
-            if (isFavorite) {
-                btnRemoveFromPlaylist.visibility = View.VISIBLE
-                btnAddToPlaylist.visibility = View.GONE
+        if (catalogueEntity != null){
+            if (catalogueEntity.isTvShow) {
+                getDetailTvShow(catalogueEntity)
+                observeTvTrailer(catalogueEntity)
             } else {
-                btnRemoveFromPlaylist.visibility = View.GONE
-                btnAddToPlaylist.visibility = View.VISIBLE
+                getDetailMovie(catalogueEntity)
+                observeMovieTrailer(catalogueEntity)
             }
 
-            btnBack.setOnClickListener { onBackPressed() }
-
-            btnPlayTrailer.setOnClickListener { showYouTubePlayer() }
-
-            btnAddToPlaylist.setOnClickListener { btnPlaylistOnClick(type) }
-
-            btnRemoveFromPlaylist.setOnClickListener { btnPlaylistOnClick(type) }
-
-            btnShare.setOnClickListener {
-                val shareIntent = Intent()
-                shareIntent.action = Intent.ACTION_SEND
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on KotakFilm")
-                shareIntent.type = "text/plain"
-                startActivity(Intent.createChooser(shareIntent, "Share To:"))
-            }
-
-            btnTryAgain.setOnClickListener {
-                if (type == "MOVIE") {
-                    getDetailMovie(movie, type)
-                    observeMovieTrailer(movie)
+            with(binding) {
+                if (isFavorite) {
+                    btnRemoveFromPlaylist.visibility = View.VISIBLE
+                    btnAddToPlaylist.visibility = View.GONE
                 } else {
-                    getDetailTvShow(tvShow, type)
-                    observeTvTrailer(tvShow)
+                    btnRemoveFromPlaylist.visibility = View.GONE
+                    btnAddToPlaylist.visibility = View.VISIBLE
+                }
+
+                btnBack.setOnClickListener { onBackPressed() }
+
+                btnPlayTrailer.setOnClickListener { showYouTubePlayer() }
+
+                btnAddToPlaylist.setOnClickListener { btnPlaylistOnClick(catalogueEntity) }
+
+                btnRemoveFromPlaylist.setOnClickListener { btnPlaylistOnClick(catalogueEntity) }
+
+                btnShare.setOnClickListener {
+                    val shareIntent = Intent()
+                    shareIntent.action = Intent.ACTION_SEND
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on KotakFilm")
+                    shareIntent.type = "text/plain"
+                    startActivity(Intent.createChooser(shareIntent, "Share To:"))
+                }
+
+                btnTryAgain.setOnClickListener {
+                    if (catalogueEntity.isTvShow) {
+                        getDetailTvShow(catalogueEntity)
+                        observeTvTrailer(catalogueEntity)
+                    } else {
+                        getDetailMovie(catalogueEntity)
+                        observeMovieTrailer(catalogueEntity)
+                    }
                 }
             }
         }
@@ -147,7 +146,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
     }
 
 
-    private fun btnPlaylistOnClick(type: String) {
+    private fun btnPlaylistOnClick(catalogueEntity: CatalogueEntity) {
         binding.apply {
             isFavorite = !isFavorite
             if (isFavorite) {
@@ -168,31 +167,17 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 btnAddToPlaylist.visibility = View.VISIBLE
             }
 
-            if (type == "MOVIE") {
-                movieViewModel.setMoviePlaylist()
-            } else if (type == "TV SHOW") {
-                tvShowViewModel.setTvShowPlaylist()
-            }
+            if (catalogueEntity.isTvShow)
+                tvShowViewModel.setTvShowPlaylist() else movieViewModel.setMoviePlaylist()
         }
     }
 
-    private fun getDetailMovie(movie: MovieEntity?, type: String) {
+    private fun getDetailMovie(movie: CatalogueEntity?) {
         binding.apply {
             movie?.let { it ->
                 isFavorite = it.isOnPlaylist
                 movieTitle = it.title
-                setData(
-                    it.title,
-                    it.overview,
-                    it.genres,
-                    it.releaseDate,
-                    it.tagline,
-                    it.voteAverage,
-                    it.runtime,
-                    it.posterPath,
-                    it.backdropPath,
-                    type,
-                )
+                setData(it)
             }
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
@@ -206,18 +191,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             movie.data?.let {
-                                setData(
-                                    it.title,
-                                    it.overview,
-                                    it.genres,
-                                    it.releaseDate,
-                                    it.tagline,
-                                    it.voteAverage,
-                                    it.runtime,
-                                    it.posterPath,
-                                    it.backdropPath,
-                                    type
-                                )
+                                setData(it)
                             }
                         }
                         Status.ERROR -> {
@@ -230,7 +204,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeMovieTrailer(movie: MovieEntity?) {
+    private fun observeMovieTrailer(movie: CatalogueEntity?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
             if (movie != null) {
@@ -258,7 +232,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeTvTrailer(tvShow: TvShowEntity?) {
+    private fun observeTvTrailer(tvShow: CatalogueEntity?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
             if (tvShow != null) {
@@ -286,23 +260,12 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDetailTvShow(tvShow: TvShowEntity?, type: String) {
+    private fun getDetailTvShow(tvShow: CatalogueEntity?) {
         binding.apply {
             tvShow?.let { it ->
                 isFavorite = it.isOnPlaylist
                 movieTitle = it.title
-                setData(
-                    it.title,
-                    it.overview,
-                    it.genres,
-                    it.releaseDate,
-                    it.tagline,
-                    it.voteAverage,
-                    it.runtime,
-                    it.posterPath,
-                    it.backdropPath,
-                    type,
-                )
+                setData(it)
             }
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
@@ -316,18 +279,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             icLoading.visibility = View.GONE
                             tvShow.data?.let {
-                                setData(
-                                    it.title,
-                                    it.overview,
-                                    it.genres,
-                                    it.releaseDate,
-                                    it.tagline,
-                                    it.voteAverage,
-                                    it.runtime,
-                                    it.posterPath.toString(),
-                                    it.backdropPath.toString(),
-                                    type
-                                )
+                                setData(it)
                             }
                         }
                         Status.ERROR -> {
@@ -340,58 +292,52 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(
-        title: String,
-        overview: String?,
-        genres: String?,
-        releaseDate: String?,
-        tagline: String?,
-        voteAverage: Double,
-        runtime: Int?,
-        posterPath: String?,
-        backdropPath: String?,
-        category: String
-    ) {
+    private fun setData(catalogueEntity: CatalogueEntity) {
         binding.apply {
-            tvDetailTitle.text = title
-            tvDetailDescription.text =
-                if (overview == "" || overview == null) getString(R.string.no_data) else overview
-            if (releaseDate == null || releaseDate == "") {
-                tvDetailRelease.text = getString(R.string.no_data)
-            } else {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                val date = dateFormat.parse(releaseDate)
-                if (date != null) {
-                    val dateFormatted = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
-                    tvDetailRelease.text = dateFormatted
-                } else {
+            catalogueEntity.apply {
+                tvDetailTitle.text = title
+                tvDetailDescription.text =
+                    if (overview == "" || overview == null) getString(R.string.no_data) else overview
+                if (releaseDate == null || releaseDate == "") {
                     tvDetailRelease.text = getString(R.string.no_data)
-                }
-            }
-
-            tvDetailQuote.text = if (tagline != null) getString(
-                R.string.quote,
-                tagline
-            ) else getString(R.string.quote, "")
-            tvDetailRating.text = voteAverage.toString()
-            tvDetailCategory.text = getString(R.string.category, category)
-            if (runtime != null) {
-                if (category == "MOVIE") {
-                    val hours = runtime.div(60)
-                    val minutes = runtime.rem(60)
-                    tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
                 } else {
-                    tvDetailDuration.text = getString(R.string.episodeRuntime, runtime)
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                    val date = dateFormat.parse(releaseDate)
+                    if (date != null) {
+                        val dateFormatted = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
+                        tvDetailRelease.text = dateFormatted
+                    } else {
+                        tvDetailRelease.text = getString(R.string.no_data)
+                    }
                 }
-            } else {
-                tvDetailDuration.text = getString(R.string.no_data)
+
+                tvDetailQuote.text = if (tagline != null) getString(
+                    R.string.quote,
+                    tagline
+                ) else getString(R.string.quote, "")
+                tvDetailRating.text = voteAverage.toString()
+
+                val category = if (isTvShow) "TV SHOW" else "MOVIE"
+
+                tvDetailCategory.text = getString(R.string.category, category)
+                if (runtime != null) {
+                    if (category == "MOVIE") {
+                        val hours = runtime.div(60)
+                        val minutes = runtime.rem(60)
+                        tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
+                    } else {
+                        tvDetailDuration.text = getString(R.string.episodeRuntime, runtime)
+                    }
+                } else {
+                    tvDetailDuration.text = getString(R.string.no_data)
+                }
+
+                tvDetailGenre.text =
+                    if (genres == null || genres == "") getString(R.string.no_genre_data) else genres
+
+                ivDetailPoster.loadImage("${IMAGE_BASE_URL}${posterPath}")
+                ivDetailPosterBackdrop.loadImage("${IMAGE_BASE_URL}${backdropPath}")
             }
-
-            tvDetailGenre.text =
-                if (genres == null || genres == "") getString(R.string.no_genre_data) else genres
-
-            ivDetailPoster.loadImage("${IMAGE_BASE_URL}${posterPath}")
-            ivDetailPosterBackdrop.loadImage("${IMAGE_BASE_URL}${backdropPath}")
         }
     }
 
@@ -405,8 +351,6 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
 
     companion object {
-        const val EXTRA_TYPE = "extra_type"
-        const val EXTRA_MOVIE = "extra_movie"
-        const val EXTRA_TV_SHOW = "extra_tv_show"
+        const val EXTRA_FILM = "extra_film"
     }
 }

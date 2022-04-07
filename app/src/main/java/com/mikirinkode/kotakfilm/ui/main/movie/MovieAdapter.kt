@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.MovieEntity
+import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
 import com.mikirinkode.kotakfilm.databinding.ItemsFilmBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakfilm.utils.Constants.Companion.IMAGE_BASE_URL
-import com.mikirinkode.kotakfilm.utils.MovieDiffUtil
+import com.mikirinkode.kotakfilm.utils.CatalogueDiffUtil
 
 
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var moviesList = ArrayList<MovieEntity>()
+    private var moviesList = ArrayList<CatalogueEntity>()
 
     class MovieViewHolder(private val binding: ItemsFilmBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: CatalogueEntity) {
             binding.apply {
                 tvItemTitle.text = movie.title
                 tvItemVote.text = movie.voteAverage.toString()
@@ -39,8 +39,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
             itemView.setOnClickListener{
                 val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_TYPE, "MOVIE")
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_MOVIE, movie)
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, movie)
                 itemView.context.startActivity(moveToDetail)
             }
         }
@@ -57,10 +56,10 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bind(movie)
     }
 
-    override fun getItemCount(): Int = if (moviesList.size >= 30) 30 else moviesList.size
+    override fun getItemCount(): Int =  moviesList.size
 
-    fun setData(newMovieList: List<MovieEntity>){
-        val diffUtil = MovieDiffUtil(moviesList,newMovieList)
+    fun setData(newMovieList: List<CatalogueEntity>){
+        val diffUtil = CatalogueDiffUtil(moviesList,newMovieList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.moviesList.clear()
         this.moviesList.addAll(newMovieList)
@@ -68,7 +67,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         diffResults.dispatchUpdatesTo(this)
     }
 
-    fun getSwipedData(swipedPosition: Int): MovieEntity {
+    fun getSwipedData(swipedPosition: Int): CatalogueEntity {
         return moviesList[swipedPosition]
     }
 

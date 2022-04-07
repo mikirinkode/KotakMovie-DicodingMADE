@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "MovieEntities")
-data class MovieEntity(
+@Entity(tableName = "CatalogueEntities")
+data class CatalogueEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
@@ -30,7 +30,6 @@ data class MovieEntity(
     @ColumnInfo(name = "genres")
     val genres: String?,
 
-
     @ColumnInfo(name = "runtime")
     val runtime: Int?,
 
@@ -46,9 +45,17 @@ data class MovieEntity(
     @ColumnInfo(name = "isOnPlaylist")
     var isOnPlaylist: Boolean = false,
 
+    @ColumnInfo(name = "isOnTrending")
+    var isOnTrending: Boolean = false,
+
     @ColumnInfo(name = "isUpcoming")
     var isUpcoming: Boolean = false,
 
-    @ColumnInfo(name = "isOnTrending")
-    var isOnTrending: Boolean = false
-):Parcelable
+    @ColumnInfo(name = "isTopRated")
+    var isTopRated: Boolean = false,
+
+    @ColumnInfo(name = "isTvShow")
+    var isTvShow: Boolean = false
+
+): Parcelable
+
