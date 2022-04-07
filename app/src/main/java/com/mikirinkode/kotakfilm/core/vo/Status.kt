@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.vo
+package com.mikirinkode.kotakfilm.core.vo
 
 enum class Status {
     SUCCESS,

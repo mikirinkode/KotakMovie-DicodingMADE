@@ -1,11 +1,11 @@
-package com.mikirinkode.kotakfilm.data
+package com.mikirinkode.kotakfilm.core.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.mikirinkode.kotakfilm.data.source.remote.ApiResponse
-import com.mikirinkode.kotakfilm.data.source.remote.StatusResponse
-import com.mikirinkode.kotakfilm.utils.AppExecutors
-import com.mikirinkode.kotakfilm.vo.Resource
+import com.mikirinkode.kotakfilm.core.data.source.remote.ApiResponse
+import com.mikirinkode.kotakfilm.core.data.source.remote.StatusResponse
+import com.mikirinkode.kotakfilm.core.utils.AppExecutors
+import com.mikirinkode.kotakfilm.core.vo.Resource
 
 abstract class NetworkOnlyResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
     private val result = MediatorLiveData<Resource<ResultType>>()
@@ -39,10 +39,9 @@ abstract class NetworkOnlyResource<ResultType, RequestType>(private val mExecuto
         }
     }
 
+    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
 
     protected abstract fun loadFromNetwork(data: RequestType): LiveData<ResultType>
-
-    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
 
     fun asLiveData(): LiveData<Resource<ResultType>> = result
 }

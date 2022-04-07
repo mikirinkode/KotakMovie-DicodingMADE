@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.data.model
+package com.mikirinkode.kotakfilm.core.data.entity
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo

@@ -1,15 +1,15 @@
-package com.mikirinkode.kotakfilm.di
+package com.mikirinkode.kotakfilm.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.mikirinkode.kotakfilm.data.MovieRepository
-import com.mikirinkode.kotakfilm.data.source.local.LocalDataSource
-import com.mikirinkode.kotakfilm.data.source.local.MovieDao
-import com.mikirinkode.kotakfilm.data.source.local.MovieDatabase
-import com.mikirinkode.kotakfilm.data.source.remote.ApiService
-import com.mikirinkode.kotakfilm.data.source.remote.RemoteDataSource
-import com.mikirinkode.kotakfilm.utils.AppExecutors
-import com.mikirinkode.kotakfilm.utils.Constants
+import com.mikirinkode.kotakfilm.core.data.MovieRepository
+import com.mikirinkode.kotakfilm.core.data.source.local.LocalDataSource
+import com.mikirinkode.kotakfilm.core.data.source.local.MovieDao
+import com.mikirinkode.kotakfilm.core.data.source.local.MovieDatabase
+import com.mikirinkode.kotakfilm.core.data.source.remote.ApiService
+import com.mikirinkode.kotakfilm.core.data.source.remote.RemoteDataSource
+import com.mikirinkode.kotakfilm.core.utils.AppExecutors
+import com.mikirinkode.kotakfilm.core.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

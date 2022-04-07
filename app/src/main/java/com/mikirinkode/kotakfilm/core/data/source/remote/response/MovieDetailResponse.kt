@@ -1,19 +1,19 @@
-package com.mikirinkode.kotakfilm.data.source.remote.response
+package com.mikirinkode.kotakfilm.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowDetailResponse(
+data class MovieDetailResponse(
     @SerializedName("id")
     val id: Int,
 
-    @SerializedName("name")
-    val name: String,
+    @SerializedName("title")
+    val title: String,
 
-    @SerializedName("first_air_date")
-    val firstAirDate: String,
+    @SerializedName("release_date")
+    val releaseDate: String,
 
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
 
     @SerializedName("tagline")
     val tagline: String?,
@@ -21,8 +21,8 @@ data class TvShowDetailResponse(
     @field:SerializedName("genres")
     val genres: List<GenresItem>,
 
-    @field:SerializedName("episode_run_time")
-    val episodeRunTime: List<Int>,
+    @SerializedName("runtime")
+    val runtime: Int?,
 
     @SerializedName("vote_average")
     val voteAverage: Double,

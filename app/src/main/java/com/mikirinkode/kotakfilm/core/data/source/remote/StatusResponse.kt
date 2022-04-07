@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.data.source.remote
+package com.mikirinkode.kotakfilm.core.data.source.remote
 
 enum class StatusResponse {
     SUCCESS,

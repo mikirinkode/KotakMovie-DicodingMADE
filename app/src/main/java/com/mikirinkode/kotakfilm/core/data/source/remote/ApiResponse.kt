@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.data.source.remote
+package com.mikirinkode.kotakfilm.core.data.source.remote
 
 
 class ApiResponse<T>(val status: StatusResponse, val body: T, val message: String?) {

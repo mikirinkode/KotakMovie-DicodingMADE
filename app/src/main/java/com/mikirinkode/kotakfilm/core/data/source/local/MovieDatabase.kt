@@ -1,9 +1,9 @@
-package com.mikirinkode.kotakfilm.data.source.local
+package com.mikirinkode.kotakfilm.core.data.source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
-import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
+import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 
 
 @Database(

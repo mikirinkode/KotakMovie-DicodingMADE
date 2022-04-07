@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.utils
+package com.mikirinkode.kotakfilm.core.utils
 
 import android.os.Handler
 import android.os.Looper

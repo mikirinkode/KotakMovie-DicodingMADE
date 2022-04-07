@@ -1,11 +1,11 @@
-package com.mikirinkode.kotakfilm.data
+package com.mikirinkode.kotakfilm.core.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.mikirinkode.kotakfilm.data.source.remote.ApiResponse
-import com.mikirinkode.kotakfilm.data.source.remote.StatusResponse
-import com.mikirinkode.kotakfilm.utils.AppExecutors
-import com.mikirinkode.kotakfilm.vo.Resource
+import com.mikirinkode.kotakfilm.core.data.source.remote.ApiResponse
+import com.mikirinkode.kotakfilm.core.data.source.remote.StatusResponse
+import com.mikirinkode.kotakfilm.core.utils.AppExecutors
+import com.mikirinkode.kotakfilm.core.vo.Resource
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 

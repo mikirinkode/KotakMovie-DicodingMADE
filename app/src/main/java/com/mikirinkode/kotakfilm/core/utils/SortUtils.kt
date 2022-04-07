@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.utils
+package com.mikirinkode.kotakfilm.core.utils
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 
@@ -9,7 +9,7 @@ object SortUtils {
     const val WORST = "Worst"
     const val RANDOM = "Random"
 
-    fun getSortedQuery(filter: String, isTvShow: Boolean): SimpleSQLiteQuery {
+    fun getSortedQuery(filter: String, isTvShow: Int): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM CatalogueEntities WHERE isTvShow = $isTvShow ")
         when (filter) {
             LATEST -> simpleQuery.append("ORDER BY releaseDate DESC")
