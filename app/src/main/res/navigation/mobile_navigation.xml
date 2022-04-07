@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_search"
         android:name="com.mikirinkode.kotakfilm.ui.main.search.SearchFragment"
-        android:label=""
+        android:label="Search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
