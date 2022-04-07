@@ -39,14 +39,14 @@ class HomeFragment : Fragment() {
                     adapter = movieAdapter
                 }
 
-                findMovieList()
+                findUpcomingMovies()
 
                 rvTopTv.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = tvShowAdapter
                 }
 
-                findTvShowList()
+                findTopTvShows()
 
                 rvTrending.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -57,8 +57,8 @@ class HomeFragment : Fragment() {
 
 
                 btnTryAgain.setOnClickListener {
-                    findMovieList()
-                    findTvShowList()
+                    findUpcomingMovies()
+                    findTopTvShows()
                     findTrendingList()
                 }
             }
@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun findMovieList() {
+    private fun findUpcomingMovies() {
         binding.apply {
             loadingUpcomingMovie.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun findTvShowList() {
+    private fun findTopTvShows() {
         binding.apply {
             loadingTopRatedTvShow.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE

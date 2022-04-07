@@ -53,8 +53,10 @@ class TopRatedTvAdapter: RecyclerView.Adapter<TopRatedTvAdapter.TvShowViewHolder
     fun setData(newTvShowList: List<CatalogueEntity>){
         val diffUtil = CatalogueDiffUtil(tvShowsList, newTvShowList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
+
+        val sortedList = newTvShowList.sortedByDescending { it.voteAverage }
         this.tvShowsList.clear()
-        this.tvShowsList.addAll(newTvShowList)
+        this.tvShowsList.addAll(sortedList)
         diffResults.dispatchUpdatesTo(this)
     }
 

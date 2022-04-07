@@ -52,8 +52,10 @@ class UpcomingMovieAdapter: RecyclerView.Adapter<UpcomingMovieAdapter.MovieViewH
     fun setData(newMovieList: List<CatalogueEntity>){
         val diffUtil = CatalogueDiffUtil(moviesList,newMovieList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
+
+        val sortedList = newMovieList.sortedByDescending { it.releaseDate }
         this.moviesList.clear()
-        this.moviesList.addAll(newMovieList)
+        this.moviesList.addAll(sortedList)
         diffResults.dispatchUpdatesTo(this)
     }
 }
