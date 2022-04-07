@@ -1,9 +1,9 @@
-package com.mikirinkode.kotakfilm.data.source.local
+package com.mikirinkode.kotakfilm.core.data.source.local
 
 import androidx.lifecycle.LiveData
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
-import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
-import com.mikirinkode.kotakfilm.utils.SortUtils
+import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
+import com.mikirinkode.kotakfilm.core.utils.SortUtils
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
@@ -16,21 +16,13 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
     }
 
     fun getMovieList(sort: String): LiveData<List<CatalogueEntity>> = mMovieDao.getPopularMovies(
-        SortUtils.getSortedQuery(sort, false))
-
-    fun searchMovies(query: String): LiveData<List<CatalogueEntity>> = mMovieDao.searchMovies(query)
-
-    fun getUpcomingMovies(): LiveData<List<CatalogueEntity>> = mMovieDao.getUpcomingMovies()
-
-    fun getTrendingMovies(): LiveData<List<CatalogueEntity>> = mMovieDao.getTrendingMovies()
+        SortUtils.getSortedQuery(sort, 0))
 
     fun getMovieDetail(movieId: Int): LiveData<CatalogueEntity> = mMovieDao.getMovieDetail(movieId)
 
     fun getMoviePlaylist(): LiveData<List<CatalogueEntity>> = mMovieDao.getMoviePlaylist()
 
     fun insertMovieList(movies: List<CatalogueEntity>) = mMovieDao.insertMovieList(movies)
-
-    fun insertSearchResult(movie: CatalogueEntity) = mMovieDao.insertSearchResult(movie)
 
     fun updateMovieData(movie: CatalogueEntity) = mMovieDao.updateMovie(movie)
 
@@ -47,11 +39,9 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
 
     fun getTvShowList(sort: String): LiveData<List<CatalogueEntity>> = mMovieDao.getPopularTvShows(
-        SortUtils.getSortedQuery(sort, true))
+        SortUtils.getSortedQuery(sort, 1))
 
     fun getTvShowDetail(tvShowId: Int): LiveData<CatalogueEntity> = mMovieDao.getTvShowDetail(tvShowId)
-
-    fun getTopTvShowList(): LiveData<List<CatalogueEntity>> = mMovieDao.getTopTvShowList()
 
     fun getTvShowPlaylist(): LiveData<List<CatalogueEntity>> = mMovieDao.getTvShowPlaylist()
 

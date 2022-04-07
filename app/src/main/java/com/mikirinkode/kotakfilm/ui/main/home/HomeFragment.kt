@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.databinding.FragmentHomeBinding
-import com.mikirinkode.kotakfilm.vo.Status
+import com.mikirinkode.kotakfilm.core.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

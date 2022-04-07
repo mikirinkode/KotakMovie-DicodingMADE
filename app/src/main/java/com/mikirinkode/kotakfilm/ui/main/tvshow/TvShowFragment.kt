@@ -7,11 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.utils.SortUtils
+import com.mikirinkode.kotakfilm.core.vo.Resource
+import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.FragmentTvShowBinding
-import com.mikirinkode.kotakfilm.utils.SortUtils
-import com.mikirinkode.kotakfilm.vo.Resource
-import com.mikirinkode.kotakfilm.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,7 +62,7 @@ class TvShowFragment : Fragment() {
         }
     }
 
-    private val tvShowObserver = Observer<Resource<List<CatalogueEntity>>> { tvShowList ->
+    private val tvShowObserver = Observer<Resource<List<Catalogue>>> { tvShowList ->
         binding.apply {
             if(tvShowList != null) {
                 when (tvShowList.status){

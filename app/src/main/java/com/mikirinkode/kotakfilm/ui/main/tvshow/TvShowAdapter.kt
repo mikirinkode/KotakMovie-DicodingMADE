@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.utils.CatalogueDiffUtil
+import com.mikirinkode.kotakfilm.core.utils.Constants
 import com.mikirinkode.kotakfilm.databinding.ItemsFilmBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
-import com.mikirinkode.kotakfilm.utils.CatalogueDiffUtil
-import com.mikirinkode.kotakfilm.utils.Constants
 
 class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
-    private var tvShowsList = ArrayList<CatalogueEntity>()
+    private var tvShowsList = ArrayList<Catalogue>()
 
     class TvShowViewHolder(private val binding: ItemsFilmBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: CatalogueEntity) {
+        fun bind(tvShow: Catalogue) {
             binding.apply {
                 tvItemTitle.text = tvShow.title
                 tvItemVote.text = tvShow.voteAverage.toString()
@@ -58,7 +58,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
 
     override fun getItemCount(): Int = tvShowsList.size
 
-    fun setData(newTvShowList: List<CatalogueEntity>){
+    fun setData(newTvShowList: List<Catalogue>){
         val diffUtil = CatalogueDiffUtil(tvShowsList, newTvShowList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.tvShowsList.clear()
@@ -66,6 +66,6 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         diffResults.dispatchUpdatesTo(this)
     }
 
-    fun getSwipedData(swipedPosition: Int): CatalogueEntity = tvShowsList[swipedPosition]
+    fun getSwipedData(swipedPosition: Int): Catalogue = tvShowsList[swipedPosition]
 
 }

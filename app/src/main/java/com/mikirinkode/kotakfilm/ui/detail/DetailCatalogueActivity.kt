@@ -14,13 +14,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.utils.Constants.Companion.IMAGE_BASE_URL
+import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakfilm.databinding.YoutubePlayerPopupBinding
 import com.mikirinkode.kotakfilm.ui.main.movie.MovieViewModel
 import com.mikirinkode.kotakfilm.ui.main.tvshow.TvShowViewModel
-import com.mikirinkode.kotakfilm.utils.Constants.Companion.IMAGE_BASE_URL
-import com.mikirinkode.kotakfilm.vo.Status
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
@@ -48,15 +48,15 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val catalogueEntity = intent.getParcelableExtra<CatalogueEntity>(EXTRA_FILM)
+        val catalogue = intent.getParcelableExtra<Catalogue>(EXTRA_FILM)
 
-        if (catalogueEntity != null){
-            if (catalogueEntity.isTvShow) {
-                getDetailTvShow(catalogueEntity)
-                observeTvTrailer(catalogueEntity)
+        if (catalogue != null){
+            if (catalogue.isTvShow) {
+                getDetailTvShow(catalogue)
+                observeTvTrailer(catalogue)
             } else {
-                getDetailMovie(catalogueEntity)
-                observeMovieTrailer(catalogueEntity)
+                getDetailMovie(catalogue)
+                observeMovieTrailer(catalogue)
             }
 
             with(binding) {
@@ -72,9 +72,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
                 btnPlayTrailer.setOnClickListener { showYouTubePlayer() }
 
-                btnAddToPlaylist.setOnClickListener { btnPlaylistOnClick(catalogueEntity) }
+                btnAddToPlaylist.setOnClickListener { btnPlaylistOnClick(catalogue) }
 
-                btnRemoveFromPlaylist.setOnClickListener { btnPlaylistOnClick(catalogueEntity) }
+                btnRemoveFromPlaylist.setOnClickListener { btnPlaylistOnClick(catalogue) }
 
                 btnShare.setOnClickListener {
                     val shareIntent = Intent()
@@ -85,12 +85,12 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 }
 
                 btnTryAgain.setOnClickListener {
-                    if (catalogueEntity.isTvShow) {
-                        getDetailTvShow(catalogueEntity)
-                        observeTvTrailer(catalogueEntity)
+                    if (catalogue.isTvShow) {
+                        getDetailTvShow(catalogue)
+                        observeTvTrailer(catalogue)
                     } else {
-                        getDetailMovie(catalogueEntity)
-                        observeMovieTrailer(catalogueEntity)
+                        getDetailMovie(catalogue)
+                        observeMovieTrailer(catalogue)
                     }
                 }
             }
@@ -146,7 +146,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
     }
 
 
-    private fun btnPlaylistOnClick(catalogueEntity: CatalogueEntity) {
+    private fun btnPlaylistOnClick(catalogue: Catalogue) {
         binding.apply {
             isFavorite = !isFavorite
             if (isFavorite) {
@@ -167,12 +167,12 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 btnAddToPlaylist.visibility = View.VISIBLE
             }
 
-            if (catalogueEntity.isTvShow)
+            if (catalogue.isTvShow)
                 tvShowViewModel.setTvShowPlaylist() else movieViewModel.setMoviePlaylist()
         }
     }
 
-    private fun getDetailMovie(movie: CatalogueEntity?) {
+    private fun getDetailMovie(movie: Catalogue?) {
         binding.apply {
             movie?.let { it ->
                 isFavorite = it.isOnPlaylist
@@ -204,7 +204,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeMovieTrailer(movie: CatalogueEntity?) {
+    private fun observeMovieTrailer(movie: Catalogue?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
             if (movie != null) {
@@ -232,7 +232,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeTvTrailer(tvShow: CatalogueEntity?) {
+    private fun observeTvTrailer(tvShow: Catalogue?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
             if (tvShow != null) {
@@ -260,7 +260,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDetailTvShow(tvShow: CatalogueEntity?) {
+    private fun getDetailTvShow(tvShow: Catalogue?) {
         binding.apply {
             tvShow?.let { it ->
                 isFavorite = it.isOnPlaylist
@@ -292,9 +292,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(catalogueEntity: CatalogueEntity) {
+    private fun setData(catalogue: Catalogue) {
         binding.apply {
-            catalogueEntity.apply {
+            catalogue.apply {
                 tvDetailTitle.text = title
                 tvDetailDescription.text =
                     if (overview == "" || overview == null) getString(R.string.no_data) else overview

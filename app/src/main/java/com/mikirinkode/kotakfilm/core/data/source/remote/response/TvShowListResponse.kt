@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.data.source.remote.response
+package com.mikirinkode.kotakfilm.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 

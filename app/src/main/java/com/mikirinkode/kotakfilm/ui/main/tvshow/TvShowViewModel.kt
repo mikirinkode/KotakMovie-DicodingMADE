@@ -4,32 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.mikirinkode.kotakfilm.data.MovieRepository
-import com.mikirinkode.kotakfilm.data.model.TrailerVideoEntity
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
-import com.mikirinkode.kotakfilm.vo.Resource
+import com.mikirinkode.kotakfilm.core.data.MovieRepository
+import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
 
-    private val selectedTvShow = MutableLiveData<CatalogueEntity>()
+    private val selectedTvShow = MutableLiveData<Catalogue>()
 
-    fun setSelectedTvShow(tvShow: CatalogueEntity){
+    fun setSelectedTvShow(tvShow: Catalogue){
         this.selectedTvShow.value = tvShow
     }
     
-    fun getPopularTvShowsList(sort: String): LiveData<Resource<List<CatalogueEntity>>>{
+    fun getPopularTvShowsList(sort: String): LiveData<Resource<List<Catalogue>>>{
         return movieRepository.getPopularTvShows(sort)
 
     }
 
-    var tvShowDetail: LiveData<Resource<CatalogueEntity>> = Transformations.switchMap(selectedTvShow) { tvShow ->
+    var tvShowDetail: LiveData<Resource<Catalogue>> = Transformations.switchMap(selectedTvShow) { tvShow ->
         movieRepository.getTvShowDetail(tvShow)
     }
 
-    fun getTvTrailer(tvShow: CatalogueEntity): LiveData<Resource<List<TrailerVideoEntity>>>{
+    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideoEntity>>>{
         return movieRepository.getTvTrailer(tvShow)
     }
 

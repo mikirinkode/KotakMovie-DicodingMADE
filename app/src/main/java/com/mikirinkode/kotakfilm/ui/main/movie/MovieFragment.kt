@@ -7,11 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.utils.SortUtils
+import com.mikirinkode.kotakfilm.core.vo.Resource
+import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.FragmentMovieBinding
-import com.mikirinkode.kotakfilm.utils.SortUtils
-import com.mikirinkode.kotakfilm.vo.Resource
-import com.mikirinkode.kotakfilm.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,7 +60,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private val movieObserver = Observer<Resource<List<CatalogueEntity>>> { movieList ->
+    private val movieObserver = Observer<Resource<List<Catalogue>>> { movieList ->
         binding.apply {
             if(movieList != null){
                 when(movieList.status){

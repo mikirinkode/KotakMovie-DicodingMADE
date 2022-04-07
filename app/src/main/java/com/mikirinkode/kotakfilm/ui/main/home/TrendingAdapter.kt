@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.utils.CatalogueDiffUtil
+import com.mikirinkode.kotakfilm.core.utils.Constants
 import com.mikirinkode.kotakfilm.databinding.TrendingItemsBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
-import com.mikirinkode.kotakfilm.utils.Constants
-import com.mikirinkode.kotakfilm.utils.CatalogueDiffUtil
 
 class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
-    private var moviesList = ArrayList<CatalogueEntity>()
+    private var moviesList = ArrayList<Catalogue>()
 
     class MovieViewHolder(private val binding: TrendingItemsBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: CatalogueEntity) {
+        fun bind(movie: Catalogue) {
             binding.apply {
                 tvItemTitle.text = movie.title
                 rateBar.rating = movie.voteAverage.toFloat() / 2
@@ -51,7 +51,7 @@ class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
 
     override fun getItemCount(): Int = moviesList.size
 
-    fun setData(newMovieList: List<CatalogueEntity>){
+    fun setData(newMovieList: List<Catalogue>){
         val diffUtil = CatalogueDiffUtil(moviesList,newMovieList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.moviesList.clear()

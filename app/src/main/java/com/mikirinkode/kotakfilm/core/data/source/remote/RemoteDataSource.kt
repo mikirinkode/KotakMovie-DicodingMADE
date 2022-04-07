@@ -1,10 +1,10 @@
-package com.mikirinkode.kotakfilm.data.source.remote
+package com.mikirinkode.kotakfilm.core.data.source.remote
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mikirinkode.kotakfilm.data.source.remote.response.*
-import com.mikirinkode.kotakfilm.utils.Constants
+import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
+import com.mikirinkode.kotakfilm.core.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

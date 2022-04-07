@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.databinding.FragmentSearchBinding
 import com.mikirinkode.kotakfilm.ui.main.movie.MovieAdapter
-import com.mikirinkode.kotakfilm.vo.Status
+import com.mikirinkode.kotakfilm.core.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

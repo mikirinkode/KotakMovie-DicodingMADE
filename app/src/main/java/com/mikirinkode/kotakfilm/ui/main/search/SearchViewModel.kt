@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.mikirinkode.kotakfilm.data.MovieRepository
-import com.mikirinkode.kotakfilm.data.model.CatalogueEntity
-import com.mikirinkode.kotakfilm.vo.Resource
+import com.mikirinkode.kotakfilm.core.data.MovieRepository
+import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class SearchViewModel @Inject constructor(private val movieRepository: MovieRepo
         this.searchQuery.value = query
     }
 
-    var searchResult: LiveData<Resource<List<CatalogueEntity>>> =
+    var searchResult: LiveData<Resource<List<Catalogue>>> =
         Transformations.switchMap(searchQuery) { query ->
             movieRepository.searchMovies(query)
         }

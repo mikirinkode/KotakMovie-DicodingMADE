@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.data.model
+package com.mikirinkode.kotakfilm.core.data.entity
 
 import android.os.Parcelable
 import androidx.annotation.NonNull
@@ -44,15 +44,6 @@ data class CatalogueEntity(
 
     @ColumnInfo(name = "isOnPlaylist")
     var isOnPlaylist: Boolean = false,
-
-    @ColumnInfo(name = "isOnTrending")
-    var isOnTrending: Boolean = false,
-
-    @ColumnInfo(name = "isUpcoming")
-    var isUpcoming: Boolean = false,
-
-    @ColumnInfo(name = "isTopRated")
-    var isTopRated: Boolean = false,
 
     @ColumnInfo(name = "isTvShow")
     var isTvShow: Boolean = false
