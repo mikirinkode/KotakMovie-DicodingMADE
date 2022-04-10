@@ -32,11 +32,6 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
     }
 
 
-    fun insertVideoTrailer(trailer: TrailerVideoEntity) = mMovieDao.insertVideoTrailer(trailer)
-
-    fun getVideoTrailer(catalogueId: Int): LiveData<List<TrailerVideoEntity>> = mMovieDao.getVideoTrailer(catalogueId)
-
-
 
     fun getTvShowList(sort: String): LiveData<List<CatalogueEntity>> = mMovieDao.getPopularTvShows(
         SortUtils.getSortedQuery(sort, 1))

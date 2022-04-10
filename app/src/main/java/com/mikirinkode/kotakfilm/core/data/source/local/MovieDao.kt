@@ -25,12 +25,6 @@ interface MovieDao {
     fun updateMovie(movie: CatalogueEntity)
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertVideoTrailer(trailer: TrailerVideoEntity)
-
-    @Query("SELECT * FROM TrailerVideoEntities WHERE catalogueId = :catalogueId")
-    fun getVideoTrailer(catalogueId: Int): LiveData<List<TrailerVideoEntity>>
-
 
     @RawQuery(observedEntities = [CatalogueEntity::class])
     fun getPopularTvShows(query: SupportSQLiteQuery): LiveData<List<CatalogueEntity>>
