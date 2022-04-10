@@ -217,8 +217,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 Status.SUCCESS -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data != null && trailer.data.isNotEmpty()) {
-                                        trailerVideoKey = trailer.data[0].key
+                                    if (trailer.data != null) {
+                                        trailerVideoKey = trailer.data.key
                                     }
                                 }
                                 Status.ERROR -> {
@@ -245,8 +245,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 Status.SUCCESS -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data != null && trailer.data.isNotEmpty()) {
-                                        trailerVideoKey = trailer.data[0].key
+                                    if (trailer.data != null) {
+                                        trailerVideoKey = trailer.data.key
                                     }
                                 }
                                 Status.ERROR -> {
