@@ -8,6 +8,8 @@ import com.mikirinkode.kotakfilm.core.data.source.local.MovieDao
 import com.mikirinkode.kotakfilm.core.data.source.local.MovieDatabase
 import com.mikirinkode.kotakfilm.core.data.source.remote.ApiService
 import com.mikirinkode.kotakfilm.core.data.source.remote.RemoteDataSource
+import com.mikirinkode.kotakfilm.core.domain.usecase.MovieInteractor
+import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase
 import com.mikirinkode.kotakfilm.core.utils.AppExecutors
 import com.mikirinkode.kotakfilm.core.utils.Constants
 import dagger.Module
@@ -54,8 +56,13 @@ object AppModule {
     @Provides
     fun provideRepository(localDataSource: LocalDataSource, remoteDataSource: RemoteDataSource): MovieRepository {
         val appExecutors = AppExecutors()
-
         return MovieRepository.getInstance(remoteDataSource, localDataSource, appExecutors)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieUseCase(movieRepository: MovieRepository): MovieUseCase{
+        return MovieInteractor(movieRepository)
     }
 
     @Singleton

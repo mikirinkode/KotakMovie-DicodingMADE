@@ -4,6 +4,7 @@ import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
 import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
 
 object DataMapper {
     /*
@@ -52,13 +53,11 @@ object DataMapper {
     /*
         Trailer To Entity
      */
-    fun mapTrailerResponseToEntity(
+    fun mapTrailerResponseToDomain(
         data: TrailerItem,
-        catalogue: Catalogue
-    ): TrailerVideoEntity {
-        return TrailerVideoEntity(
+    ): TrailerVideo {
+        return TrailerVideo(
             data.id,
-            catalogue.id,
             data.key,
             data.name,
             data.site,

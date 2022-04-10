@@ -1,12 +1,11 @@
-package com.mikirinkode.kotakfilm.core.data
+package com.mikirinkode.kotakfilm.core.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakfilm.core.vo.Resource
 
-interface MovieDataSource {
-
+interface IMovieRepository {
     fun searchMovies(query: String): LiveData<Resource<List<Catalogue>>>
 
     fun getPopularMovies(sort: String): LiveData<Resource<List<Catalogue>>>

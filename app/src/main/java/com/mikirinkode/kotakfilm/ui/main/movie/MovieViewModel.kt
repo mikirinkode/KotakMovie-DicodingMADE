@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.mikirinkode.kotakfilm.core.data.MovieRepository
 import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
+import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase
 import com.mikirinkode.kotakfilm.core.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
+class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase): ViewModel() {
 
     private val selectedMovie = MutableLiveData<Catalogue>()
 
@@ -22,15 +24,15 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
 
 
     var movieDetail: LiveData<Resource<Catalogue>> = Transformations.switchMap(selectedMovie) { movie ->
-        movieRepository.getMovieDetail(movie)
+        movieUseCase.getMovieDetail(movie)
     }
 
     fun getPopularMoviesList(sort: String): LiveData<Resource<List<Catalogue>>>{
-        return movieRepository.getPopularMovies(sort)
+        return movieUseCase.getPopularMovies(sort)
     }
 
-    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideoEntity>>>{
-        return movieRepository.getMovieTrailer(movie)
+    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<TrailerVideo>>{
+        return movieUseCase.getMovieTrailer(movie)
     }
 
     fun setMoviePlaylist(){
@@ -38,7 +40,7 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         if (movieValue != null){
             if (movieValue.data != null){
                 val newState = !movieValue.data.isOnPlaylist
-                movieRepository.setMoviePlaylist(movieValue.data, newState)
+                movieUseCase.setMoviePlaylist(movieValue.data, newState)
             }
         }
     }

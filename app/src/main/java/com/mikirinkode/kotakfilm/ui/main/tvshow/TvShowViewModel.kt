@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.mikirinkode.kotakfilm.core.data.MovieRepository
 import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
+import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase
 import com.mikirinkode.kotakfilm.core.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepository): ViewModel() {
+class TvShowViewModel @Inject constructor(private val movieUseCase: MovieUseCase): ViewModel() {
 
     private val selectedTvShow = MutableLiveData<Catalogue>()
 
@@ -21,16 +23,16 @@ class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepo
     }
     
     fun getPopularTvShowsList(sort: String): LiveData<Resource<List<Catalogue>>>{
-        return movieRepository.getPopularTvShows(sort)
+        return movieUseCase.getPopularTvShows(sort)
 
     }
 
     var tvShowDetail: LiveData<Resource<Catalogue>> = Transformations.switchMap(selectedTvShow) { tvShow ->
-        movieRepository.getTvShowDetail(tvShow)
+        movieUseCase.getTvShowDetail(tvShow)
     }
 
-    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideoEntity>>>{
-        return movieRepository.getTvTrailer(tvShow)
+    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<TrailerVideo>>{
+        return movieUseCase.getTvTrailer(tvShow)
     }
 
     fun setTvShowPlaylist(){
@@ -38,7 +40,7 @@ class TvShowViewModel @Inject constructor(private val movieRepository: MovieRepo
         if (tvShowValue != null){
             if (tvShowValue.data != null){
                 val newState = !tvShowValue.data.isOnPlaylist
-                movieRepository.setTvShowPlaylist(tvShowValue.data, newState)
+                movieUseCase.setTvShowPlaylist(tvShowValue.data, newState)
             }
         }
     }

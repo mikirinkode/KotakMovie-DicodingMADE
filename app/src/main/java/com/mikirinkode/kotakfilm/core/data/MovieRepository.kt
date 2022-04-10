@@ -1,15 +1,15 @@
 package com.mikirinkode.kotakfilm.core.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.data.source.local.LocalDataSource
 import com.mikirinkode.kotakfilm.core.data.source.remote.ApiResponse
 import com.mikirinkode.kotakfilm.core.data.source.remote.RemoteDataSource
 import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
+import com.mikirinkode.kotakfilm.core.domain.repository.IMovieRepository
 import com.mikirinkode.kotakfilm.core.utils.AppExecutors
 import com.mikirinkode.kotakfilm.core.utils.DataMapper
 import com.mikirinkode.kotakfilm.core.vo.Resource
@@ -18,7 +18,7 @@ class MovieRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-) : MovieDataSource {
+) : IMovieRepository {
 
 
     override fun getPopularMovies(sort: String): LiveData<Resource<List<Catalogue>>> {
@@ -115,61 +115,43 @@ class MovieRepository private constructor(
         }.asLiveData()
     }
 
-
-    override fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideoEntity>>> {
+    override fun getMovieTrailer(movie: Catalogue): LiveData<Resource<TrailerVideo>> {
         return object :
-            NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
-                return localDataSource.getVideoTrailer(movie.id)
-            }
-
-            override fun shouldFetch(data: List<TrailerVideoEntity>?): Boolean {
-                return data == null || data.isEmpty()
-            }
-
+            NetworkOnlyResource<TrailerVideo, TrailerVideoResponse>(appExecutors) {
             override fun createCall(): LiveData<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getMovieTrailer(movie.id)
             }
 
-            override fun saveCallResult(data: TrailerVideoResponse) {
+            override fun loadFromNetwork(data: TrailerVideoResponse): LiveData<TrailerVideo> {
+                val movieTrailer = MutableLiveData<TrailerVideo>()
                 data.results.forEach {
                     if (it.site == "YouTube" && it.type == "Trailer") {
-                        localDataSource.insertVideoTrailer(
-                            DataMapper.mapTrailerResponseToEntity(it, movie)
-                        )
+                        movieTrailer.postValue(DataMapper.mapTrailerResponseToDomain(it))
                     }
                 }
+                return movieTrailer
             }
         }.asLiveData()
     }
 
-    override fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideoEntity>>> {
+    override fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<TrailerVideo>> {
         return object :
-            NetworkBoundResource<List<TrailerVideoEntity>, TrailerVideoResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TrailerVideoEntity>> {
-                return localDataSource.getVideoTrailer(tvShow.id)
-            }
-
-            override fun shouldFetch(data: List<TrailerVideoEntity>?): Boolean {
-                return data == null || data.isEmpty()
-            }
-
+            NetworkOnlyResource<TrailerVideo, TrailerVideoResponse>(appExecutors) {
             override fun createCall(): LiveData<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getTvTrailer(tvShow.id)
             }
 
-            override fun saveCallResult(data: TrailerVideoResponse) {
+            override fun loadFromNetwork(data: TrailerVideoResponse): LiveData<TrailerVideo> {
+                val tvShowTrailer = MutableLiveData<TrailerVideo>()
                 data.results.forEach {
-                    if (it.official && it.site == "YouTube" && it.type == "Trailer") {
-                        localDataSource.insertVideoTrailer(
-                            DataMapper.mapTrailerResponseToEntity(it, tvShow)
-                        )
+                    if (it.site == "YouTube" && it.type == "Trailer") {
+                        tvShowTrailer.postValue(DataMapper.mapTrailerResponseToDomain(it))
                     }
                 }
+                return tvShowTrailer
             }
         }.asLiveData()
     }
-
 
     override fun getMoviePlaylist(): LiveData<List<Catalogue>> {
         return Transformations.map(localDataSource.getMoviePlaylist()) {
