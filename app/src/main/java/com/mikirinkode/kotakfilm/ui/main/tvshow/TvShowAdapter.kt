@@ -65,7 +65,4 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
         this.tvShowsList.addAll(newTvShowList)
         diffResults.dispatchUpdatesTo(this)
     }
-
-    fun getSwipedData(swipedPosition: Int): Catalogue = tvShowsList[swipedPosition]
-
 }

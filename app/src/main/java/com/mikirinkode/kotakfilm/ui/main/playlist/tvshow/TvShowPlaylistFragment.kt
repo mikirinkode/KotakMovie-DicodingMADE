@@ -35,7 +35,6 @@ class TvShowPlaylistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        itemTouchHelper.attachToRecyclerView(binding.rvFilm)
 
         if(activity != null){
             with(binding.rvFilm){
@@ -54,30 +53,6 @@ class TvShowPlaylistFragment : Fragment() {
             }
         }
     }
-
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-        override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int =
-            makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if (view != null) {
-                val swipedPosition = viewHolder.bindingAdapterPosition
-                val tvShowEntity = tvShowAdapter.getSwipedData(swipedPosition)
-                tvShowEntity.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
-                val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
-                snackbar.apply {
-                    setActionTextColor(ContextCompat.getColor(context, R.color.secondary_200))
-                    setTextColor(ContextCompat.getColor(context, R.color.light_200))
-                    setBackgroundTint(ContextCompat.getColor(context, R.color.dark_400))
-                    setAction(R.string.message_ok) {
-                        tvShowEntity.let { playlistViewModel.setTvShowPlaylist(tvShowEntity) }
-                    }
-                    show()
-                }
-
-            }
-        }
-    })
 
     override fun onDestroyView() {
         super.onDestroyView()
