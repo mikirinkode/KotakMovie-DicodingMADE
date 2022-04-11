@@ -105,6 +105,24 @@ object DataMapper {
     /*
         Response To Domain
      */
+    fun mapSearchResponseToDomain(data: SearchResponse): List<Catalogue> {
+        return data.results.map {
+            Catalogue(
+                id = it.id,
+                title = if(it.mediaType == "tv") it.name else it.title,
+                releaseDate = if(it.mediaType == "tv") it.firstAirDate else it.releaseDate,
+                isTvShow = it.mediaType == "tv",
+                overview = it.overview,
+                tagline = null,
+                genres = null,
+                runtime = null,
+                voteAverage = it.voteAverage,
+                posterPath = it.posterPath,
+                backdropPath = it.backdropPath,
+            )
+        }
+    }
+
     fun mapMovieResponsesToDomain(data: MovieListResponse): List<Catalogue> {
         return data.results.map {
             Catalogue(

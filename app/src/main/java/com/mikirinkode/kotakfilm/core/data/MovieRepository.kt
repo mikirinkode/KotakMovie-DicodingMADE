@@ -7,7 +7,6 @@ import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakfilm.core.domain.repository.IMovieRepository
-import com.mikirinkode.kotakfilm.core.utils.AppExecutors
 import com.mikirinkode.kotakfilm.core.utils.DataMapper
 import com.mikirinkode.kotakfilm.core.vo.Resource
 import kotlinx.coroutines.flow.Flow
@@ -49,13 +48,13 @@ class MovieRepository @Inject constructor(
 
     override fun searchMovies(query: String): Flow<Resource<List<Catalogue>>> {
         return object :
-            NetworkOnlyResource<List<Catalogue>, MovieListResponse>() {
-            override suspend fun createCall(): Flow<ApiResponse<MovieListResponse>> {
+            NetworkOnlyResource<List<Catalogue>, SearchResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<SearchResponse>> {
                 return remoteDataSource.searchMovies(query)
             }
 
-            override suspend fun loadFromNetwork(data: MovieListResponse): Flow<List<Catalogue>> {
-                return flowOf(DataMapper.mapMovieResponsesToDomain(data))
+            override suspend fun loadFromNetwork(data: SearchResponse): Flow<List<Catalogue>> {
+                return flowOf(DataMapper.mapSearchResponseToDomain(data))
             }
         }.asFlow()
     }

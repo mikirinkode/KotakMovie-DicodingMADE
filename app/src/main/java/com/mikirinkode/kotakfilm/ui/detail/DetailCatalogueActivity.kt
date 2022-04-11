@@ -180,7 +180,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         binding.apply {
             movie?.let { it ->
                 isFavorite = it.isOnPlaylist
-                movieTitle = it.title
+                movieTitle = it.title ?: getString(R.string.no_data)
                 setData(it)
             }
             icLoading.visibility = View.VISIBLE
@@ -268,7 +268,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
         binding.apply {
             tvShow?.let { it ->
                 isFavorite = it.isOnPlaylist
-                movieTitle = it.title
+                movieTitle = it.title ?: getString(R.string.no_data)
                 setData(it)
             }
             icLoading.visibility = View.VISIBLE

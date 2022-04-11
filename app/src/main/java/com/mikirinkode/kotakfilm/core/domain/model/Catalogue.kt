@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Catalogue(
     val id: Int,
-    val title: String,
+    val title: String?,
     val releaseDate: String?,
     val overview: String?,
     val tagline: String?,

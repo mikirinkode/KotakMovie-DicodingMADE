@@ -13,7 +13,7 @@ class RemoteDataSource @Inject constructor(private val api: ApiService) {
 
     private val apiKey = Constants.API_KEY
 
-    suspend fun searchMovies(query: String): Flow<ApiResponse<MovieListResponse>> {
+    suspend fun searchMovies(query: String): Flow<ApiResponse<SearchResponse>> {
         return flow {
             try {
                 val response = api.searchMovies(apiKey, query)

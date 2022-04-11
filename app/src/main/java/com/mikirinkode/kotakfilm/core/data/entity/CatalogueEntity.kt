@@ -16,7 +16,7 @@ data class CatalogueEntity(
     val id: Int,
 
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String?,
 
     @ColumnInfo(name = "releaseDate")
     val releaseDate: String?,
