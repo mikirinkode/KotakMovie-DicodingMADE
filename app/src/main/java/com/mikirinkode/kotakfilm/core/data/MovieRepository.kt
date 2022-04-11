@@ -13,8 +13,11 @@ import com.mikirinkode.kotakfilm.core.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository private constructor(
+@Singleton
+class MovieRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
 ) : IMovieRepository {
@@ -98,27 +101,27 @@ class MovieRepository private constructor(
         }.asFlow()
     }
 
-    override fun getMovieTrailer(movie: Catalogue): Flow<Resource<TrailerVideo>> {
+    override fun getMovieTrailer(movie: Catalogue): Flow<Resource<List<TrailerVideo>>> {
         return object :
-            NetworkOnlyResource<TrailerVideo, TrailerVideoResponse>() {
+            NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getMovieTrailer(movie.id)
             }
 
-            override suspend fun loadFromNetwork(data: TrailerVideoResponse): Flow<TrailerVideo> {
+            override suspend fun loadFromNetwork(data: TrailerVideoResponse): Flow<List<TrailerVideo>> {
                 return flowOf(DataMapper.mapTrailerResponseToDomain(data))
             }
         }.asFlow()
     }
 
-    override fun getTvTrailer(tvShow: Catalogue): Flow<Resource<TrailerVideo>> {
+    override fun getTvTrailer(tvShow: Catalogue): Flow<Resource<List<TrailerVideo>>> {
         return object :
-            NetworkOnlyResource<TrailerVideo, TrailerVideoResponse>() {
+            NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getTvTrailer(tvShow.id)
             }
 
-            override suspend fun loadFromNetwork(data: TrailerVideoResponse): Flow<TrailerVideo> {
+            override suspend fun loadFromNetwork(data: TrailerVideoResponse): Flow<List<TrailerVideo>> {
                 return flowOf(DataMapper.mapTrailerResponseToDomain(data))
             }
         }.asFlow()

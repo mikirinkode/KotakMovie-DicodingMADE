@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.core.di
+package com.mikirinkode.kotakfilm.core.vo
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
