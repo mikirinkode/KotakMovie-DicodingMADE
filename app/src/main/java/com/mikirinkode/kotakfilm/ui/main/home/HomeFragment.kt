@@ -103,8 +103,9 @@ class HomeFragment : Fragment() {
                                 loadingUpcomingMovie.visibility = View.VISIBLE
                             }
                             is Resource.Success -> {
-                                movieList.data?.let { movieAdapter.setData(it) }
                                 loadingUpcomingMovie.visibility = View.GONE
+                                val sortedList = movieList.data?.sortedByDescending { it.releaseDate }
+                                sortedList?.let { movieAdapter.setData(it) }
                             }
                             is Resource.Error -> {
                                 loadingUpcomingMovie.visibility = View.GONE
