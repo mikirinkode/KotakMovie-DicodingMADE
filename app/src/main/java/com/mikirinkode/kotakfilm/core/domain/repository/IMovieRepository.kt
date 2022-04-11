@@ -18,7 +18,7 @@ interface IMovieRepository {
 
     fun getMoviePlaylist(): Flow<List<Catalogue>>
 
-    fun getMovieTrailer(movie: Catalogue): Flow<Resource<TrailerVideo>>
+    fun getMovieTrailer(movie: Catalogue): Flow<Resource<List<TrailerVideo>>>
 
 
     suspend fun insertPlaylistItem(item: Catalogue, state: Boolean)
@@ -26,7 +26,7 @@ interface IMovieRepository {
     suspend fun removePlaylistItem(item: Catalogue)
 
 
-    fun getTvTrailer(tvShow: Catalogue): Flow<Resource<TrailerVideo>>
+    fun getTvTrailer(tvShow: Catalogue): Flow<Resource<List<TrailerVideo>>>
 
     fun getPopularTvShows(sort: String): Flow<Resource<List<Catalogue>>>
 

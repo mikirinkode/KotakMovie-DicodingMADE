@@ -30,7 +30,7 @@ class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase)
         return movieUseCase.getPopularMovies(sort).asLiveData()
     }
 
-    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<TrailerVideo>> {
+    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
         return movieUseCase.getMovieTrailer(movie).asLiveData()
     }
 

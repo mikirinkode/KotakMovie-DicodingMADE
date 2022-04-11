@@ -183,7 +183,7 @@ object DataMapper {
     /*
     Trailer Response To Domain
     */
-    fun mapTrailerResponseToDomain(data: TrailerVideoResponse): TrailerVideo {
+    fun mapTrailerResponseToDomain(data: TrailerVideoResponse): List<TrailerVideo> {
         val trailerList = ArrayList<TrailerVideo>()
         data.results.map {
             if (it.site == "YouTube" && it.type == "Trailer") {
@@ -199,6 +199,6 @@ object DataMapper {
                 )
             }
         }
-        return trailerList[0]
+        return trailerList
     }
 }

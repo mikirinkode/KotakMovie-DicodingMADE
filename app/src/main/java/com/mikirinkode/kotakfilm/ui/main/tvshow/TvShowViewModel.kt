@@ -29,7 +29,7 @@ class TvShowViewModel @Inject constructor(private val movieUseCase: MovieUseCase
         movieUseCase.getTvShowDetail(tvShow).asLiveData()
     }
 
-    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<TrailerVideo>>{
+    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideo>>>{
         return movieUseCase.getTvTrailer(tvShow).asLiveData()
     }
 

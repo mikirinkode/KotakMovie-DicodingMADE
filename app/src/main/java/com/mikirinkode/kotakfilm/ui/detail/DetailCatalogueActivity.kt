@@ -99,7 +99,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
     }
 
     private fun showYouTubePlayer() {
-        if(trailerVideoKey != ""){
+        if(trailerVideoKey.isNotEmpty() && trailerVideoKey != ""){
             popupBinding = YoutubePlayerPopupBinding.inflate(layoutInflater)
             popupBinding.apply {
                 lifecycle.addObserver(youTubePlayerView)
@@ -221,8 +221,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data != null) {
-                                        trailerVideoKey = trailer.data.key
+                                    if (trailer.data?.isNotEmpty() == true) {
+                                        trailerVideoKey = trailer.data[0].key
                                     }
                                 }
                                 is Resource.Error -> {
@@ -249,8 +249,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data != null) {
-                                        trailerVideoKey = trailer.data.key
+                                    if (trailer.data?.isNotEmpty() == true) {
+                                        trailerVideoKey = trailer.data[0].key
                                     }
                                 }
                                 is Resource.Error -> {
