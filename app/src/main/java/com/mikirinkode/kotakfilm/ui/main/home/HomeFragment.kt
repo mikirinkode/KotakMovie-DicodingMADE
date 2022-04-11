@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mikirinkode.kotakfilm.core.vo.Resource
 import com.mikirinkode.kotakfilm.databinding.FragmentHomeBinding
 import com.mikirinkode.kotakfilm.core.vo.Status
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,15 +73,15 @@ class HomeFragment : Fragment() {
             viewModel.getTrendingMovies()
                 .observe(viewLifecycleOwner) { movieList ->
                     if (movieList != null) {
-                        when (movieList.status) {
-                            Status.LOADING -> {
+                        when (movieList) {
+                            is Resource.Loading -> {
                                 loadingTrending.visibility = View.VISIBLE
                             }
-                            Status.SUCCESS -> {
+                            is Resource.Success -> {
                                 movieList.data?.let { trendingAdapter.setData(it) }
                                 loadingTrending.visibility = View.GONE
                             }
-                            Status.ERROR -> {
+                            is Resource.Error -> {
                                 loadingTrending.visibility = View.GONE
                                 onFailMsg.visibility = View.VISIBLE
                             }
@@ -97,15 +98,15 @@ class HomeFragment : Fragment() {
             viewModel.getUpcomingMovies()
                 .observe(viewLifecycleOwner) { movieList ->
                     if (movieList != null) {
-                        when (movieList.status) {
-                            Status.LOADING -> {
+                        when (movieList) {
+                            is Resource.Loading -> {
                                 loadingUpcomingMovie.visibility = View.VISIBLE
                             }
-                            Status.SUCCESS -> {
+                            is Resource.Success -> {
                                 movieList.data?.let { movieAdapter.setData(it) }
                                 loadingUpcomingMovie.visibility = View.GONE
                             }
-                            Status.ERROR -> {
+                            is Resource.Error -> {
                                 loadingUpcomingMovie.visibility = View.GONE
                                 onFailMsg.visibility = View.VISIBLE
                             }
@@ -123,15 +124,15 @@ class HomeFragment : Fragment() {
             viewModel.getTopTvShowList()
                 .observe(viewLifecycleOwner) { tvShowList ->
                     if (tvShowList != null) {
-                        when (tvShowList.status) {
-                            Status.LOADING -> {
+                        when (tvShowList) {
+                            is Resource.Loading -> {
                                 loadingTopRatedTvShow.visibility = View.VISIBLE
                             }
-                            Status.SUCCESS -> {
+                            is Resource.Success -> {
                                 loadingTopRatedTvShow.visibility = View.GONE
                                 tvShowList.data?.let { tvShowAdapter.setData(it) }
                             }
-                            Status.ERROR -> {
+                            is Resource.Error -> {
                                 loadingTopRatedTvShow.visibility = View.GONE
                                 btnTryAgain.visibility = View.VISIBLE
                                 onFailMsg.visibility = View.VISIBLE

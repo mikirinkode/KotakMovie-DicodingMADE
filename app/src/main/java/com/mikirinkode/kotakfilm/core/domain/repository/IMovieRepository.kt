@@ -1,37 +1,38 @@
 package com.mikirinkode.kotakfilm.core.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakfilm.core.vo.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
-    fun searchMovies(query: String): LiveData<Resource<List<Catalogue>>>
+    fun searchMovies(query: String): Flow<Resource<List<Catalogue>>>
 
-    fun getPopularMovies(sort: String): LiveData<Resource<List<Catalogue>>>
+    fun getPopularMovies(sort: String): Flow<Resource<List<Catalogue>>>
 
-    fun getUpcomingMovies(): LiveData<Resource<List<Catalogue>>>
+    fun getUpcomingMovies(): Flow<Resource<List<Catalogue>>>
 
-    fun getTrendingMovies(): LiveData<Resource<List<Catalogue>>>
+    fun getTrendingMovies(): Flow<Resource<List<Catalogue>>>
 
-    fun getMovieDetail(movie: Catalogue): LiveData<Resource<Catalogue>>
+    fun getMovieDetail(movie: Catalogue): Flow<Resource<Catalogue>>
 
-    fun getMoviePlaylist(): LiveData<List<Catalogue>>
+    fun getMoviePlaylist(): Flow<List<Catalogue>>
 
-    fun setMoviePlaylist(movie: Catalogue, state: Boolean)
-
-    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<TrailerVideo>>
+    fun getMovieTrailer(movie: Catalogue): Flow<Resource<TrailerVideo>>
 
 
-    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<TrailerVideo>>
+    suspend fun insertPlaylistItem(item: Catalogue, state: Boolean)
 
-    fun getPopularTvShows(sort: String): LiveData<Resource<List<Catalogue>>>
+    suspend fun removePlaylistItem(item: Catalogue)
 
-    fun getTopTvShowList(): LiveData<Resource<List<Catalogue>>>
 
-    fun getTvShowDetail(tvShow: Catalogue): LiveData<Resource<Catalogue>>
+    fun getTvTrailer(tvShow: Catalogue): Flow<Resource<TrailerVideo>>
 
-    fun getTvShowPlaylist(): LiveData<List<Catalogue>>
+    fun getPopularTvShows(sort: String): Flow<Resource<List<Catalogue>>>
 
-    fun setTvShowPlaylist(tvShow: Catalogue, state: Boolean)
+    fun getTopTvShowList(): Flow<Resource<List<Catalogue>>>
+
+    fun getTvShowDetail(tvShow: Catalogue): Flow<Resource<Catalogue>>
+
+    fun getTvShowPlaylist(): Flow<List<Catalogue>>
 }

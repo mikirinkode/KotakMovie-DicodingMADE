@@ -1,9 +1,6 @@
 package com.mikirinkode.kotakfilm.ui.main.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.mikirinkode.kotakfilm.core.data.MovieRepository
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase
@@ -23,7 +20,7 @@ class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase
 
     var searchResult: LiveData<Resource<List<Catalogue>>> =
         Transformations.switchMap(searchQuery) { query ->
-            movieUseCase.searchMovies(query)
+            movieUseCase.searchMovies(query).asLiveData()
         }
 
 }

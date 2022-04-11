@@ -1,7 +1,6 @@
 package com.mikirinkode.kotakfilm.core.utils
 
 import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
-import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
@@ -30,41 +29,6 @@ object DataMapper {
         return movieList
     }
 
-    fun mapDetailMovieResponseToEntity(data: MovieDetailResponse): CatalogueEntity {
-        data.apply {
-            val genreList = ArrayList<String>()
-            genres.forEach { genreList.add(it.name) }
-            val genre = genreList.joinToString(separator = ", ")
-            return CatalogueEntity(
-                id,
-                title,
-                releaseDate,
-                overview,
-                tagline,
-                genre,
-                runtime,
-                voteAverage,
-                posterPath,
-                backdropPath,
-            )
-        }
-    }
-
-    /*
-        Trailer To Entity
-     */
-    fun mapTrailerResponseToDomain(
-        data: TrailerItem,
-    ): TrailerVideo {
-        return TrailerVideo(
-            data.id,
-            data.key,
-            data.name,
-            data.site,
-            data.type,
-            data.official
-        )
-    }
 
     /*
        TV Response To Entity
@@ -90,53 +54,30 @@ object DataMapper {
         return tvShowList
     }
 
-    fun mapDetailTvResponseToEntity(data: TvShowDetailResponse): CatalogueEntity {
-        data.apply {
-            val genreList = ArrayList<String>()
-            genres.forEach { genreList.add(it.name) }
-            val genre = genreList.joinToString(separator = ", ")
-            return CatalogueEntity(
-                id,
-                name,
-                firstAirDate,
-                overview,
-                tagline,
-                genre,
-                if (episodeRunTime.isEmpty()) 0 else episodeRunTime[0],
-                voteAverage,
-                posterPath,
-                backdropPath,
-                isTvShow = true
-            )
-        }
-    }
 
     /*
        Entities To Domain
      */
-    fun mapEntityToDomain(data: CatalogueEntity?): Catalogue?{
-        if (data == null){
-            return null
-        } else {
-            return Catalogue(
-                id = data.id,
-                title = data.title,
-                releaseDate = data.releaseDate,
-                overview = data.overview,
-                tagline = data.tagline,
-                genres = data.genres,
-                runtime = data.runtime,
-                voteAverage = data.voteAverage,
-                posterPath = data.posterPath,
-                backdropPath = data.backdropPath,
-                isOnPlaylist = data.isOnPlaylist,
-                isTvShow = data.isTvShow
-            )
-        }
+    fun mapEntityToDomain(data: CatalogueEntity): Catalogue {
+        return Catalogue(
+            id = data.id,
+            title = data.title,
+            releaseDate = data.releaseDate,
+            overview = data.overview,
+            tagline = data.tagline,
+            genres = data.genres,
+            runtime = data.runtime,
+            voteAverage = data.voteAverage,
+            posterPath = data.posterPath,
+            backdropPath = data.backdropPath,
+            isOnPlaylist = data.isOnPlaylist,
+            isTvShow = data.isTvShow
+        )
     }
-    fun mapEntitiesToDomain(data: List<CatalogueEntity>): List<Catalogue>{
+
+    fun mapEntitiesToDomain(data: List<CatalogueEntity>): List<Catalogue> {
         return data.map {
-            mapEntityToDomain(it)!!
+            mapEntityToDomain(it)
         }
     }
 
@@ -144,27 +85,27 @@ object DataMapper {
     /*
         Domain To Entities
     */
-    fun mapDomainToEntity(data: Catalogue): CatalogueEntity{
+    fun mapDomainToEntity(data: Catalogue): CatalogueEntity {
         return CatalogueEntity(
-                id = data.id,
-                title = data.title,
-                releaseDate = data.releaseDate,
-                overview = data.overview,
-                tagline = data.tagline,
-                genres = data.genres,
-                runtime = data.runtime,
-                voteAverage = data.voteAverage,
-                posterPath = data.posterPath,
-                backdropPath = data.backdropPath,
-                isOnPlaylist = data.isOnPlaylist,
-                isTvShow = data.isTvShow
-            )
+            id = data.id,
+            title = data.title,
+            releaseDate = data.releaseDate,
+            overview = data.overview,
+            tagline = data.tagline,
+            genres = data.genres,
+            runtime = data.runtime,
+            voteAverage = data.voteAverage,
+            posterPath = data.posterPath,
+            backdropPath = data.backdropPath,
+            isOnPlaylist = data.isOnPlaylist,
+            isTvShow = data.isTvShow
+        )
     }
 
     /*
         Response To Domain
      */
-    fun mapMovieResponsesToDomain(data: MovieListResponse): List<Catalogue>{
+    fun mapMovieResponsesToDomain(data: MovieListResponse): List<Catalogue> {
         return data.results.map {
             Catalogue(
                 id = it.id,
@@ -181,7 +122,27 @@ object DataMapper {
         }
     }
 
-    fun mapTvResponsesToDomain(data: TvShowListResponse): List<Catalogue>{
+    fun mapDetailMovieResponseToDomain(data: MovieDetailResponse): Catalogue {
+        data.apply {
+            val genreList = ArrayList<String>()
+            genres.forEach { genreList.add(it.name) }
+            val genre = genreList.joinToString(separator = ", ")
+            return Catalogue(
+                id,
+                title,
+                releaseDate,
+                overview,
+                tagline,
+                genre,
+                runtime,
+                voteAverage,
+                posterPath,
+                backdropPath,
+            )
+        }
+    }
+
+    fun mapTvResponsesToDomain(data: TvShowListResponse): List<Catalogue> {
         return data.results.map {
             Catalogue(
                 id = it.id,
@@ -196,5 +157,48 @@ object DataMapper {
                 backdropPath = it.backdropPath,
             )
         }
+    }
+
+    fun mapDetailTvResponseToDomain(data: TvShowDetailResponse): Catalogue {
+        data.apply {
+            val genreList = ArrayList<String>()
+            genres.forEach { genreList.add(it.name) }
+            val genre = genreList.joinToString(separator = ", ")
+            return Catalogue(
+                id,
+                name,
+                firstAirDate,
+                overview,
+                tagline,
+                genre,
+                if (episodeRunTime.isEmpty()) 0 else episodeRunTime[0],
+                voteAverage,
+                posterPath,
+                backdropPath,
+                isTvShow = true
+            )
+        }
+    }
+
+    /*
+    Trailer Response To Domain
+    */
+    fun mapTrailerResponseToDomain(data: TrailerVideoResponse): TrailerVideo {
+        val trailerList = ArrayList<TrailerVideo>()
+        data.results.map {
+            if (it.site == "YouTube" && it.type == "Trailer") {
+                trailerList.add(
+                    TrailerVideo(
+                        it.id,
+                        it.key,
+                        it.name,
+                        it.site,
+                        it.type,
+                        it.official
+                    )
+                )
+            }
+        }
+        return trailerList[0]
     }
 }

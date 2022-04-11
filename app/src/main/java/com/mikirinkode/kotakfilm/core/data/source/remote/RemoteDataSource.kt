@@ -1,217 +1,194 @@
 package com.mikirinkode.kotakfilm.core.data.source.remote
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
 import com.mikirinkode.kotakfilm.core.utils.Constants
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val api: ApiService){
+class RemoteDataSource @Inject constructor(private val api: ApiService) {
 
     private val apiKey = Constants.API_KEY
 
-    fun searchMovies(query: String): LiveData<ApiResponse<MovieListResponse>>{
-        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
-        api.searchMovies(apiKey, query).enqueue(object : Callback<MovieListResponse> {
-            override fun onResponse(
-                call: Call<MovieListResponse>,
-                response: Response<MovieListResponse>
-            ) {
-                if(response.isSuccessful){
-                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun searchMovies(query: String): Flow<ApiResponse<MovieListResponse>> {
+        return flow {
+            try {
+                val response = api.searchMovies(apiKey, query)
+                val movieList = response.results
+                if (movieList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Search Movie Results")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Search Movie Results", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return movieListResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getPopularMovieList(): LiveData<ApiResponse<MovieListResponse>>{
-        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
-        api.getPopularMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {
-            override fun onResponse(
-                call: Call<MovieListResponse>,
-                response: Response<MovieListResponse>
-            ) {
-                if(response.isSuccessful){
-                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getPopularMovieList(): Flow<ApiResponse<MovieListResponse>> {
+        return flow {
+            try {
+                val response = api.getPopularMovieList(apiKey)
+                val movieList = response.results
+                if (movieList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Popular Movie List")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Popular Movie List", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return movieListResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getTrendingMovieList(): LiveData<ApiResponse<MovieListResponse>>{
-        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
-        api.getTrendingMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {
-            override fun onResponse(
-                call: Call<MovieListResponse>,
-                response: Response<MovieListResponse>
-            ) {
-                if(response.isSuccessful){
-                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getTrendingMovieList(): Flow<ApiResponse<MovieListResponse>> {
+        return flow {
+            try {
+                val response = api.getTrendingMovieList(apiKey)
+                val movieList = response.results
+                if (movieList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Trending Movie List")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Trending Movie List", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return movieListResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getUpcomingMovieList(): LiveData<ApiResponse<MovieListResponse>>{
-        val movieListResult = MutableLiveData<ApiResponse<MovieListResponse>>()
-        api.getUpcomingMovieList(apiKey).enqueue(object : Callback<MovieListResponse> {
-            override fun onResponse(
-                call: Call<MovieListResponse>,
-                response: Response<MovieListResponse>
-            ) {
-                if(response.isSuccessful){
-                    movieListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getUpcomingMovieList(): Flow<ApiResponse<MovieListResponse>> {
+        return flow {
+            try {
+                val response = api.getUpcomingMovieList(apiKey)
+                val movieList = response.results
+                if (movieList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Upcoming Movie List")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Upcoming Movie List", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return movieListResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getMovieDetail(movieId: Int): LiveData<ApiResponse<MovieDetailResponse>>{
-        val movieResult = MutableLiveData<ApiResponse<MovieDetailResponse>>()
-
-        api.getDetailMovie(movieId, apiKey).enqueue(object : Callback<MovieDetailResponse>{
-            override fun onResponse(
-                call: Call<MovieDetailResponse>,
-                response: Response<MovieDetailResponse>
-            ) {
-                if (response.isSuccessful){
-                    movieResult.value = response.body()?.let { ApiResponse.success(it) }
-                }
+    suspend fun getMovieDetail(movieId: Int): Flow<ApiResponse<MovieDetailResponse>> {
+        return flow {
+            try {
+                val response = api.getDetailMovie(movieId, apiKey)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Movie Detail")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Movie Detail", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return movieResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getMovieTrailer(movieId: Int): LiveData<ApiResponse<TrailerVideoResponse>>{
-        val trailerResult = MutableLiveData<ApiResponse<TrailerVideoResponse>>()
-        api.getMovieTrailer(movieId, apiKey).enqueue(object : Callback<TrailerVideoResponse>{
-            override fun onResponse(
-                call: Call<TrailerVideoResponse>,
-                response: Response<TrailerVideoResponse>
-            ) {
-                if (response.isSuccessful){
-                    trailerResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getMovieTrailer(movieId: Int): Flow<ApiResponse<TrailerVideoResponse>> {
+        return flow {
+            try {
+                val response = api.getMovieTrailer(movieId, apiKey)
+                val trailerList = response.results
+                if (trailerList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Movie Trailer Video")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<TrailerVideoResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Movie Trailer Video", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return trailerResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getTvTrailer(tvShowId: Int): LiveData<ApiResponse<TrailerVideoResponse>>{
-        val trailerResult = MutableLiveData<ApiResponse<TrailerVideoResponse>>()
-        api.getTvShowTrailer(tvShowId, apiKey).enqueue(object : Callback<TrailerVideoResponse>{
-            override fun onResponse(
-                call: Call<TrailerVideoResponse>,
-                response: Response<TrailerVideoResponse>
-            ) {
-                if (response.isSuccessful){
-                    trailerResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getTvTrailer(tvShowId: Int): Flow<ApiResponse<TrailerVideoResponse>> {
+        return flow {
+            try {
+                val response = api.getTvShowTrailer(tvShowId, apiKey)
+                val trailerList = response.results
+                if (trailerList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get TV Show Trailer Video")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<TrailerVideoResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get TV Show Trailer Video", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return trailerResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getPopularTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
-        val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
-        api.getPopularTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
-            override fun onResponse(
-                call: Call<TvShowListResponse>,
-                response: Response<TvShowListResponse>
-            ) {
-                if(response.isSuccessful){
-                    tvShowListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getPopularTvShowList(): Flow<ApiResponse<TvShowListResponse>> {
+        return flow {
+            try {
+                val response = api.getPopularTvShowList(apiKey)
+                val tvList = response.results
+                if (tvList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Popular TvShow List")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<TvShowListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Popular TvShow List", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return tvShowListResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getTopTvShowList(): LiveData<ApiResponse<TvShowListResponse>>{
-        val tvShowListResult = MutableLiveData<ApiResponse<TvShowListResponse>>()
-        api.getTopTvShowList(apiKey).enqueue(object : Callback<TvShowListResponse> {
-            override fun onResponse(
-                call: Call<TvShowListResponse>,
-                response: Response<TvShowListResponse>
-            ) {
-                if(response.isSuccessful){
-                    tvShowListResult.value = response.body()?.let { ApiResponse.success(it) }
+    suspend fun getTopTvShowList(): Flow<ApiResponse<TvShowListResponse>> {
+        return flow {
+            try {
+                val response = api.getTopTvShowList(apiKey)
+                val tvList = response.results
+                if (tvList.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty(response))
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Top TvShow List")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-            override fun onFailure(call: Call<TvShowListResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get TvShow List that Airing Today", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return tvShowListResult
+        }.flowOn(Dispatchers.IO)
     }
 
 
-    fun getTvShowDetail(tvShowId: Int): LiveData<ApiResponse<TvShowDetailResponse>>{
-        val tvShowResult = MutableLiveData<ApiResponse<TvShowDetailResponse>>()
-        api.getDetailTvShow(tvShowId, apiKey).enqueue(object : Callback<TvShowDetailResponse>{
-            override fun onResponse(
-                call: Call<TvShowDetailResponse>,
-                response: Response<TvShowDetailResponse>
-            ) {
-                if(response.isSuccessful){
-                    tvShowResult.value = response.body()?.let { ApiResponse.success(it) }
-                }
+    suspend fun getTvShowDetail(tvShowId: Int): Flow<ApiResponse<TvShowDetailResponse>> {
+        return flow {
+            try {
+                val response = api.getDetailTvShow(tvShowId, apiKey)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", "Failed to Get Tv Show Detail")
+                Log.e("RemoteDataSource", e.message.toString())
             }
-
-            override fun onFailure(call: Call<TvShowDetailResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "Failed to Get Tv Show Detail", t)
-                Log.e("RemoteDataSource", t.message.toString())
-            }
-        })
-        return tvShowResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    companion object{
+    companion object {
         @Volatile
         private var instance: RemoteDataSource? = null
         fun getInstance(api: ApiService): RemoteDataSource =
-            instance ?: synchronized(this){
+            instance ?: synchronized(this) {
                 instance ?: RemoteDataSource(api).apply { instance = this }
             }
     }

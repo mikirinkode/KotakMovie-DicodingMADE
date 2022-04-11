@@ -17,10 +17,11 @@ class MovieInteractor(private val movieRepository: IMovieRepository): MovieUseCa
 
     override fun getMoviePlaylist() = movieRepository.getMoviePlaylist()
 
-    override fun setMoviePlaylist(movie: Catalogue, state: Boolean) = movieRepository.setMoviePlaylist(movie, state)
-
     override fun getMovieTrailer(movie: Catalogue) = movieRepository.getMovieTrailer(movie)
 
+    override suspend fun insertPlaylistItem(item: Catalogue, state: Boolean) = movieRepository.insertPlaylistItem(item, state)
+
+    override suspend fun removePlaylistItem(item: Catalogue) = movieRepository.removePlaylistItem(item)
 
     override fun getTvTrailer(tvShow: Catalogue) = movieRepository.getTvTrailer(tvShow)
 
@@ -31,6 +32,4 @@ class MovieInteractor(private val movieRepository: IMovieRepository): MovieUseCa
     override fun getTvShowDetail(tvShow: Catalogue) = movieRepository.getTvShowDetail(tvShow)
 
     override fun getTvShowPlaylist() = movieRepository.getTvShowPlaylist()
-
-    override fun setTvShowPlaylist(tvShow: Catalogue, state: Boolean) = movieRepository.setTvShowPlaylist(tvShow, state)
 }

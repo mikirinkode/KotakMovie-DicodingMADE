@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
+import com.mikirinkode.kotakfilm.core.vo.Resource
 import com.mikirinkode.kotakfilm.databinding.FragmentSearchBinding
 import com.mikirinkode.kotakfilm.ui.main.movie.MovieAdapter
 import com.mikirinkode.kotakfilm.core.vo.Status
@@ -96,11 +97,11 @@ class SearchFragment : Fragment() {
         binding.apply {
             searchViewModel.searchResult.observe(viewLifecycleOwner) { results ->
                 if (results != null) {
-                    when (results.status) {
-                        Status.LOADING -> {
+                    when (results) {
+                        is Resource.Loading -> {
                             icLoading.visibility = View.VISIBLE
                         }
-                        Status.SUCCESS -> {
+                        is Resource.Success -> {
                             icLoading.visibility = View.GONE
                             results.data?.let { movieAdapter.setData(it) }
                             if (results.data == null || results.data.isEmpty()) {
@@ -108,7 +109,7 @@ class SearchFragment : Fragment() {
                                 onInitialSearchStateMessage.visibility = View.GONE
                             }
                         }
-                        Status.ERROR -> {
+                        is Resource.Error -> {
                             icLoading.visibility = View.GONE
                             onFailMsg.visibility = View.VISIBLE
                         }

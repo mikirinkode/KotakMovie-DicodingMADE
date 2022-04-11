@@ -9,59 +9,59 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("search/movie")
-    fun searchMovies(
+    suspend fun searchMovies(
         @Query("api_key") apiKey: String,
         @Query("query") query: String
-    ):Call<MovieListResponse>
+    ): MovieListResponse
 
     @GET("movie/popular")
-    fun getPopularMovieList(
+    suspend fun getPopularMovieList(
         @Query("api_key") apiKey: String
-    ): Call<MovieListResponse>
+    ): MovieListResponse
 
     @GET("movie/upcoming")
-    fun getUpcomingMovieList(
+    suspend fun getUpcomingMovieList(
         @Query("api_key") apiKey: String
-    ): Call<MovieListResponse>
+    ): MovieListResponse
 
     @GET("trending/movie/week")
-    fun getTrendingMovieList(
+    suspend fun getTrendingMovieList(
         @Query("api_key") apiKey: String
-    ): Call<MovieListResponse>
+    ): MovieListResponse
 
     @GET("movie/{movie_id}")
-    fun getDetailMovie(
+    suspend fun getDetailMovie(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Call<MovieDetailResponse>
+    ): MovieDetailResponse
 
     @GET("movie/{movie_id}/videos")
-    fun getMovieTrailer(
+    suspend fun getMovieTrailer(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Call<TrailerVideoResponse>
+    ): TrailerVideoResponse
 
 
     @GET("tv/{tv_id}/videos")
-    fun getTvShowTrailer(
+    suspend fun getTvShowTrailer(
         @Path("tv_id") tvShowId: Int,
         @Query("api_key") apiKey: String
-    ): Call<TrailerVideoResponse>
+    ): TrailerVideoResponse
 
     @GET("tv/popular")
-    fun getPopularTvShowList(
+    suspend fun getPopularTvShowList(
         @Query("api_key") apiKey: String
-    ): Call<TvShowListResponse>
+    ): TvShowListResponse
 
     @GET("tv/top_rated")
-    fun getTopTvShowList(
+    suspend fun getTopTvShowList(
         @Query("api_key") apiKey: String
-    ): Call<TvShowListResponse>
+    ): TvShowListResponse
 
     @GET("tv/{tv_id}")
-    fun getDetailTvShow(
+    suspend fun getDetailTvShow(
         @Path("tv_id") tvShowId: Int,
         @Query("api_key") apiKey: String
-    ): Call<TvShowDetailResponse>
+    ): TvShowDetailResponse
 
 }

@@ -65,15 +65,15 @@ class TvShowFragment : Fragment() {
     private val tvShowObserver = Observer<Resource<List<Catalogue>>> { tvShowList ->
         binding.apply {
             if(tvShowList != null) {
-                when (tvShowList.status){
-                    Status.LOADING -> {
+                when (tvShowList){
+                    is Resource.Loading -> {
                         icLoading.visibility = View.VISIBLE
                     }
-                    Status.SUCCESS -> {
+                    is Resource.Success -> {
                         icLoading.visibility = View.GONE
                         tvShowList.data?.let { tvShowAdapter.setData(it) }
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         icLoading.visibility = View.GONE
                         btnTryAgain.visibility = View.VISIBLE
                         onFailMsg.visibility = View.VISIBLE

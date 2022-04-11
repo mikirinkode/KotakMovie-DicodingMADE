@@ -1,44 +1,34 @@
 package com.mikirinkode.kotakfilm.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
-import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @RawQuery(observedEntities = [CatalogueEntity::class])
-    fun getPopularMovies(query: SupportSQLiteQuery): LiveData<List<CatalogueEntity>>
+    fun getPopularMovies(query: SupportSQLiteQuery): Flow<List<CatalogueEntity>>
 
-    @Query("SELECT * FROM CatalogueEntities WHERE id = :id")
-    fun getMovieDetail(id: Int): LiveData<CatalogueEntity>
+    @Query("SELECT * FROM CatalogueEntities WHERE isOnPlaylist = 1 AND isTvShow = 0")
+    fun getMoviePlaylist(): Flow<List<CatalogueEntity>>
 
-    @Query("SELECT * FROM CatalogueEntities WHERE isOnPlaylist = 1")
-    fun getMoviePlaylist(): LiveData<List<CatalogueEntity>>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovieList(movies: List<CatalogueEntity>)
+    suspend fun insertCatalogueList(catalogueList: List<CatalogueEntity>)
 
-    @Update
-    fun updateMovie(movie: CatalogueEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNewPlaylistItem(catalogueItem: CatalogueEntity)
 
+    @Delete
+    suspend fun removePlaylistItem(catalogueItem: CatalogueEntity)
 
 
     @RawQuery(observedEntities = [CatalogueEntity::class])
-    fun getPopularTvShows(query: SupportSQLiteQuery): LiveData<List<CatalogueEntity>>
-
-    @Query("SELECT * FROM CatalogueEntities WHERE id = :id AND isTvShow = 1")
-    fun getTvShowDetail(id: Int): LiveData<CatalogueEntity>
+    fun getPopularTvShows(query: SupportSQLiteQuery): Flow<List<CatalogueEntity>>
 
     @Query("SELECT * FROM CatalogueEntities WHERE isOnPlaylist = 1 AND isTvShow = 1")
-    fun getTvShowPlaylist(): LiveData<List<CatalogueEntity>>
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTvShowList(tvShowList: List<CatalogueEntity>)
-
-    @Update
-    fun updateTvShow(tvShow: CatalogueEntity)
+    fun getTvShowPlaylist(): Flow<List<CatalogueEntity>>
 }

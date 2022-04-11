@@ -55,8 +55,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(localDataSource: LocalDataSource, remoteDataSource: RemoteDataSource): MovieRepository {
-        val appExecutors = AppExecutors()
-        return MovieRepository.getInstance(remoteDataSource, localDataSource, appExecutors)
+        return MovieRepository.getInstance(remoteDataSource, localDataSource)
     }
 
     @Singleton

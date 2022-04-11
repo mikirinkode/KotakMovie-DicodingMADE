@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.utils.Constants.Companion.IMAGE_BASE_URL
+import com.mikirinkode.kotakfilm.core.vo.Resource
 import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakfilm.databinding.YoutubePlayerPopupBinding
@@ -150,6 +151,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
         binding.apply {
             isFavorite = !isFavorite
             if (isFavorite) {
+                if (catalogue.isTvShow)
+                    tvShowViewModel.insertTvShowToPlaylist() else movieViewModel.insertMovieToPlaylist()
                 Toast.makeText(
                     this@DetailCatalogueActivity,
                     getString(R.string.added_to_playlist),
@@ -158,6 +161,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 btnRemoveFromPlaylist.visibility = View.VISIBLE
                 btnAddToPlaylist.visibility = View.GONE
             } else {
+                if (catalogue.isTvShow)
+                    tvShowViewModel.removeTvShowFromPlaylist(catalogue) else movieViewModel.removeMovieFromPlaylist(catalogue)
                 Toast.makeText(
                     this@DetailCatalogueActivity,
                     getString(R.string.removed_from_playlist),
@@ -167,8 +172,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 btnAddToPlaylist.visibility = View.VISIBLE
             }
 
-            if (catalogue.isTvShow)
-                tvShowViewModel.setTvShowPlaylist() else movieViewModel.setMoviePlaylist()
+
         }
     }
 
@@ -184,17 +188,17 @@ class DetailCatalogueActivity : AppCompatActivity() {
             movie?.let { movieViewModel.setSelectedMovie(it) }
             movieViewModel.movieDetail.observe(this@DetailCatalogueActivity) { movie ->
                 if (movie != null) {
-                    when (movie.status) {
-                        Status.LOADING -> {
+                    when (movie) {
+                        is Resource.Loading -> {
                             icLoading.visibility = View.VISIBLE
                         }
-                        Status.SUCCESS -> {
+                        is Resource.Success -> {
                             icLoading.visibility = View.GONE
                             movie.data?.let {
                                 setData(it)
                             }
                         }
-                        Status.ERROR -> {
+                        is Resource.Error -> {
                             icLoading.visibility = View.GONE
                             onFailMsg.visibility = View.VISIBLE
                         }
@@ -211,17 +215,17 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 movieViewModel.getMovieTrailer(movie)
                     .observe(this@DetailCatalogueActivity) { trailer ->
                         if (trailer != null) {
-                            when (trailer.status) {
-                                Status.LOADING -> {
+                            when (trailer) {
+                                is Resource.Loading -> {
                                     icLoading.visibility = View.VISIBLE
                                 }
-                                Status.SUCCESS -> {
+                                is Resource.Success -> {
                                     icLoading.visibility = View.GONE
                                     if (trailer.data != null) {
                                         trailerVideoKey = trailer.data.key
                                     }
                                 }
-                                Status.ERROR -> {
+                                is Resource.Error -> {
                                     icLoading.visibility = View.GONE
                                     onFailMsg.visibility = View.VISIBLE
                                 }
@@ -239,17 +243,17 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 tvShowViewModel.getTvTrailer(tvShow)
                     .observe(this@DetailCatalogueActivity) { trailer ->
                         if (trailer != null) {
-                            when (trailer.status) {
-                                Status.LOADING -> {
+                            when (trailer) {
+                                is Resource.Loading -> {
                                     icLoading.visibility = View.VISIBLE
                                 }
-                                Status.SUCCESS -> {
+                                is Resource.Success -> {
                                     icLoading.visibility = View.GONE
                                     if (trailer.data != null) {
                                         trailerVideoKey = trailer.data.key
                                     }
                                 }
-                                Status.ERROR -> {
+                                is Resource.Error -> {
                                     icLoading.visibility = View.GONE
                                     onFailMsg.visibility = View.VISIBLE
                                 }
@@ -272,17 +276,17 @@ class DetailCatalogueActivity : AppCompatActivity() {
             tvShow?.let { tvShowViewModel.setSelectedTvShow(it) }
             tvShowViewModel.tvShowDetail.observe(this@DetailCatalogueActivity) { tvShow ->
                 if (tvShow != null) {
-                    when (tvShow.status) {
-                        Status.LOADING -> {
+                    when (tvShow) {
+                        is Resource.Loading -> {
                             icLoading.visibility = View.VISIBLE
                         }
-                        Status.SUCCESS -> {
+                        is Resource.Success -> {
                             icLoading.visibility = View.GONE
                             tvShow.data?.let {
                                 setData(it)
                             }
                         }
-                        Status.ERROR -> {
+                        is Resource.Error -> {
                             icLoading.visibility = View.GONE
                             onFailMsg.visibility = View.VISIBLE
                         }

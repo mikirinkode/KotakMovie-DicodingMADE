@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.mikirinkode.kotakfilm.core.data.entity.CatalogueEntity
 import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.utils.SortUtils
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
@@ -15,38 +16,38 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
             INSTANCE ?: LocalDataSource(movieDao)
     }
 
-    fun getMovieList(sort: String): LiveData<List<CatalogueEntity>> = mMovieDao.getPopularMovies(
+    fun getMovieList(sort: String): Flow<List<CatalogueEntity>> = mMovieDao.getPopularMovies(
         SortUtils.getSortedQuery(sort, 0))
 
-    fun getMovieDetail(movieId: Int): LiveData<CatalogueEntity> = mMovieDao.getMovieDetail(movieId)
+    fun getMoviePlaylist(): Flow<List<CatalogueEntity>> = mMovieDao.getMoviePlaylist()
 
-    fun getMoviePlaylist(): LiveData<List<CatalogueEntity>> = mMovieDao.getMoviePlaylist()
+    suspend fun insertMovieList(movies: List<CatalogueEntity>) = mMovieDao.insertCatalogueList(movies)
 
-    fun insertMovieList(movies: List<CatalogueEntity>) = mMovieDao.insertMovieList(movies)
+//    suspend fun setMoviePlaylist(movie: CatalogueEntity, newState: Boolean) {
+//        movie.isOnPlaylist = newState
+//        mMovieDao.insertNewPlaylistItem(movie)
+//    }
 
-    fun updateMovieData(movie: CatalogueEntity) = mMovieDao.updateMovie(movie)
+    suspend fun insertPlaylistItem(item: CatalogueEntity, newState: Boolean) {
+        item.isOnPlaylist = newState
+        mMovieDao.insertNewPlaylistItem(item)
+    }
 
-    fun setMoviePlaylist(movie: CatalogueEntity, newState: Boolean) {
-        movie.isOnPlaylist = newState
-        mMovieDao.updateMovie(movie)
+    suspend fun removeItemFromPlaylist(item: CatalogueEntity){
+        mMovieDao.removePlaylistItem(item)
     }
 
 
-
-    fun getTvShowList(sort: String): LiveData<List<CatalogueEntity>> = mMovieDao.getPopularTvShows(
+    fun getTvShowList(sort: String): Flow<List<CatalogueEntity>> = mMovieDao.getPopularTvShows(
         SortUtils.getSortedQuery(sort, 1))
 
-    fun getTvShowDetail(tvShowId: Int): LiveData<CatalogueEntity> = mMovieDao.getTvShowDetail(tvShowId)
+    fun getTvShowPlaylist(): Flow<List<CatalogueEntity>> = mMovieDao.getTvShowPlaylist()
 
-    fun getTvShowPlaylist(): LiveData<List<CatalogueEntity>> = mMovieDao.getTvShowPlaylist()
+    suspend fun insertTvShowList(tvShows: List<CatalogueEntity>) = mMovieDao.insertCatalogueList(tvShows)
 
-    fun insertTvShowList(tvShows: List<CatalogueEntity>) = mMovieDao.insertTvShowList(tvShows)
-
-    fun updateTvShowData(tvShow: CatalogueEntity) = mMovieDao.updateTvShow(tvShow)
-
-    fun setTvShowPlaylist(tvShow: CatalogueEntity, newState: Boolean) {
-        tvShow.isOnPlaylist = newState
-        mMovieDao.updateTvShow(tvShow)
-    }
+//    suspend fun setTvShowPlaylist(tvShow: CatalogueEntity, newState: Boolean) {
+//        tvShow.isOnPlaylist = newState
+//        mMovieDao.insertNewPlaylistItem(tvShow)
+//    }
 }
 

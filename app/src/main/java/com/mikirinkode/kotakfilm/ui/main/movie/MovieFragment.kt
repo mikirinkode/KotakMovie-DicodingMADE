@@ -63,15 +63,15 @@ class MovieFragment : Fragment() {
     private val movieObserver = Observer<Resource<List<Catalogue>>> { movieList ->
         binding.apply {
             if(movieList != null){
-                when(movieList.status){
-                    Status.LOADING -> {
+                when(movieList){
+                    is Resource.Loading -> {
                         icLoading.visibility = View.VISIBLE
                     }
-                    Status.SUCCESS -> {
+                    is Resource.Success -> {
                         movieList.data?.let { movieAdapter.setData(it) }
                         icLoading.visibility = View.GONE
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         icLoading.visibility = View.GONE
                         btnTryAgain.visibility = View.VISIBLE
                         onFailMsg.visibility = View.VISIBLE

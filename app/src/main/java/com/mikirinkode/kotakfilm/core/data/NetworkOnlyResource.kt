@@ -1,47 +1,35 @@
 package com.mikirinkode.kotakfilm.core.data
 
+import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.data.source.remote.ApiResponse
 import com.mikirinkode.kotakfilm.core.data.source.remote.StatusResponse
 import com.mikirinkode.kotakfilm.core.utils.AppExecutors
 import com.mikirinkode.kotakfilm.core.vo.Resource
+import kotlinx.coroutines.flow.*
 
-abstract class NetworkOnlyResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
-    private val result = MediatorLiveData<Resource<ResultType>>()
-
-    init {
-        result.value = Resource.loading(null)
-
-        val apiResponse = createCall()
-
-        result.addSource(apiResponse) { response ->
-            result.removeSource(apiResponse)
-            when (response.status){
-                StatusResponse.SUCCESS -> mExecutors.diskIO().execute {
-                    mExecutors.mainThread().execute {
-                        result.addSource(loadFromNetwork(response.body)) { newData ->
-                            result.value = Resource.success(newData)
-                        }
-                    }
-                }
-                StatusResponse.EMPTY -> mExecutors.mainThread().execute {
-                    result.addSource(loadFromNetwork(response.body)) { newData ->
-                        result.value = Resource.success(newData)
-                    }
-                }
-                StatusResponse.ERROR -> {
-                    result.addSource(loadFromNetwork(response.body)) { newData ->
-                        result.value = Resource.error(response.message, newData)
-                    }
-                }
+abstract class NetworkOnlyResource<ResultType, RequestType>{
+    private val result: Flow<Resource<ResultType>> = flow {
+        emit(Resource.Loading())
+        when (val apiResponse = createCall().first()){
+            is ApiResponse.Success -> {
+                emitAll(loadFromNetwork(apiResponse.data).map { Resource.Success(it) })
+            }
+            is ApiResponse.Empty -> {
+                emitAll(loadFromNetwork(apiResponse.data).map { Resource.Success(it) })
+            }
+            is ApiResponse.Error -> {
+                emit(Resource.Error(apiResponse.errorMessage))
             }
         }
     }
 
-    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
 
-    protected abstract fun loadFromNetwork(data: RequestType): LiveData<ResultType>
+    protected abstract suspend fun createCall(): Flow<ApiResponse<RequestType>>
 
-    fun asLiveData(): LiveData<Resource<ResultType>> = result
+    protected abstract suspend fun loadFromNetwork(data: RequestType): Flow<ResultType>
+
+    fun asFlow(): Flow<Resource<ResultType>> = result
 }
