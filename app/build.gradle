@@ -74,6 +74,8 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$roomRuntimeVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
+    // Room + Flow
+    implementation "androidx.room:room-ktx:$roomRuntimeVersion"
 
     // networking
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -81,9 +83,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
 
     // coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+    // flow to live data
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
     // youtube player
     implementation "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubeVideoPlayerVersion"
