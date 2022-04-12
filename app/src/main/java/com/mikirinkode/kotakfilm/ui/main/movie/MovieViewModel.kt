@@ -34,15 +34,9 @@ class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase)
         return movieUseCase.getMovieTrailer(movie).asLiveData()
     }
 
-    fun insertMovieToPlaylist() {
-        val movieValue = movieDetail.value
-        if (movieValue != null) {
-            if (movieValue.data != null) {
-                val newState = !movieValue.data.isOnPlaylist
-                viewModelScope.launch {
-                    movieUseCase.insertPlaylistItem(movieValue.data, newState)
-                }
-            }
+    fun insertMovieToPlaylist(item: Catalogue, newState: Boolean) {
+        viewModelScope.launch {
+            movieUseCase.insertPlaylistItem(item, newState)
         }
     }
 

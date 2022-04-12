@@ -8,6 +8,8 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+apply from:'../shared_dependencies.gradle'
+
 android {
     compileSdk 32
 
@@ -43,50 +45,54 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation project(":core")
 
-    // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$coreVersion"
+    /*
+        dipincah ke shared dependencies
+     */
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//
+//    // kotlin
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    implementation "androidx.core:core-ktx:$coreVersion"
+//
+//    // ui
+//    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+//    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+//    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+//    implementation "com.google.android.material:material:$materialVersion"
+//    implementation "com.github.bumptech.glide:glide:$glideVersion"
+//    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+//    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//
+//    // Dagger Hilt
+//    implementation "com.google.dagger:hilt-android:$hiltVersion"
+//    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+//    implementation "androidx.activity:activity-ktx:$activityKtxVersion"
+//    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
-    // ui
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
-    // Dagger Hilt
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
-
-    // Room
-    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    // Room + Flow
-    implementation "androidx.room:room-ktx:$roomRuntimeVersion"
-
-    // networking
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
-
-    // coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
-    // flow to live data
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    /*
+        dipindah ke gradle module core
+     */
+//    // Room
+//    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
+//    kapt "androidx.room:room-compiler:$roomVersion"
+//    // Room + Flow
+//    implementation "androidx.room:room-ktx:$roomRuntimeVersion"
+//
+//    // networking
+//    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+//    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+//    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
+//
+//    // coroutines
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+//    // flow to live data
+//    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
     // youtube player
     implementation "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubeVideoPlayerVersion"

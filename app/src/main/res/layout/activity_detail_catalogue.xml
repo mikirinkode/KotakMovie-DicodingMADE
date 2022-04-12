@@ -28,7 +28,7 @@
                     android:id="@+id/iv_detail_poster_backdrop"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:contentDescription="@string/movie_tv_show_backdrop"
+                    android:contentDescription="@string/back_button"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -152,8 +152,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/title" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/poster_layout"
@@ -172,7 +171,6 @@
                             android:id="@+id/iv_detail_poster"
                             android:layout_width="140dp"
                             android:layout_height="210dp"
-                            android:contentDescription="@string/movie_tv_show_poster"
                             android:elevation="2dp"
                             android:scaleType="fitXY" />
 
@@ -198,47 +196,7 @@
                         app:layout_constraintStart_toEndOf="@+id/poster_layout"
                         app:layout_constraintTop_toTopOf="@+id/poster_layout" />
 
-                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-                    <!--                        android:id="@+id/btn_add_to_playlist"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_marginStart="16dp"-->
-                    <!--                        android:layout_marginTop="8dp"-->
-                    <!--                        android:paddingStart="8dp"-->
-                    <!--                        android:paddingBottom="16dp"-->
-                    <!--                        android:paddingTop="16dp"-->
-                    <!--                        android:paddingEnd="8dp"-->
-                    <!--                        android:clickable="true"-->
-                    <!--                        android:focusable="true"-->
-                    <!--                        android:focusableInTouchMode="true"-->
-                    <!--                        android:background="?selectableItemBackground"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        app:layout_constraintStart_toEndOf="@+id/poster_layout"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@+id/btn_play_trailer">-->
 
-                    <!--                        <ToggleButton-->
-                    <!--                            android:id="@+id/toggle_add_item"-->
-                    <!--                            android:layout_width="24dp"-->
-                    <!--                            android:layout_height="24dp"-->
-                    <!--                            android:background="@drawable/add_item_toggle"-->
-                    <!--                            android:backgroundTint="@color/secondary_200"-->
-                    <!--                            android:elevation="2dp"-->
-                    <!--                            android:textOff=""-->
-                    <!--                            android:textOn=""-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:textSize="16sp"-->
-                    <!--                            android:paddingStart="8dp"-->
-                    <!--                            android:textColor="@color/secondary_200"-->
-                    <!--                            android:text="@string/add_to_playlist"-->
-                    <!--                            app:layout_constraintTop_toTopOf="@id/toggle_add_item"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="@id/toggle_add_item"-->
-                    <!--                            app:layout_constraintStart_toEndOf="@id/toggle_add_item"/>-->
-
-                    <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/add_to_playlist_layout"

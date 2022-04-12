@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="film_poster">film poster</string>
+    <string name="movie_tv_show_backdrop">movie / tv show backdrop</string>
+    <string name="movie_tv_show_poster">movie / tv show poster</string>
+    <string name="title">Title</string>
+    <string name="star_symbol">star symbol</string>
+    <string name="no_data">-No Data-</string>
+</resources>

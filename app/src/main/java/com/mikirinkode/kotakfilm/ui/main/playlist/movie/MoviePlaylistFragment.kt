@@ -1,19 +1,16 @@
 package com.mikirinkode.kotakfilm.ui.main.playlist.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.databinding.FragmentMoviePlaylistBinding
-import com.mikirinkode.kotakfilm.ui.main.movie.MovieAdapter
+import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
+import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,7 +19,7 @@ class MoviePlaylistFragment : Fragment() {
 
     private var _binding: FragmentMoviePlaylistBinding? = null
     private val binding get() = _binding!!
-    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var catalogueAdapter: CatalogueAdapter
     private val playlistViewModel: MoviePlaylistViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,16 +34,21 @@ class MoviePlaylistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(activity != null){
-            movieAdapter = MovieAdapter()
+            catalogueAdapter = CatalogueAdapter()
 
             with(binding.rvFilm){
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = movieAdapter
+                adapter = catalogueAdapter
+            }
+            catalogueAdapter.onItemClick = { selectedData ->
+                val moveToDetail = Intent(requireContext(), DetailCatalogueActivity::class.java)
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
+                startActivity(moveToDetail)
             }
 
             playlistViewModel.getMoviePlaylist().observe(viewLifecycleOwner) { movieList ->
-                movieAdapter.setData(movieList)
+                catalogueAdapter.setData(movieList)
                 if (movieList.isNotEmpty()) {
                     binding.apply { onEmptyData.visibility = View.GONE }
                 } else {

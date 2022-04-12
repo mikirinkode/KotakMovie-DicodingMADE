@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">Kotak Film</string>
 
-    <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="movie">Movie</string>
     <string name="tv_show">TV Show</string>
-    <string name="film_poster">film poster</string>
     <string name="film_duration">Film Duration</string>
     <string name="rating_sample">9.9</string>
     <string name="genre1_genre2_genre3">Genre 1 / Genre 2 / Genre 3</string>
@@ -17,9 +15,10 @@
     <string name="please_check_your_internet">You are offline. Please check your internet connection</string>
     <string name="please_connect_to_internet">Please connect to Internet</string>
     <string name="no_internet_connection">No Internet Connection</string>
-    <string name="movie_tv_show_backdrop">movie / tv show backdrop</string>
-    <string name="movie_tv_show_poster">movie / tv show poster</string>
-    <string name="star_symbol">star symbol</string>
+
+    <style name="backdrop">Backdrop Image</style>
+    <style name="poster_image">Poster Image</style>
+
     <string name="runtime">%dh %dm</string>
     <string name="episodeRuntime">%dmin</string>
     <string name="quote">\"%s\"</string>

@@ -33,14 +33,9 @@ class TvShowViewModel @Inject constructor(private val movieUseCase: MovieUseCase
         return movieUseCase.getTvTrailer(tvShow).asLiveData()
     }
 
-    fun insertTvShowToPlaylist(){
-        val tvShowValue = tvShowDetail.value
-        if (tvShowValue != null){
-            if (tvShowValue.data != null){
-                val newState = !tvShowValue.data.isOnPlaylist
-                viewModelScope.launch {
-                    movieUseCase.insertPlaylistItem(tvShowValue.data, newState) }
-            }
+    fun insertTvShowToPlaylist(item: Catalogue, newState: Boolean){
+        viewModelScope.launch {
+            movieUseCase.insertPlaylistItem(item, newState)
         }
     }
 

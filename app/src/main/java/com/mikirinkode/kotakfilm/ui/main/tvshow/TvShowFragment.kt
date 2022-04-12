@@ -1,5 +1,6 @@
 package com.mikirinkode.kotakfilm.ui.main.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,10 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
 import com.mikirinkode.kotakfilm.core.utils.SortUtils
 import com.mikirinkode.kotakfilm.core.vo.Resource
-import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.FragmentTvShowBinding
+import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +21,7 @@ class TvShowFragment : Fragment() {
 
     private var _binding: FragmentTvShowBinding? = null
     private val binding get() = _binding!!
-    private val tvShowAdapter = TvShowAdapter()
+    private val tvShowAdapter = CatalogueAdapter()
     private val viewModel: TvShowViewModel by viewModels()
 
     override fun onCreateView(
@@ -41,6 +43,11 @@ class TvShowFragment : Fragment() {
                 adapter = tvShowAdapter
             }
 
+            tvShowAdapter.onItemClick = { selectedData ->
+                val moveToDetail = Intent(requireContext(), DetailCatalogueActivity::class.java)
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
+                startActivity(moveToDetail)
+            }
             findTvShowList()
 
             binding.apply {

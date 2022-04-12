@@ -65,7 +65,6 @@
         android:layout_width="0dp"
         android:scrollbars="vertical"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/items_film"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

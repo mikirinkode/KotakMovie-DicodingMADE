@@ -152,7 +152,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
             isFavorite = !isFavorite
             if (isFavorite) {
                 if (catalogue.isTvShow)
-                    tvShowViewModel.insertTvShowToPlaylist() else movieViewModel.insertMovieToPlaylist()
+                    tvShowViewModel.insertTvShowToPlaylist(catalogue, isFavorite) else movieViewModel.insertMovieToPlaylist(catalogue, isFavorite)
                 Toast.makeText(
                     this@DetailCatalogueActivity,
                     getString(R.string.added_to_playlist),
@@ -221,8 +221,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data?.isNotEmpty() == true) {
-                                        trailerVideoKey = trailer.data[0].key
+                                    val trailerList = trailer.data
+                                    if (!trailerList.isNullOrEmpty()) {
+                                        trailerVideoKey = trailerList[0].key
                                     }
                                 }
                                 is Resource.Error -> {
@@ -249,9 +250,13 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     icLoading.visibility = View.GONE
-                                    if (trailer.data?.isNotEmpty() == true) {
-                                        trailerVideoKey = trailer.data[0].key
+                                    val trailerList = trailer.data
+                                    if (!trailerList.isNullOrEmpty()) {
+                                        trailerVideoKey = trailerList[0].key
                                     }
+//                                    if (trailer.data?.isNotEmpty() == true) {
+////                                        trailerVideoKey = trailer.data[0].key
+//                                    }
                                 }
                                 is Resource.Error -> {
                                     icLoading.visibility = View.GONE
@@ -326,8 +331,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 tvDetailCategory.text = getString(R.string.category, category)
                 if (runtime != null) {
                     if (category == "MOVIE") {
-                        val hours = runtime.div(60)
-                        val minutes = runtime.rem(60)
+                        val hours = runtime?.div(60)
+                        val minutes = runtime?.rem(60)
                         tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
                     } else {
                         tvDetailDuration.text = getString(R.string.episodeRuntime, runtime)

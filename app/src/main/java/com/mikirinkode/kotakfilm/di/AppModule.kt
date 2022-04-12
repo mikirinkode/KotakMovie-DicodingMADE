@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.core.vo
+package com.mikirinkode.kotakfilm.di
 
 import com.mikirinkode.kotakfilm.core.domain.usecase.MovieInteractor
 import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase

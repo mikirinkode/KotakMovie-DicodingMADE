@@ -1,5 +1,6 @@
 package com.mikirinkode.kotakfilm.ui.main.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -9,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.vo.Resource
 import com.mikirinkode.kotakfilm.databinding.FragmentSearchBinding
-import com.mikirinkode.kotakfilm.ui.main.movie.MovieAdapter
-import com.mikirinkode.kotakfilm.core.vo.Status
+import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
+import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +20,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private val movieAdapter = MovieAdapter()
+    private val movieAdapter = CatalogueAdapter()
     private val searchViewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
@@ -39,6 +40,11 @@ class SearchFragment : Fragment() {
                     layoutManager = LinearLayoutManager(context)
                     adapter = movieAdapter
                 }
+                movieAdapter.onItemClick = { selectedData ->
+                    val moveToDetail = Intent(requireContext(), DetailCatalogueActivity::class.java)
+                    moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
+                    startActivity(moveToDetail)
+                }
             }
             observeSearchResult()
         }
@@ -46,7 +52,7 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (movieAdapter.itemCount > 0){
+        if (movieAdapter.itemCount > 0) {
             binding.onInitialSearchStateMessage.visibility = View.GONE
         }
     }
@@ -83,7 +89,7 @@ class SearchFragment : Fragment() {
                         }
                         searchViewModel.setSearchQuery(query)
                         observeSearchResult()
-                    } else if (query.equals("")){
+                    } else if (query.equals("")) {
                         movieAdapter.clearList()
                     }
                     return true
@@ -102,12 +108,20 @@ class SearchFragment : Fragment() {
                             icLoading.visibility = View.VISIBLE
                         }
                         is Resource.Success -> {
+                            val searchResult = results.data
                             icLoading.visibility = View.GONE
-                            results.data?.let { movieAdapter.setData(it) }
-                            if (results.data == null || results.data.isEmpty()) {
-                                onEmptyStateMessage.visibility = View.VISIBLE
-                                onInitialSearchStateMessage.visibility = View.GONE
+                            if (searchResult != null) {
+                                movieAdapter.setData(searchResult)
+//                            results.data?.let { movieAdapter.setData(it) }
+                                if (searchResult.isEmpty()){
+                                    onEmptyStateMessage.visibility = View.VISIBLE
+                                    onInitialSearchStateMessage.visibility = View.GONE
+                                }
                             }
+//                            if (results.data == null || results.data.isEmpty()) {
+//                                onEmptyStateMessage.visibility = View.VISIBLE
+//                                onInitialSearchStateMessage.visibility = View.GONE
+//                            }
                         }
                         is Resource.Error -> {
                             icLoading.visibility = View.GONE

@@ -1,5 +1,6 @@
 package com.mikirinkode.kotakfilm.ui.main.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,10 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
+import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
 import com.mikirinkode.kotakfilm.core.utils.SortUtils
 import com.mikirinkode.kotakfilm.core.vo.Resource
-import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.FragmentMovieBinding
+import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +21,7 @@ class MovieFragment : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
-    private val movieAdapter = MovieAdapter()
+    private val movieAdapter = CatalogueAdapter()
     private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
@@ -39,6 +41,12 @@ class MovieFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = movieAdapter
+            }
+
+            movieAdapter.onItemClick = { selectedData ->
+                val moveToDetail = Intent(requireContext(), DetailCatalogueActivity::class.java)
+                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
+                startActivity(moveToDetail)
             }
 
             findMovieList()
