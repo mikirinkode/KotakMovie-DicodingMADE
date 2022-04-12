@@ -1,24 +1,23 @@
-package com.mikirinkode.kotakfilm.ui.main.movie
+package com.mikirinkode.kotakfilm.core.ui
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.mikirinkode.kotakfilm.R
+import com.mikirinkode.kotakfilm.core.R
+import com.mikirinkode.kotakfilm.core.databinding.CatalogueItemsBinding
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.utils.CatalogueDiffUtil
 import com.mikirinkode.kotakfilm.core.utils.Constants.Companion.IMAGE_BASE_URL
-import com.mikirinkode.kotakfilm.databinding.ItemsFilmBinding
-import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 
+class CatalogueAdapter: RecyclerView.Adapter<CatalogueAdapter.MovieViewHolder>() {
 
-class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var moviesList = ArrayList<Catalogue>()
+    var onItemClick: ((Catalogue) -> Unit)? = null
 
-    class MovieViewHolder(private val binding: ItemsFilmBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(private val binding: CatalogueItemsBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Catalogue) {
             binding.apply {
                 tvItemTitle.text = movie.title
@@ -36,19 +35,18 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                     .error(R.drawable.ic_error)
                     .into(ivPoster)
             }
-
-            itemView.setOnClickListener{
-                val moveToDetail = Intent(itemView.context, DetailCatalogueActivity::class.java)
-                moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, movie)
-                itemView.context.startActivity(moveToDetail)
+        }
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(moviesList[adapterPosition])
             }
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val itemsFilmBinding = ItemsFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(itemsFilmBinding)
+        val itemsBinding = CatalogueItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieViewHolder(itemsBinding)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
