@@ -17,11 +17,10 @@ import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.utils.Constants.Companion.IMAGE_BASE_URL
 import com.mikirinkode.kotakfilm.core.vo.Resource
-import com.mikirinkode.kotakfilm.core.vo.Status
 import com.mikirinkode.kotakfilm.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakfilm.databinding.YoutubePlayerPopupBinding
-import com.mikirinkode.kotakfilm.ui.main.movie.MovieViewModel
-import com.mikirinkode.kotakfilm.ui.main.tvshow.TvShowViewModel
+import com.mikirinkode.kotakfilm.ui.movie.MovieViewModel
+import com.mikirinkode.kotakfilm.ui.tvshow.TvShowViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
@@ -311,7 +310,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
                     tvDetailRelease.text = getString(R.string.no_data)
                 } else {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    val date = dateFormat.parse(releaseDate)
+                    val date = releaseDate?.let { dateFormat.parse(it) }
                     if (date != null) {
                         val dateFormatted = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
                         tvDetailRelease.text = dateFormatted

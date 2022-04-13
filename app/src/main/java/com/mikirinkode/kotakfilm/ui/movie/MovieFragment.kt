@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.ui.main.tvshow
+package com.mikirinkode.kotakfilm.ui.movie
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,23 +12,23 @@ import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
 import com.mikirinkode.kotakfilm.core.utils.SortUtils
 import com.mikirinkode.kotakfilm.core.vo.Resource
-import com.mikirinkode.kotakfilm.databinding.FragmentTvShowBinding
+import com.mikirinkode.kotakfilm.databinding.FragmentMovieBinding
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TvShowFragment : Fragment() {
+class MovieFragment : Fragment() {
 
-    private var _binding: FragmentTvShowBinding? = null
+    private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
-    private val tvShowAdapter = CatalogueAdapter()
-    private val viewModel: TvShowViewModel by viewModels()
+    private val movieAdapter = CatalogueAdapter()
+    private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTvShowBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,49 +36,48 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        if (activity != null) {
+        if(activity != null){
             with(binding.rvFilm){
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = tvShowAdapter
+                adapter = movieAdapter
             }
 
-            tvShowAdapter.onItemClick = { selectedData ->
+            movieAdapter.onItemClick = { selectedData ->
                 val moveToDetail = Intent(requireContext(), DetailCatalogueActivity::class.java)
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
                 startActivity(moveToDetail)
             }
-            findTvShowList()
 
-            binding.apply {
-                btnTryAgain.setOnClickListener{
-                    findTvShowList()
+            findMovieList()
 
+            with(binding){
+                btnTryAgain.setOnClickListener {
+                    findMovieList()
                 }
             }
         }
     }
 
-
-    private fun findTvShowList(){
+    private fun findMovieList(){
         binding.apply {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularTvShowsList(SortUtils.LATEST).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularMoviesList(SortUtils.LATEST).observe(viewLifecycleOwner, movieObserver)
         }
     }
 
-    private val tvShowObserver = Observer<Resource<List<Catalogue>>> { tvShowList ->
+    private val movieObserver = Observer<Resource<List<Catalogue>>> { movieList ->
         binding.apply {
-            if(tvShowList != null) {
-                when (tvShowList){
+            if(movieList != null){
+                when(movieList){
                     is Resource.Loading -> {
                         icLoading.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
+                        movieList.data?.let { movieAdapter.setData(it) }
                         icLoading.visibility = View.GONE
-                        tvShowList.data?.let { tvShowAdapter.setData(it) }
                     }
                     is Resource.Error -> {
                         icLoading.visibility = View.GONE
@@ -104,7 +103,7 @@ class TvShowFragment : Fragment() {
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         binding.apply {
-            viewModel.getPopularTvShowsList(sort).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularMoviesList(sort).observe(viewLifecycleOwner, movieObserver)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)

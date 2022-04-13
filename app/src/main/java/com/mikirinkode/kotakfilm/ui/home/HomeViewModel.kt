@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.ui.main.home
+package com.mikirinkode.kotakfilm.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

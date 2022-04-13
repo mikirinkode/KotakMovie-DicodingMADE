@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakfilm.ui.main.search
+package com.mikirinkode.kotakfilm.ui.search
 
 import android.content.Intent
 import android.os.Bundle
@@ -112,16 +112,11 @@ class SearchFragment : Fragment() {
                             icLoading.visibility = View.GONE
                             if (searchResult != null) {
                                 movieAdapter.setData(searchResult)
-//                            results.data?.let { movieAdapter.setData(it) }
                                 if (searchResult.isEmpty()){
                                     onEmptyStateMessage.visibility = View.VISIBLE
                                     onInitialSearchStateMessage.visibility = View.GONE
                                 }
                             }
-//                            if (results.data == null || results.data.isEmpty()) {
-//                                onEmptyStateMessage.visibility = View.VISIBLE
-//                                onInitialSearchStateMessage.visibility = View.GONE
-//                            }
                         }
                         is Resource.Error -> {
                             icLoading.visibility = View.GONE

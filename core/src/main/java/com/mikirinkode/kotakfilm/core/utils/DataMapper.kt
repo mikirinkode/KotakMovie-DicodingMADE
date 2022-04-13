@@ -58,7 +58,7 @@ object DataMapper {
     /*
        Entities To Domain
      */
-    fun mapEntityToDomain(data: CatalogueEntity): Catalogue {
+    private fun mapEntityToDomain(data: CatalogueEntity): Catalogue {
         return Catalogue(
             id = data.id,
             title = data.title,

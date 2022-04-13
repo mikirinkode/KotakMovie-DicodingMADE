@@ -1,8 +1,6 @@
-package com.mikirinkode.kotakfilm.ui.main.movie
+package com.mikirinkode.kotakfilm.ui.movie
 
 import androidx.lifecycle.*
-import com.mikirinkode.kotakfilm.core.data.MovieRepository
-import com.mikirinkode.kotakfilm.core.data.entity.TrailerVideoEntity
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase

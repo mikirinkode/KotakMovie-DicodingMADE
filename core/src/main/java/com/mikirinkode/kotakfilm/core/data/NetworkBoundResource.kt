@@ -1,10 +1,6 @@
 package com.mikirinkode.kotakfilm.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import com.mikirinkode.kotakfilm.core.data.source.remote.ApiResponse
-import com.mikirinkode.kotakfilm.core.data.source.remote.StatusResponse
-import com.mikirinkode.kotakfilm.core.utils.AppExecutors
 import com.mikirinkode.kotakfilm.core.vo.Resource
 import kotlinx.coroutines.flow.*
 

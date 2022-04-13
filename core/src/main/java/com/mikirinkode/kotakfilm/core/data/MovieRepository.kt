@@ -199,18 +199,4 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    companion object {
-        @Volatile
-        private var instance: MovieRepository? = null
-
-        fun getInstance(
-            remoteDataSource: RemoteDataSource,
-            localData: LocalDataSource
-        ): MovieRepository =
-            instance ?: synchronized(this) {
-                instance ?: MovieRepository(remoteDataSource, localData).apply {
-                    instance = this
-                }
-            }
-    }
 }

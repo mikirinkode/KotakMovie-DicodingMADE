@@ -1,7 +1,6 @@
-package com.mikirinkode.kotakfilm.ui.main.search
+package com.mikirinkode.kotakfilm.ui.search
 
 import androidx.lifecycle.*
-import com.mikirinkode.kotakfilm.core.data.MovieRepository
 import com.mikirinkode.kotakfilm.core.domain.model.Catalogue
 import com.mikirinkode.kotakfilm.core.domain.usecase.MovieUseCase
 import com.mikirinkode.kotakfilm.core.vo.Resource

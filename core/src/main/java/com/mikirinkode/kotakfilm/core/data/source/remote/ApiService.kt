@@ -1,7 +1,6 @@
 package com.mikirinkode.kotakfilm.core.data.source.remote
 
 import com.mikirinkode.kotakfilm.core.data.source.remote.response.*
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
