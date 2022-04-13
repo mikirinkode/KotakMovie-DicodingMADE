@@ -1,14 +1,14 @@
-package com.mikirinkode.kotakfilm.ui.main.playlist
+package com.mikirinkode.kotakfilm.playlist.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mikirinkode.kotakfilm.R
-import com.mikirinkode.kotakfilm.databinding.FragmentPlaylistBinding
+import com.mikirinkode.kotakfilm.playlist.databinding.FragmentPlaylistBinding
 
 class PlaylistFragment : Fragment() {
 

@@ -1,9 +1,9 @@
-package com.mikirinkode.kotakfilm.ui.main.playlist
+package com.mikirinkode.kotakfilm.playlist.ui
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.mikirinkode.kotakfilm.ui.main.playlist.movie.MoviePlaylistFragment
-import com.mikirinkode.kotakfilm.ui.main.playlist.tvshow.TvShowPlaylistFragment
+import com.mikirinkode.kotakfilm.playlist.ui.movie.MoviePlaylistFragment
+import com.mikirinkode.kotakfilm.playlist.ui.tvshow.TvShowPlaylistFragment
 
 class SectionsPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
