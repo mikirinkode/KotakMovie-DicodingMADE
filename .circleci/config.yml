@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@1.0.3
+  android: circleci/android@0.2.1
 
 jobs:
   build:
@@ -9,9 +9,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: androic-orb-v1
+          key: android-orb-v1-
       - run:
-          name: Chmod permission
+          name: Chmod permissions
           command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
