@@ -38,7 +38,7 @@ class CatalogueAdapter: RecyclerView.Adapter<CatalogueAdapter.MovieViewHolder>()
         }
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(moviesList[adapterPosition])
+                onItemClick?.invoke(moviesList[bindingAdapterPosition])
             }
         }
     }
@@ -61,7 +61,6 @@ class CatalogueAdapter: RecyclerView.Adapter<CatalogueAdapter.MovieViewHolder>()
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.moviesList.clear()
         this.moviesList.addAll(newMovieList)
-        notifyDataSetChanged()
         diffResults.dispatchUpdatesTo(this)
     }
 

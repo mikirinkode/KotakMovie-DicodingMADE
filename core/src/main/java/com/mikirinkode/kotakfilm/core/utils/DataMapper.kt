@@ -208,11 +208,7 @@ object DataMapper {
                 trailerList.add(
                     TrailerVideo(
                         it.id,
-                        it.key,
-                        it.name,
-                        it.site,
-                        it.type,
-                        it.official
+                        it.name
                     )
                 )
             }

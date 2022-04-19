@@ -7,8 +7,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.databinding.ActivityMainBinding
@@ -32,9 +30,7 @@ class MainActivity : AppCompatActivity() {
             val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
             val navController = navHostFragment.navController
-//            val appBarConfiguration = AppBarConfiguration(navController.graph)
             setSupportActionBar(toolbar)
-//            setupActionBarWithNavController(navController, appBarConfiguration)
             setupBottomNavMenu(navController)
         }
     }

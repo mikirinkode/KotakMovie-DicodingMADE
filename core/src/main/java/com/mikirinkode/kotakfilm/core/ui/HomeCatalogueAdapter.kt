@@ -30,7 +30,7 @@ class HomeCatalogueAdapter: RecyclerView.Adapter<HomeCatalogueAdapter.MovieViewH
         }
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(moviesList[adapterPosition])
+                onItemClick?.invoke(moviesList[bindingAdapterPosition])
             }
         }
     }

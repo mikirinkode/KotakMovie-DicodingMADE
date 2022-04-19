@@ -31,7 +31,7 @@ class TrendingAdapter: RecyclerView.Adapter<TrendingAdapter.MovieViewHolder>() {
         }
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(moviesList[adapterPosition])
+                onItemClick?.invoke(moviesList[bindingAdapterPosition])
             }
         }
     }

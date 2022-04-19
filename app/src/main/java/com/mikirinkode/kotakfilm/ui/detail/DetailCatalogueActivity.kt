@@ -253,9 +253,6 @@ class DetailCatalogueActivity : AppCompatActivity() {
                                     if (!trailerList.isNullOrEmpty()) {
                                         trailerVideoKey = trailerList[0].key
                                     }
-//                                    if (trailer.data?.isNotEmpty() == true) {
-////                                        trailerVideoKey = trailer.data[0].key
-//                                    }
                                 }
                                 is Resource.Error -> {
                                     icLoading.visibility = View.GONE

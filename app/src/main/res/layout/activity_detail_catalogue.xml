@@ -8,6 +8,7 @@
     tools:context=".ui.detail.DetailCatalogueActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.KotakFilm">
@@ -28,7 +29,7 @@
                     android:id="@+id/iv_detail_poster_backdrop"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:contentDescription="@string/back_button"
+                    android:contentDescription="@string/movie_tv_show_backdrop"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -44,24 +45,14 @@
                     app:layout_constraintStart_toStartOf="@+id/iv_detail_poster_backdrop"
                     app:layout_constraintTop_toTopOf="@id/iv_detail_poster_backdrop" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:background="@drawable/gradient_drawable_from_up"
-                    android:elevation="1dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_detail_poster_backdrop"
-                    app:layout_constraintEnd_toEndOf="@id/iv_detail_poster_backdrop"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_poster_backdrop"
-                    app:layout_constraintTop_toTopOf="@id/iv_detail_poster_backdrop" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:contentInsetStart="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,13 +65,13 @@
                         android:id="@+id/btn_back"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:contentDescription="@string/back_button"
                         android:elevation="2dp"
                         android:focusable="true"
-                        android:layout_marginStart="16dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_back"
@@ -98,7 +89,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/btn_back" />
-
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -172,7 +162,8 @@
                             android:layout_width="140dp"
                             android:layout_height="210dp"
                             android:elevation="2dp"
-                            android:scaleType="fitXY" />
+                            android:scaleType="fitXY"
+                            android:contentDescription="@string/movie_tv_show_poster" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -577,6 +568,14 @@
 
 
     </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/gradient_drawable_from_up"
+        android:elevation="1dp"
+        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchorGravity="center" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
