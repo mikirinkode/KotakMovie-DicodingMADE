@@ -5,24 +5,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-    android:backgroundTint="@color/primary_900"
+    android:backgroundTint="@color/placeholder"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primary_900">
-
-
-        <ImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
-            android:contentDescription="@string/film_poster"
-            android:elevation="2dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/placeholder">
 
 
         <View
@@ -50,23 +39,23 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/rounded_rectangle">
 
-            <ImageView
+            <View
                 android:id="@+id/imageView"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                app:tint="@color/secondary_200"
                 android:contentDescription="@string/star_symbol"
-                android:src="@drawable/ic_star_fill"
+                android:background="@color/placeholder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_item_vote"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
                 android:textColor="@color/light_200"
                 android:textSize="14sp"
+                android:background="@color/placeholder"
                 android:layout_marginStart="4dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"

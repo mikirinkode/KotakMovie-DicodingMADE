@@ -39,6 +39,8 @@ buildscript {
 
         firebaseAnalyticsVersion = '20.1.2'
         firebaseCrashlyticsVersion = '18.2.9'
+
+        shimmerVersion = '0.5.0'
     }
 
     repositories {
