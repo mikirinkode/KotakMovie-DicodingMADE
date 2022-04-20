@@ -33,6 +33,9 @@ buildscript {
         lifecycleVersion = "2.4.1"
 
         youtubeVideoPlayerVersion = '11.0.1'
+        leakCanaryVersion = '2.7'
+        sqlCipherVersion = '4.5.0'
+        sqliteVersion = '2.2.0'
     }
 
     repositories {
@@ -45,6 +48,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-alpha03"
+        classpath "com.squareup.leakcanary:leakcanary-deobfuscation-gradle-plugin:$leakCanaryVersion"
     }
 }
 
