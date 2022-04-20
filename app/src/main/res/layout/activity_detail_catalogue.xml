@@ -45,6 +45,15 @@
                     app:layout_constraintStart_toStartOf="@+id/iv_detail_poster_backdrop"
                     app:layout_constraintTop_toTopOf="@id/iv_detail_poster_backdrop" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/gradient_drawable_from_up"
+                    android:elevation="1dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_detail_poster_backdrop"
+                    app:layout_constraintEnd_toEndOf="@id/iv_detail_poster_backdrop"
+                    app:layout_constraintStart_toStartOf="@+id/iv_detail_poster_backdrop"
+                    app:layout_constraintTop_toTopOf="@id/iv_detail_poster_backdrop" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -566,16 +575,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.core.widget.NestedScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@drawable/gradient_drawable_from_up"
-        android:elevation="1dp"
-        app:layout_anchor="@+id/appBarLayout"
-        app:layout_anchorGravity="center" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
