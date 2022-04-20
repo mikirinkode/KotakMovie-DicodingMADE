@@ -6,9 +6,19 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
+    id 'com.squareup.leakcanary.deobfuscation'
 }
 
 apply from: '../shared_dependencies.gradle'
+
+leakCanary {
+    // LeakCanary needs to know which variants have obfuscation turned on
+    // never use this plugin on a release variant.
+    // detail: https://square.github.io/leakcanary/recipes/#using-leakcanary-with-obfuscated-apps
+    filterObfuscatedVariants { variant ->
+        variant.name == "debug"
+    }
+}
 
 android {
     compileSdk 32
@@ -25,7 +35,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,4 +62,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
     // flow to live data
     api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+
+    // SQLCipher
+    implementation "net.zetetic:android-database-sqlcipher:$sqlCipherVersion"
+    implementation "androidx.sqlite:sqlite-ktx:$sqliteVersion"
 }
