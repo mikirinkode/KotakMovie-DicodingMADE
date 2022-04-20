@@ -50,7 +50,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
         val catalogue = intent.getParcelableExtra<Catalogue>(EXTRA_FILM)
 
-        if (catalogue != null){
+        if (catalogue != null) {
             if (catalogue.isTvShow) {
                 getDetailTvShow(catalogue)
                 observeTvTrailer(catalogue)
@@ -98,7 +98,7 @@ class DetailCatalogueActivity : AppCompatActivity() {
     }
 
     private fun showYouTubePlayer() {
-        if(trailerVideoKey.isNotEmpty() && trailerVideoKey != ""){
+        if (trailerVideoKey.isNotEmpty() && trailerVideoKey != "") {
             popupBinding = YoutubePlayerPopupBinding.inflate(layoutInflater)
             popupBinding.apply {
                 lifecycle.addObserver(youTubePlayerView)
@@ -151,7 +151,10 @@ class DetailCatalogueActivity : AppCompatActivity() {
             isFavorite = !isFavorite
             if (isFavorite) {
                 if (catalogue.isTvShow)
-                    tvShowViewModel.insertTvShowToPlaylist(catalogue, isFavorite) else movieViewModel.insertMovieToPlaylist(catalogue, isFavorite)
+                    tvShowViewModel.insertTvShowToPlaylist(
+                        catalogue,
+                        isFavorite
+                    ) else movieViewModel.insertMovieToPlaylist(catalogue, isFavorite)
                 Toast.makeText(
                     this@DetailCatalogueActivity,
                     getString(R.string.added_to_playlist),
@@ -161,7 +164,9 @@ class DetailCatalogueActivity : AppCompatActivity() {
                 btnAddToPlaylist.visibility = View.GONE
             } else {
                 if (catalogue.isTvShow)
-                    tvShowViewModel.removeTvShowFromPlaylist(catalogue) else movieViewModel.removeMovieFromPlaylist(catalogue)
+                    tvShowViewModel.removeTvShowFromPlaylist(catalogue) else movieViewModel.removeMovieFromPlaylist(
+                    catalogue
+                )
                 Toast.makeText(
                     this@DetailCatalogueActivity,
                     getString(R.string.removed_from_playlist),
@@ -309,7 +314,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                     val date = releaseDate?.let { dateFormat.parse(it) }
                     if (date != null) {
-                        val dateFormatted = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
+                        val dateFormatted =
+                            SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
                         tvDetailRelease.text = dateFormatted
                     } else {
                         tvDetailRelease.text = getString(R.string.no_data)
@@ -329,11 +335,8 @@ class DetailCatalogueActivity : AppCompatActivity() {
                     if (category == "MOVIE") {
                         val hours = runtime?.div(60)
                         val minutes = runtime?.rem(60)
-                        if (hours != null && minutes != null){
-                            tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
-                        } else {
-                            tvDetailDuration.text = getString(R.string.no_data)
-                        }
+                        val duration = "${hours}h ${minutes}m"
+                        tvDetailDuration.text = duration
                     } else {
                         tvDetailDuration.text = getString(R.string.episodeRuntime, runtime)
                     }
