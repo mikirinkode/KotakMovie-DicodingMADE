@@ -329,7 +329,11 @@ class DetailCatalogueActivity : AppCompatActivity() {
                     if (category == "MOVIE") {
                         val hours = runtime?.div(60)
                         val minutes = runtime?.rem(60)
-                        tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
+                        if (hours != null && minutes != null){
+                            tvDetailDuration.text = getString(R.string.runtime, hours, minutes)
+                        } else {
+                            tvDetailDuration.text = getString(R.string.no_data)
+                        }
                     } else {
                         tvDetailDuration.text = getString(R.string.episodeRuntime, runtime)
                     }
