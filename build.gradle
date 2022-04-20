@@ -36,6 +36,9 @@ buildscript {
         leakCanaryVersion = '2.7'
         sqlCipherVersion = '4.5.0'
         sqliteVersion = '2.2.0'
+
+        firebaseAnalyticsVersion = '20.1.2'
+        firebaseCrashlyticsVersion = '18.2.9'
     }
 
     repositories {
