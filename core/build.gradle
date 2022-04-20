@@ -7,8 +7,6 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
     id 'com.squareup.leakcanary.deobfuscation'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
 apply from: '../shared_dependencies.gradle'
