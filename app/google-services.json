@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "863715324401",
+    "project_id": "mk-kotakfilm",
+    "storage_bucket": "mk-kotakfilm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863715324401:android:6aa113f1c9bd4ff5181450",
+        "android_client_info": {
+          "package_name": "com.mikirinkode.kotakfilm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863715324401-h50cjcssljjel5q28l5q93eapag17vs2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdJv69jwuIX4O8Y1UcmVcHhxXk_4sTxXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863715324401-h50cjcssljjel5q28l5q93eapag17vs2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
