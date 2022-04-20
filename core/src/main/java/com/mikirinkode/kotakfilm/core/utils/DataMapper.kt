@@ -173,6 +173,7 @@ object DataMapper {
                 voteAverage = it.voteAverage,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
+                isTvShow = true
             )
         }
     }
