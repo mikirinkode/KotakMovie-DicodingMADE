@@ -37,8 +37,4 @@ dependencies {
 
     // leak canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-
-    // Firebase Crashlytics
-    implementation "com.google.firebase:firebase-analytics-ktx:$firebaseAnalyticsVersion"
-    implementation "com.google.firebase:firebase-crashlytics:$firebaseCrashlyticsVersion"
 }
