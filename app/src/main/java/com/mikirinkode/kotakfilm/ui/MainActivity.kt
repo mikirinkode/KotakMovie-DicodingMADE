@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.mikirinkode.kotakfilm.R
 import com.mikirinkode.kotakfilm.databinding.ActivityMainBinding
 import com.mikirinkode.kotakfilm.ui.home.HomeFragment
@@ -17,14 +18,12 @@ import com.mikirinkode.kotakfilm.ui.tvshow.TvShowFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         binding.apply {
             val navHostFragment =

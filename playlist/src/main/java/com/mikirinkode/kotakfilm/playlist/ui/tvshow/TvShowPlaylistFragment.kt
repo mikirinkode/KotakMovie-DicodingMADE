@@ -3,27 +3,26 @@ package com.mikirinkode.kotakfilm.playlist.ui.tvshow
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.mikirinkode.kotakfilm.core.ui.CatalogueAdapter
 import com.mikirinkode.kotakfilm.di.PlaylistModuleDependencies
-import com.mikirinkode.kotakfilm.playlist.ui.PlaylistViewModel
+import com.mikirinkode.kotakfilm.playlist.R
 import com.mikirinkode.kotakfilm.playlist.databinding.FragmentTvShowPlaylistBinding
 import com.mikirinkode.kotakfilm.playlist.di.DaggerPlaylistComponent
 import com.mikirinkode.kotakfilm.playlist.di.ViewModelFactory
+import com.mikirinkode.kotakfilm.playlist.ui.PlaylistViewModel
 import com.mikirinkode.kotakfilm.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 
-class TvShowPlaylistFragment : Fragment() {
+class TvShowPlaylistFragment : Fragment(R.layout.fragment_tv_show_playlist) {
 
-    private var _binding: FragmentTvShowPlaylistBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentTvShowPlaylistBinding by viewBinding()
     private val tvShowAdapter = CatalogueAdapter()
 
     @Inject
@@ -43,15 +42,6 @@ class TvShowPlaylistFragment : Fragment() {
             .build()
             .inject(this)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentTvShowPlaylistBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,10 +68,5 @@ class TvShowPlaylistFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

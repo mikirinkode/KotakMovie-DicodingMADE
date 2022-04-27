@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakfilm.R
@@ -31,9 +32,9 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class DetailCatalogueActivity : AppCompatActivity() {
+class DetailCatalogueActivity : AppCompatActivity(R.layout.activity_detail_catalogue) {
 
-    private lateinit var binding: ActivityDetailCatalogueBinding
+    private val binding: ActivityDetailCatalogueBinding by viewBinding()
     private lateinit var popupBinding: YoutubePlayerPopupBinding
     private lateinit var movieTitle: String
     private val movieViewModel: MovieViewModel by viewModels()
@@ -43,7 +44,6 @@ class DetailCatalogueActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailCatalogueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
