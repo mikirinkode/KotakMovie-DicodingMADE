@@ -208,7 +208,7 @@ object DataMapper {
             if (it.site == "YouTube" && it.type == "Trailer") {
                 trailerList.add(
                     TrailerVideo(
-                        it.id,
+                        it.key,
                         it.name
                     )
                 )
