@@ -69,6 +69,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     clearFocus()
+                    binding.rvSearchResult.scrollToPosition(0)
                     return true
                 }
 
@@ -79,6 +80,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             onEmptyStateMessage.visibility = View.GONE
                             onFailMsg.visibility = View.GONE
                             onInitialSearchStateMessage.visibility = View.GONE
+                            rvSearchResult.scrollToPosition(0)
                         }
                         searchViewModel.setSearchQuery(query)
                         observeSearchResult()
@@ -105,7 +107,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             icLoading.visibility = View.GONE
                             if (searchResult != null) {
                                 movieAdapter.setData(searchResult)
-                                rvSearchResult.smoothScrollToPosition(0)
+                                rvSearchResult.scrollToPosition(0)
                                 if (searchResult.isEmpty()){
                                     onEmptyStateMessage.visibility = View.VISIBLE
                                     onInitialSearchStateMessage.visibility = View.GONE
