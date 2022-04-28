@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "863715324401",
-    "project_id": "mk-kotakfilm",
-    "storage_bucket": "mk-kotakfilm.appspot.com"
+    "project_number": "613198513201",
+    "project_id": "mk-kotakmovie",
+    "storage_bucket": "mk-kotakmovie.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:863715324401:android:6aa113f1c9bd4ff5181450",
+        "mobilesdk_app_id": "1:613198513201:android:c050ebe543e854162e0110",
         "android_client_info": {
-          "package_name": "com.mikirinkode.kotakfilm"
+          "package_name": "com.mikirinkode.kotakmovie"
         }
       },
       "oauth_client": [
         {
-          "client_id": "863715324401-h50cjcssljjel5q28l5q93eapag17vs2.apps.googleusercontent.com",
+          "client_id": "613198513201-clu7j68o7i314h5tf4hd1bno0do9m5da.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdJv69jwuIX4O8Y1UcmVcHhxXk_4sTxXY"
+          "current_key": "AIzaSyCmWReBSteMFJm56OHS9fZ9wa1HmmlzOl0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "863715324401-h50cjcssljjel5q28l5q93eapag17vs2.apps.googleusercontent.com",
+              "client_id": "613198513201-clu7j68o7i314h5tf4hd1bno0do9m5da.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kotak Film</string>
+    <string name="app_name">KotakMovie</string>
 
     <string name="description">Description</string>
     <string name="movie">Movie</string>

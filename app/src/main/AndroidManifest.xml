@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mikirinkode.kotakfilm">
+    package="com.mikirinkode.kotakmovie">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name="com.mikirinkode.kotakfilm.di.BaseApplication"
+        android:name="com.mikirinkode.kotakmovie.di.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KotakFilm.NoActionBar">
+        android:theme="@style/Theme.KotakMovie.NoActionBar">
         <activity
-            android:name=".ui.detail.DetailCatalogueActivity"
+            android:name="com.mikirinkode.kotakmovie.ui.detail.DetailCatalogueActivity"
             android:exported="false"
-            android:theme="@style/Theme.KotakFilm.NoActionBar"/>
+            android:theme="@style/Theme.KotakMovie.NoActionBar"/>
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.mikirinkode.kotakmovie.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

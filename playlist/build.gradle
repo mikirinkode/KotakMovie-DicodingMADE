@@ -13,6 +13,7 @@ android {
     compileSdk 32
 
     defaultConfig {
+        applicationId "com.mikirinkode.kotakmovie"
         minSdk 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
