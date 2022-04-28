@@ -32,15 +32,15 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-        buildConfigField("String", "HOSTNAME", "\"${properties.getProperty('HOSTNAME')}\"")
-        buildConfigField("String", "BASE_URL", "\"${properties.getProperty('BASE_URL')}\"")
-        buildConfigField("String", "IMAGE_BASE_URL", "\"${properties.getProperty('IMAGE_BASE_URL')}\"")
-        buildConfigField("String", "API_KEY", "\"${properties.getProperty('API_KEY')}\"")
-        buildConfigField("String", "DB_NAME", "\"${properties.getProperty('DB_NAME')}\"")
-        buildConfigField("String", "PASSPHRASE", "\"${properties.getProperty('PASSPHRASE')}\"")
-        buildConfigField("String", "CERTIFICATE_PIN_1", "${properties.getProperty('CERTIFICATE_PIN_1')}")
-        buildConfigField("String", "CERTIFICATE_PIN_2", "${properties.getProperty('CERTIFICATE_PIN_3')}")
-        buildConfigField("String", "CERTIFICATE_PIN_3", "${properties.getProperty('CERTIFICATE_PIN_3')}")
+//        buildConfigField("String", "HOSTNAME", "\"${properties.getProperty('HOSTNAME')}\"")
+//        buildConfigField("String", "BASE_URL", "\"${properties.getProperty('BASE_URL')}\"")
+//        buildConfigField("String", "IMAGE_BASE_URL", "\"${properties.getProperty('IMAGE_BASE_URL')}\"")
+//        buildConfigField("String", "API_KEY", "\"${properties.getProperty('API_KEY')}\"")
+//        buildConfigField("String", "DB_NAME", "\"${properties.getProperty('DB_NAME')}\"")
+//        buildConfigField("String", "PASSPHRASE", "\"${properties.getProperty('PASSPHRASE')}\"")
+//        buildConfigField("String", "CERTIFICATE_PIN_1", "\"${properties.getProperty('CERTIFICATE_PIN_1')}\"")
+//        buildConfigField("String", "CERTIFICATE_PIN_2", "\"${properties.getProperty('CERTIFICATE_PIN_3')}\"")
+//        buildConfigField("String", "CERTIFICATE_PIN_3", "\"${properties.getProperty('CERTIFICATE_PIN_3')}\"")
     }
 
     buildTypes {
