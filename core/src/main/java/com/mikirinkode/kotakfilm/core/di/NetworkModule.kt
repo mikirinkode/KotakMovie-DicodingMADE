@@ -21,11 +21,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient{
-        val hostname = "api.themoviedb.org"
+        val hostname = Constants.HOSTNAME
         val certificatePinner = CertificatePinner.Builder()
-            .add(hostname, "sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk=")
-            .add(hostname, "sha256/JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=")
-            .add(hostname, "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=")
+            .add(hostname, Constants.CERTIFICATE_PIN_1)
+            .add(hostname, Constants.CERTIFICATE_PIN_2)
+            .add(hostname, Constants.CERTIFICATE_PIN_3)
             .build()
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
