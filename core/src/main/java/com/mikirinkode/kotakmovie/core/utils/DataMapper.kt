@@ -21,6 +21,7 @@ object DataMapper {
                 null,
                 null,
                 it.voteAverage,
+                it.popularity,
                 it.posterPath,
                 it.backdropPath,
             )
@@ -45,6 +46,7 @@ object DataMapper {
                 null,
                 null,
                 it.voteAverage,
+                it.popularity,
                 it.posterPath,
                 it.backdropPath,
                 isTvShow = true
@@ -68,6 +70,7 @@ object DataMapper {
             genres = data.genres,
             runtime = data.runtime,
             voteAverage = data.voteAverage,
+            popularity = data.popularity,
             posterPath = data.posterPath,
             backdropPath = data.backdropPath,
             isOnPlaylist = data.isOnPlaylist,
@@ -95,6 +98,7 @@ object DataMapper {
             genres = data.genres,
             runtime = data.runtime,
             voteAverage = data.voteAverage,
+            popularity = data.popularity,
             posterPath = data.posterPath,
             backdropPath = data.backdropPath,
             isOnPlaylist = data.isOnPlaylist,
@@ -117,6 +121,7 @@ object DataMapper {
                 genres = null,
                 runtime = null,
                 voteAverage = it.voteAverage,
+                popularity = it.popularity,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
             )
@@ -134,6 +139,7 @@ object DataMapper {
                 genres = null,
                 runtime = null,
                 voteAverage = it.voteAverage,
+                popularity = it.popularity,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
             )
@@ -154,6 +160,7 @@ object DataMapper {
                 genre,
                 runtime,
                 voteAverage,
+                popularity,
                 posterPath,
                 backdropPath,
             )
@@ -171,6 +178,7 @@ object DataMapper {
                 genres = null,
                 runtime = null,
                 voteAverage = it.voteAverage,
+                popularity = it.popularity,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
                 isTvShow = true
@@ -192,6 +200,7 @@ object DataMapper {
                 genre,
                 if (episodeRunTime.isEmpty()) 0 else episodeRunTime[0],
                 voteAverage,
+                popularity,
                 posterPath,
                 backdropPath,
                 isTvShow = true

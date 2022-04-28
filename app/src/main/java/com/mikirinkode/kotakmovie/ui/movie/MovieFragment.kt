@@ -57,7 +57,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularMoviesList(SortUtils.LATEST).observe(viewLifecycleOwner, movieObserver)
+            viewModel.getPopularMoviesList(SortUtils.POPULAR).observe(viewLifecycleOwner, movieObserver)
         }
     }
 
@@ -71,6 +71,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     is Resource.Success -> {
                         movieList.data?.let { movieAdapter.setData(it) }
                         icLoading.visibility = View.GONE
+                        rvFilm.smoothScrollToPosition(0)
                     }
                     is Resource.Error -> {
                         icLoading.visibility = View.GONE
@@ -89,6 +90,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var sort = ""
         when (item.itemId) {
+            R.id.action_popular -> sort = SortUtils.POPULAR
             R.id.action_latest_release -> sort = SortUtils.LATEST
             R.id.action_oldest_release -> sort = SortUtils.OLDEST
             R.id.action_best_vote -> sort = SortUtils.BEST

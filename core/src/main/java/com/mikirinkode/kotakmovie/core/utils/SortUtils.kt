@@ -3,6 +3,7 @@ package com.mikirinkode.kotakmovie.core.utils
 import androidx.sqlite.db.SimpleSQLiteQuery
 
 object SortUtils {
+    const val POPULAR = "Popular"
     const val LATEST = "Latest"
     const val OLDEST = "Oldest"
     const val BEST = "Best"
@@ -12,6 +13,7 @@ object SortUtils {
     fun getSortedQuery(filter: String, isTvShow: Int): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM CatalogueEntities WHERE isTvShow = $isTvShow ")
         when (filter) {
+            POPULAR -> simpleQuery.append("ORDER BY popularity DESC")
             LATEST -> simpleQuery.append("ORDER BY releaseDate DESC")
             OLDEST -> simpleQuery.append("ORDER BY releaseDate ASC")
             BEST -> simpleQuery.append("ORDER BY voteAverage DESC")

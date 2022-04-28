@@ -3,8 +3,13 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/action_latest_release"
+            android:id="@+id/action_popular"
             android:checked="true"
+            android:title="@string/popular"/>
+
+        <item
+            android:id="@+id/action_latest_release"
+            android:checked="false"
             android:title="@string/latest_release" />
 
         <item

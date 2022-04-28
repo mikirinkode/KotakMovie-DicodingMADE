@@ -33,4 +33,7 @@ data class TvItems(
     @field:SerializedName("vote_average")
     val voteAverage: Double,
 
+    @field:SerializedName("popularity")
+    val popularity: Double
+
     )

@@ -58,5 +58,6 @@
     <string name="overview">Overview</string>
     <string name="top_rated_tv_shows">Top Rated TV Shows</string>
     <string name="title_playlist">Playlist</string>
+    <string name="popular">Popular</string>
 
 </resources>

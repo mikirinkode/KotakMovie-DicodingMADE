@@ -60,7 +60,7 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularTvShowsList(SortUtils.LATEST).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularTvShowsList(SortUtils.POPULAR).observe(viewLifecycleOwner, tvShowObserver)
         }
     }
 
@@ -74,6 +74,7 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
                     is Resource.Success -> {
                         icLoading.visibility = View.GONE
                         tvShowList.data?.let { tvShowAdapter.setData(it) }
+                        rvFilm.smoothScrollToPosition(0)
                     }
                     is Resource.Error -> {
                         icLoading.visibility = View.GONE
@@ -92,6 +93,7 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var sort = ""
         when (item.itemId) {
+            R.id.action_popular -> sort = SortUtils.POPULAR
             R.id.action_latest_release -> sort = SortUtils.LATEST
             R.id.action_oldest_release -> sort = SortUtils.OLDEST
             R.id.action_best_vote -> sort = SortUtils.BEST

@@ -36,6 +36,9 @@ data class CatalogueEntity(
     @ColumnInfo(name = "voteAverage")
     val voteAverage: Double,
 
+    @ColumnInfo(name = "popularity")
+    val popularity: Double,
+
     @ColumnInfo(name = "posterPath")
     val posterPath: String?,
 

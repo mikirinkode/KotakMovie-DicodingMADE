@@ -13,6 +13,7 @@ data class Catalogue(
     val genres: String?,
     val runtime: Int?,
     val voteAverage: Double,
+    val popularity: Double,
     val posterPath: String?,
     val backdropPath: String?,
     var isOnPlaylist: Boolean = false,

@@ -30,6 +30,9 @@ data class SearchResultsItem(
 	@field:SerializedName("vote_average")
 	val voteAverage: Double,
 
+	@field:SerializedName("popularity")
+	val popularity: Double,
+
 	@field:SerializedName("name")
 	val name: String?,
 
