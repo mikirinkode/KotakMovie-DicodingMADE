@@ -10,7 +10,8 @@ interface ApiService {
     @GET("search/multi")
     suspend fun searchMovies(
         @Query("api_key") apiKey: String,
-        @Query("query") query: String
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean
     ): MultiResponse
 
     @GET("movie/popular")

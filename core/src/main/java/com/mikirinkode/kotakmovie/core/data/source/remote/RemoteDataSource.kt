@@ -16,7 +16,7 @@ class RemoteDataSource @Inject constructor(private val api: ApiService) {
     suspend fun searchMovies(query: String): Flow<ApiResponse<MultiResponse>> {
         return flow {
             try {
-                val response = api.searchMovies(apiKey, query)
+                val response = api.searchMovies(apiKey, query, false)
                 val movieList = response.results
                 if (movieList.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
