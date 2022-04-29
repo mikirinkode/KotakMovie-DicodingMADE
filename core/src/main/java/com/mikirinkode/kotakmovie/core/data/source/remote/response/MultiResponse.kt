@@ -2,12 +2,12 @@ package com.mikirinkode.kotakmovie.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchResponse(
+data class MultiResponse(
 	@field:SerializedName("results")
-	val results: List<SearchResultsItem>,
+	val results: List<MultiResultsItem>,
 )
 
-data class SearchResultsItem(
+data class MultiResultsItem(
 
 	@field:SerializedName("id")
 	val id: Int,

@@ -89,7 +89,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
             loadingUpcomingMovie.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
-            viewModel.getTrendingMovies()
+            viewModel.getTrendingThisWeekList()
                 .observe(viewLifecycleOwner) { movieList ->
                     if (movieList != null) {
                         when (movieList) {

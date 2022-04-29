@@ -109,7 +109,7 @@ object DataMapper {
     /*
         Response To Domain
      */
-    fun mapSearchResponseToDomain(data: SearchResponse): List<Catalogue> {
+    fun mapMultiResponsesToDomain(data: MultiResponse): List<Catalogue> {
         return data.results.map {
             Catalogue(
                 id = it.id,

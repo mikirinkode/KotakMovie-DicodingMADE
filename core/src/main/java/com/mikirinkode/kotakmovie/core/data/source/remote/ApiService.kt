@@ -11,7 +11,7 @@ interface ApiService {
     suspend fun searchMovies(
         @Query("api_key") apiKey: String,
         @Query("query") query: String
-    ): SearchResponse
+    ): MultiResponse
 
     @GET("movie/popular")
     suspend fun getPopularMovieList(
@@ -23,10 +23,10 @@ interface ApiService {
         @Query("api_key") apiKey: String
     ): MovieListResponse
 
-    @GET("trending/movie/week")
-    suspend fun getTrendingMovieList(
+    @GET("trending/all/week")
+    suspend fun getTrendingThisWeekList(
         @Query("api_key") apiKey: String
-    ): MovieListResponse
+    ): MultiResponse
 
     @GET("movie/{movie_id}")
     suspend fun getDetailMovie(
