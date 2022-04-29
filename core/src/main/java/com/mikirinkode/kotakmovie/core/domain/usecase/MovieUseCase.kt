@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 interface MovieUseCase {
     fun searchMovies(query: String): Flow<Resource<List<Catalogue>>>
 
-    fun getPopularMovies(sort: String): Flow<Resource<List<Catalogue>>>
+    fun getPopularMovies(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>>
 
     fun getUpcomingMovies(): Flow<Resource<List<Catalogue>>>
 
-    fun getTrendingMovies(): Flow<Resource<List<Catalogue>>>
+    fun getTrendingThisWeekList(): Flow<Resource<List<Catalogue>>>
 
     fun getMovieDetail(movie: Catalogue): Flow<Resource<Catalogue>>
 
@@ -28,7 +28,7 @@ interface MovieUseCase {
 
     fun getTvTrailer(tvShow: Catalogue): Flow<Resource<List<TrailerVideo>>>
 
-    fun getPopularTvShows(sort: String): Flow<Resource<List<Catalogue>>>
+    fun getPopularTvShows(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>>
 
     fun getTopTvShowList(): Flow<Resource<List<Catalogue>>>
 

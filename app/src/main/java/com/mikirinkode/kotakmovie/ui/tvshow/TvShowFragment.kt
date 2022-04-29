@@ -43,27 +43,27 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
                 moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
                 startActivity(moveToDetail)
             }
-            findTvShowList()
+            findTvShowList(false)
 
             binding.apply {
                 btnTryAgain.setOnClickListener{
-                    findTvShowList()
+                    findTvShowList(false)
 
                 }
                 swipeToRefresh.setOnRefreshListener {
-                    findTvShowList()
+                    findTvShowList(true)
                 }
             }
         }
     }
 
 
-    private fun findTvShowList(){
+    private fun findTvShowList(shouldFetchAgain: Boolean){
         binding.apply {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularTvShowsList(SortUtils.POPULAR).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularTvShowsList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, tvShowObserver)
         }
     }
 
@@ -105,7 +105,7 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         binding.apply {
-            viewModel.getPopularTvShowsList(sort).observe(viewLifecycleOwner, tvShowObserver)
+            viewModel.getPopularTvShowsList(sort, false).observe(viewLifecycleOwner, tvShowObserver)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)

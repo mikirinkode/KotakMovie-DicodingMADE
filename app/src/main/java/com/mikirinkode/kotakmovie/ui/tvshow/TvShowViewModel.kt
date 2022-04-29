@@ -18,8 +18,8 @@ class TvShowViewModel @Inject constructor(private val movieUseCase: MovieUseCase
         this.selectedTvShow.value = tvShow
     }
     
-    fun getPopularTvShowsList(sort: String): LiveData<Resource<List<Catalogue>>>{
-        return movieUseCase.getPopularTvShows(sort).asLiveData()
+    fun getPopularTvShowsList(sort: String, shouldFetchAgain: Boolean): LiveData<Resource<List<Catalogue>>>{
+        return movieUseCase.getPopularTvShows(sort, shouldFetchAgain).asLiveData()
 
     }
 

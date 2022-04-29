@@ -24,8 +24,8 @@ class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase)
             movieUseCase.getMovieDetail(movie).asLiveData()
         }
 
-    fun getPopularMoviesList(sort: String): LiveData<Resource<List<Catalogue>>> {
-        return movieUseCase.getPopularMovies(sort).asLiveData()
+    fun getPopularMoviesList(sort: String, shouldFetchAgain: Boolean): LiveData<Resource<List<Catalogue>>> {
+        return movieUseCase.getPopularMovies(sort, shouldFetchAgain).asLiveData()
     }
 
     fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideo>>> {

@@ -22,7 +22,7 @@ class MovieRepository @Inject constructor(
 ) : IMovieRepository {
 
 
-    override fun getPopularMovies(sort: String): Flow<Resource<List<Catalogue>>> {
+    override fun getPopularMovies(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>> {
         return object :
             NetworkBoundResource<List<Catalogue>, MovieListResponse>() {
             override fun loadFromDB(): Flow<List<Catalogue>> {
@@ -32,7 +32,7 @@ class MovieRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Catalogue>?): Boolean {
-                return data == null || data.isEmpty() || data.size <= 10
+                return data == null || data.isEmpty() || data.size <= 10 || shouldFetchAgain
             }
 
             override suspend fun createCall(): Flow<ApiResponse<MovieListResponse>> {
@@ -48,27 +48,27 @@ class MovieRepository @Inject constructor(
 
     override fun searchMovies(query: String): Flow<Resource<List<Catalogue>>> {
         return object :
-            NetworkOnlyResource<List<Catalogue>, SearchResponse>() {
-            override suspend fun createCall(): Flow<ApiResponse<SearchResponse>> {
+            NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<MultiResponse>> {
                 return remoteDataSource.searchMovies(query)
             }
 
-            override suspend fun loadFromNetwork(data: SearchResponse): Flow<List<Catalogue>> {
-                return flowOf(DataMapper.mapSearchResponseToDomain(data))
+            override suspend fun loadFromNetwork(data: MultiResponse): Flow<List<Catalogue>> {
+                return flowOf(DataMapper.mapMultiResponsesToDomain(data))
             }
         }.asFlow()
     }
 
 
-    override fun getTrendingMovies(): Flow<Resource<List<Catalogue>>> {
+    override fun getTrendingThisWeekList(): Flow<Resource<List<Catalogue>>> {
         return object :
-            NetworkOnlyResource<List<Catalogue>, MovieListResponse>() {
-            override suspend fun createCall(): Flow<ApiResponse<MovieListResponse>> {
-                return remoteDataSource.getTrendingMovieList()
+            NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
+            override suspend fun createCall(): Flow<ApiResponse<MultiResponse>> {
+                return remoteDataSource.getTrendingThisWeekList()
             }
 
-            override suspend fun loadFromNetwork(data: MovieListResponse): Flow<List<Catalogue>> {
-                return flowOf(DataMapper.mapMovieResponsesToDomain(data))
+            override suspend fun loadFromNetwork(data: MultiResponse): Flow<List<Catalogue>> {
+                return flowOf(DataMapper.mapMultiResponsesToDomain(data))
             }
         }.asFlow()
     }
@@ -143,7 +143,7 @@ class MovieRepository @Inject constructor(
         localDataSource.removeItemFromPlaylist(DataMapper.mapDomainToEntity(item))
     }
 
-    override fun getPopularTvShows(sort: String): Flow<Resource<List<Catalogue>>> {
+    override fun getPopularTvShows(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>> {
         return object :
             NetworkBoundResource<List<Catalogue>, TvShowListResponse>() {
             override fun loadFromDB(): Flow<List<Catalogue>> {
@@ -153,7 +153,7 @@ class MovieRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Catalogue>?): Boolean {
-                return data == null || data.isEmpty() || data.size <= 10
+                return data == null || data.isEmpty() || data.size <= 10 || shouldFetchAgain
             }
 
             override suspend fun createCall(): Flow<ApiResponse<TvShowListResponse>> {

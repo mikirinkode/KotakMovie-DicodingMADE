@@ -42,25 +42,25 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                 startActivity(moveToDetail)
             }
 
-            findMovieList()
+            findMovieList(false)
 
             with(binding){
                 btnTryAgain.setOnClickListener {
-                    findMovieList()
+                    findMovieList(false)
                 }
                 swipeToRefresh.setOnRefreshListener {
-                    viewModel.getPopularMoviesList(SortUtils.POPULAR).observe(viewLifecycleOwner, movieObserver)
+                    findMovieList(true)
                 }
             }
         }
      }
 
-    private fun findMovieList(){
+    private fun findMovieList(shouldFetchAgain: Boolean){
         binding.apply {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularMoviesList(SortUtils.POPULAR).observe(viewLifecycleOwner, movieObserver)
+            viewModel.getPopularMoviesList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, movieObserver)
         }
     }
 
@@ -102,7 +102,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         binding.apply {
-            viewModel.getPopularMoviesList(sort).observe(viewLifecycleOwner, movieObserver)
+            viewModel.getPopularMoviesList(sort, false).observe(viewLifecycleOwner, movieObserver)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)

@@ -4,15 +4,17 @@ import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.domain.repository.IMovieRepository
 import javax.inject.Inject
 
-class MovieInteractor @Inject constructor(private val movieRepository: IMovieRepository): MovieUseCase {
+class MovieInteractor @Inject constructor(private val movieRepository: IMovieRepository) :
+    MovieUseCase {
 
     override fun searchMovies(query: String) = movieRepository.searchMovies(query)
 
-    override fun getPopularMovies(sort: String) = movieRepository.getPopularMovies(sort)
+    override fun getPopularMovies(sort: String, shouldFetchAgain: Boolean) =
+        movieRepository.getPopularMovies(sort, shouldFetchAgain)
 
     override fun getUpcomingMovies() = movieRepository.getUpcomingMovies()
 
-    override fun getTrendingMovies() = movieRepository.getTrendingMovies()
+    override fun getTrendingThisWeekList() = movieRepository.getTrendingThisWeekList()
 
     override fun getMovieDetail(movie: Catalogue) = movieRepository.getMovieDetail(movie)
 
@@ -20,13 +22,16 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
 
     override fun getMovieTrailer(movie: Catalogue) = movieRepository.getMovieTrailer(movie)
 
-    override suspend fun insertPlaylistItem(item: Catalogue, state: Boolean) = movieRepository.insertPlaylistItem(item, state)
+    override suspend fun insertPlaylistItem(item: Catalogue, state: Boolean) =
+        movieRepository.insertPlaylistItem(item, state)
 
-    override suspend fun removePlaylistItem(item: Catalogue) = movieRepository.removePlaylistItem(item)
+    override suspend fun removePlaylistItem(item: Catalogue) =
+        movieRepository.removePlaylistItem(item)
 
     override fun getTvTrailer(tvShow: Catalogue) = movieRepository.getTvTrailer(tvShow)
 
-    override fun getPopularTvShows(sort: String) = movieRepository.getPopularTvShows(sort)
+    override fun getPopularTvShows(sort: String, shouldFetchAgain: Boolean) =
+        movieRepository.getPopularTvShows(sort, shouldFetchAgain)
 
     override fun getTopTvShowList() = movieRepository.getTopTvShowList()
 
