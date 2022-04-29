@@ -78,8 +78,10 @@ class DetailCatalogueActivity : AppCompatActivity(R.layout.activity_detail_catal
 
                 btnShare.setOnClickListener {
                     val shareIntent = Intent()
+                    val appName = getString(R.string.app_name)
+                    val appPlayStoreLink = getString(R.string.app_link)
                     shareIntent.action = Intent.ACTION_SEND
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on KotakFilm")
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on $appName \n$appPlayStoreLink")
                     shareIntent.type = "text/plain"
                     startActivity(Intent.createChooser(shareIntent, "Share To:"))
                 }

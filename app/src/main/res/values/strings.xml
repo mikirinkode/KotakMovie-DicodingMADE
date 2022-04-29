@@ -59,5 +59,6 @@
     <string name="top_rated_tv_shows">Top Rated TV Shows</string>
     <string name="title_playlist">Playlist</string>
     <string name="popular">Popular</string>
+    <string name="app_link">https://play.google.com/store/apps/details?id=com.mikirinkode.kotakmovie</string>
 
 </resources>
