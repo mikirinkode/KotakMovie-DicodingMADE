@@ -359,7 +359,7 @@ class DetailCatalogueActivity : AppCompatActivity(R.layout.activity_detail_catal
         Glide.with(this.context)
             .load(url)
             .apply(RequestOptions.placeholderOf(R.drawable.ic_refresh))
-            .error(R.drawable.ic_error)
+            .error(R.drawable.ic_error_image)
             .into(this)
     }
 
