@@ -30,7 +30,7 @@ A movie catalogue app that implement clean architecture, MVVM, Hilt, ROOM, Corou
 - Share Movie to other application
 
 ## If you want to Clone this Repo
-You need to have an API Key, because the data is from <a href="https://www.themoviedb.org/">TheMovieDatabase</a>. To get the api key you can go to this <a href="https://developers.themoviedb.org/3/">link</a>, sign up and you will get one. Then you can put it at Constants class in Core module (package: com.mikirinkode.kotakfilm.core.utils)
+You need to have an API Key, because the data is from <a href="https://www.themoviedb.org/">TheMovieDatabase</a>. To get the api key you can go to this <a href="https://developers.themoviedb.org/3/">link</a>, sign up and you will get one. Then you can put it at Constants.kt class in Core module (package: com.mikirinkode.kotakmovie.core.utils)
 ```
 class Constants {
     companion object{
