@@ -48,9 +48,12 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                 btnTryAgain.setOnClickListener {
                     findMovieList()
                 }
+                swipeToRefresh.setOnRefreshListener {
+                    viewModel.getPopularMoviesList(SortUtils.POPULAR).observe(viewLifecycleOwner, movieObserver)
+                }
             }
         }
-    }
+     }
 
     private fun findMovieList(){
         binding.apply {
@@ -72,6 +75,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                         movieList.data?.let { movieAdapter.setData(it) }
                         icLoading.visibility = View.GONE
                         rvFilm.smoothScrollToPosition(0)
+                        swipeToRefresh.isRefreshing = false
                     }
                     is Resource.Error -> {
                         icLoading.visibility = View.GONE

@@ -50,6 +50,9 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
                     findTvShowList()
 
                 }
+                swipeToRefresh.setOnRefreshListener {
+                    findTvShowList()
+                }
             }
         }
     }
@@ -75,6 +78,7 @@ class TvShowFragment : Fragment(R.layout.fragment_tv_show) {
                         icLoading.visibility = View.GONE
                         tvShowList.data?.let { tvShowAdapter.setData(it) }
                         rvFilm.smoothScrollToPosition(0)
+                        swipeToRefresh.isRefreshing = false
                     }
                     is Resource.Error -> {
                         icLoading.visibility = View.GONE

@@ -74,6 +74,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     findTopTvShows()
                     findTrendingList()
                 }
+
+                swipeToRefresh.setOnRefreshListener {
+                    findUpcomingMovies()
+                    findTopTvShows()
+                    findTrendingList()
+                    swipeToRefresh.isRefreshing = false
+                }
             }
         }
     }

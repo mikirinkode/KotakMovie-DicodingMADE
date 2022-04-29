@@ -11,9 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.mikirinkode.kotakmovie.R
-import com.mikirinkode.kotakmovie.databinding.FragmentSearchBinding
 import com.mikirinkode.kotakmovie.core.ui.CatalogueAdapter
 import com.mikirinkode.kotakmovie.core.vo.Resource
+import com.mikirinkode.kotakmovie.databinding.FragmentSearchBinding
 import com.mikirinkode.kotakmovie.ui.detail.DetailCatalogueActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +39,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     moveToDetail.putExtra(DetailCatalogueActivity.EXTRA_FILM, selectedData)
                     startActivity(moveToDetail)
                 }
+                swipeToRefresh.setOnRefreshListener {
+                    observeSearchResult()
+                }
+                swipeToRefresh.isRefreshing = false
             }
             observeSearchResult()
         }
@@ -108,6 +112,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             if (searchResult != null) {
                                 movieAdapter.setData(searchResult)
                                 rvSearchResult.scrollToPosition(0)
+                                swipeToRefresh.isRefreshing = false
                                 if (searchResult.isEmpty()){
                                     onEmptyStateMessage.visibility = View.VISIBLE
                                     onInitialSearchStateMessage.visibility = View.GONE
