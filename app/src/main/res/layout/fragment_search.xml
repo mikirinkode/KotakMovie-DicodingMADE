@@ -6,43 +6,45 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:id="@+id/on_fail_msg"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_rectangle"
         android:padding="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ImageView
-            android:id="@+id/no_internet_icon"
+            android:id="@+id/error_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_no_internet"
-            android:contentDescription="@string/no_internet_connection"
-            app:layout_constraintBottom_toTopOf="@+id/label_connect"
+            android:background="@drawable/ic_error_state"
+            android:contentDescription="@string/an_error_occurred_illustration"
+            app:layout_constraintBottom_toTopOf="@+id/label_error"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
-            android:id="@+id/label_connect"
+            android:id="@+id/label_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_internet_connection"
+            android:text="@string/an_error_occurred"
             android:textColor="@color/light_200"
+            android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="@id/label_please_check"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/no_internet_icon" />
+            app:layout_constraintTop_toBottomOf="@+id/error_state" />
 
 
         <TextView
@@ -50,11 +52,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/you_are_offline"
+            android:text="@string/check_keyword_or_connection"
+            android:textAlignment="center"
             android:textColor="@color/light_200"
-            app:layout_constraintEnd_toEndOf="@+id/label_connect"
-            app:layout_constraintStart_toStartOf="@+id/label_connect"
-            app:layout_constraintTop_toBottomOf="@id/label_connect" />
+            app:layout_constraintEnd_toEndOf="@+id/label_error"
+            app:layout_constraintStart_toStartOf="@+id/label_error"
+            app:layout_constraintTop_toBottomOf="@id/label_error" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -112,6 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
+        tools:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,8 +177,8 @@
 
         <ImageView
             android:id="@+id/iv_empty_state_illustration"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/search_empty_result_illustration"
             android:src="@drawable/ic_search_empty_result_illustration"
             app:layout_constraintEnd_toEndOf="parent"
