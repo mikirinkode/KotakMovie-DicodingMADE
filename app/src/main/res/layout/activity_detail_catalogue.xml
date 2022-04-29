@@ -462,7 +462,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -476,11 +476,10 @@
 
                     <ImageView
                         android:id="@+id/no_internet_icon"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/ic_no_internet"
                         android:contentDescription="@string/no_internet_connection"
-                        app:backgroundTint="@color/light_200"
                         app:layout_constraintBottom_toTopOf="@+id/label_connect"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
