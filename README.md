@@ -1,10 +1,19 @@
 # KotakMovie-DicodingMADE
 A movie catalogue app that implement clean architecture, MVVM, Hilt, ROOM, Coroutines, Flow. This project is also a submission for Dicoding Class Menjadi Android Developer Expert.
 
-<a href="https://play.google.com/store/apps/details?id=com.mikirinkode.kotakmovie">
-  <img alt="Get it on Google Play"
-       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
-</a>
+
+<div align="center">
+
+
+[![Downloads](https://PlayBadges.pavi2410.me/badge/downloads?id=com.mikirinkode.kotakmovie)](https://play.google.com/store/apps/details?id=com.mikirinkode.kotakmovie)
+ [![Version](https://img.shields.io/github/v/release/mikirinkode/KotakMovie-DicodingMADE?include_prereleases&sort=semver)](https://github.com/mikirinkode/KotakMovie-DicodingMADE/releases/latest)
+
+
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+      alt='Get it on Google Play'
+      height="80">](https://play.google.com/store/apps/details?id=com.mikirinkode.kotakmovie)
+
+<div align="left">
 
 <br>
 
