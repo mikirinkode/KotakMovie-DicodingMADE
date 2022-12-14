@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(private val movieUseCase: MovieUseCase): ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when{
             modelClass.isAssignableFrom(PlaylistViewModel::class.java) -> {
                 PlaylistViewModel(movieUseCase) as T
