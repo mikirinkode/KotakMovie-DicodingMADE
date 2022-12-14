@@ -14,5 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kotak Film"
 include ':app'
-include ':core'
-include ':playlist'

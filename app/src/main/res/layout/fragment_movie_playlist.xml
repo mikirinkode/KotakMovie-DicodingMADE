@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.mikirinkode.kotakmovie.ui.playlist.TvShowPlaylistFragment">
+    tools:context="com.mikirinkode.kotakmovie.ui.main.playlist.movie.MoviePlaylistFragment">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_film"
@@ -70,7 +71,5 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

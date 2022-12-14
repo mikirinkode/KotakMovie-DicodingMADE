@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.home.HomeFragment">
+            tools:context=".ui.main.home.HomeFragment">
 
             <TextView
                 android:id="@+id/label_trending"

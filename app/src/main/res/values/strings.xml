@@ -64,4 +64,9 @@
     <string name="an_error_occurred">Oops… An Error Occurred.</string>
     <string name="check_keyword_or_connection">Please check your input keyword or your internet connection.</string>
 
+    <string name="film_poster">film poster</string>
+    <string name="movie_tv_show_backdrop">movie / tv show backdrop</string>
+    <string name="movie_tv_show_poster">movie / tv show poster</string>
+    <string name="title">Title</string>
+    <string name="star_symbol">star symbol</string>
 </resources>

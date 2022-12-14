@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mikirinkode.kotakmovie.R
@@ -20,8 +19,8 @@ import com.mikirinkode.kotakmovie.core.utils.Constants.Companion.IMAGE_BASE_URL
 import com.mikirinkode.kotakmovie.core.vo.Resource
 import com.mikirinkode.kotakmovie.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakmovie.databinding.YoutubePlayerPopupBinding
-import com.mikirinkode.kotakmovie.ui.movie.MovieViewModel
-import com.mikirinkode.kotakmovie.ui.tvshow.TvShowViewModel
+import com.mikirinkode.kotakmovie.ui.main.movie.MovieViewModel
+import com.mikirinkode.kotakmovie.ui.main.tvshow.TvShowViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
@@ -32,9 +31,9 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class DetailCatalogueActivity : AppCompatActivity(R.layout.activity_detail_catalogue) {
+class DetailCatalogueActivity : AppCompatActivity() {
 
-    private val binding: ActivityDetailCatalogueBinding by viewBinding()
+    private lateinit var binding: ActivityDetailCatalogueBinding
     private lateinit var popupBinding: YoutubePlayerPopupBinding
     private lateinit var movieTitle: String
     private val movieViewModel: MovieViewModel by viewModels()
@@ -44,6 +43,7 @@ class DetailCatalogueActivity : AppCompatActivity(R.layout.activity_detail_catal
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailCatalogueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

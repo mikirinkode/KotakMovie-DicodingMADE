@@ -15,7 +15,7 @@
             android:exported="false"
             android:theme="@style/Theme.KotakMovie.NoActionBar"/>
         <activity
-            android:name="com.mikirinkode.kotakmovie.ui.MainActivity"
+            android:name="com.mikirinkode.kotakmovie.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
