@@ -6,4 +6,5 @@
     <string name="title">Title</string>
     <string name="star_symbol">star symbol</string>
     <string name="no_data">-No Data-</string>
+    <string name="rating_icon">Rating Icon</string>
 </resources>

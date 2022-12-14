@@ -1,7 +1,12 @@
-package com.mikirinkode.kotakmovie.ui
+package com.mikirinkode.kotakmovie
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -9,11 +14,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.databinding.ActivityMainBinding
 import com.mikirinkode.kotakmovie.ui.home.HomeFragment
 import com.mikirinkode.kotakmovie.ui.movie.MovieFragment
 import com.mikirinkode.kotakmovie.ui.search.SearchFragment
+import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.ui.tvshow.TvShowFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,14 +29,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.apply {
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
-            val navController = navHostFragment.navController
-            setSupportActionBar(toolbar)
-            setupBottomNavMenu(navController)
+        setContent {
+            KotakMovieTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    KotakMovieApp()
+                }
+            }
         }
+//        binding.apply {
+//            val navHostFragment =
+//                supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
+//            val navController = navHostFragment.navController
+//            setSupportActionBar(toolbar)
+//            setupBottomNavMenu(navController)
+//        }
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

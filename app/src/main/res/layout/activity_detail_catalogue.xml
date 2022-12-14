@@ -148,6 +148,7 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        tools:text="Sample Title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -462,7 +463,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
 

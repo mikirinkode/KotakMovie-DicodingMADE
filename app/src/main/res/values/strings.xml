@@ -63,5 +63,6 @@
     <string name="an_error_occurred_illustration">An Error Occurred Illustration</string>
     <string name="an_error_occurred">Oops… An Error Occurred.</string>
     <string name="check_keyword_or_connection">Please check your input keyword or your internet connection.</string>
+    <string name="rating_icon">Rating Icon</string>
 
 </resources>
