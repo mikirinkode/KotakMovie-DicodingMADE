@@ -1,8 +1,6 @@
 package com.mikirinkode.kotakmovie.ui.main.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -137,7 +135,7 @@ fun TrendingCardRow(
     ) {
         items(list) { movie ->
             TrendingMovieItem(
-                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.backdropPath}" ?: "",
+                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.backdropPath}",
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 rating = movie.voteAverage,
                 onClick = {
@@ -175,7 +173,7 @@ fun CompactCardRow(
     ) {
         items(list) { movie ->
             CompactMovieItem(
-                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}" ?: "",
+                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
                 rating = movie.voteAverage,
                 onClick = {
                     navigateToDetail(movie.isTvShow, movie.id)

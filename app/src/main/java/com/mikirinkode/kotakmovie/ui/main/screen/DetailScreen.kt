@@ -1,6 +1,5 @@
 package com.mikirinkode.kotakmovie.ui.main.screen
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,10 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.mikirinkode.kotakmovie.R
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.utils.Constants
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
+import com.mikirinkode.kotakmovie.ui.components.ShimmerDetailScreen
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.DetailMovieViewModel
 import com.mikirinkode.kotakmovie.viewmodel.TrailerViewModel
@@ -113,7 +112,7 @@ fun DetailScreen(
                     runtime = data.runtime ?: 0,
                     voteAverage = data.voteAverage,
                     releaseDate = data.releaseDate ?: stringResource(id = R.string.no_data),
-                    tagline = "\"${data.tagline}\"" ?: stringResource(id = R.string.no_data),
+                    tagline = "\"${data.tagline}\"",
                     overview = data.overview ?: stringResource(id = R.string.no_data),
                     isOnPlaylist = data.isOnPlaylist,
                     navigateBack = navigateBack,
@@ -207,7 +206,7 @@ fun DetailMovieContent(
 
     }
 
-    Box() {
+    Box {
         CollapsingToolbarScaffold(
             modifier = modifier.fillMaxSize(),
             state = state,

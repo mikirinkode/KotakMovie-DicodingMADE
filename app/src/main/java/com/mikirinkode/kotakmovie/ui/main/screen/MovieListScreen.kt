@@ -3,7 +3,6 @@ package com.mikirinkode.kotakmovie.ui.main.screen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import com.mikirinkode.kotakmovie.R
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -14,16 +13,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
+import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.core.utils.SortUtils
-import com.mikirinkode.kotakmovie.core.vo.Resource
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.NoInternetCard
 import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
-import com.mikirinkode.kotakmovie.viewmodel.MovieViewModel
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.MovieListViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory

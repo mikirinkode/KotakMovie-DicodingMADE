@@ -16,7 +16,6 @@ import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
-import com.mikirinkode.kotakmovie.viewmodel.MoviePlaylistViewModel
 import com.mikirinkode.kotakmovie.viewmodel.TvShowPlaylistViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 

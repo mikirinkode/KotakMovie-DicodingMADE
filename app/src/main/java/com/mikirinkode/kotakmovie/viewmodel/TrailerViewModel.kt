@@ -3,7 +3,6 @@ package com.mikirinkode.kotakmovie.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow

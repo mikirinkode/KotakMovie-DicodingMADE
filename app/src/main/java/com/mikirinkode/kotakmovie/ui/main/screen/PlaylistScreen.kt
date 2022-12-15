@@ -13,9 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
-import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.R
+import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import kotlinx.coroutines.launch
 
 
@@ -35,7 +34,7 @@ fun PlaylistScreen(
             )
         }
     ) { innerPadding ->
-        TabLayout(navigateToDetail = navigateToDetail, modifier = Modifier.padding(innerPadding), )
+        TabLayout(navigateToDetail = navigateToDetail, modifier = Modifier.padding(innerPadding))
     }
 }
 
@@ -46,7 +45,7 @@ fun TabLayout(
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = 2)
-    Column() {
+    Column {
         Tabs(pagerState = pagerState)
         TabsContent(pagerState = pagerState, navigateToDetail = navigateToDetail)
     }

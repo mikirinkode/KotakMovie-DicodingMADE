@@ -10,14 +10,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mikirinkode.kotakmovie.R
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
-import com.mikirinkode.kotakmovie.viewmodel.HomeViewModel
 import com.mikirinkode.kotakmovie.viewmodel.MoviePlaylistViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 

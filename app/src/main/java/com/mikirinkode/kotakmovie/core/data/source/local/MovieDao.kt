@@ -3,7 +3,6 @@ package com.mikirinkode.kotakmovie.core.data.source.local
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.mikirinkode.kotakmovie.core.data.entity.CatalogueEntity
-import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import kotlinx.coroutines.flow.Flow
 
 @Dao

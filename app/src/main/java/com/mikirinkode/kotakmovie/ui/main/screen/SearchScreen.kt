@@ -29,7 +29,6 @@ import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
-import com.mikirinkode.kotakmovie.viewmodel.MovieListViewModel
 import com.mikirinkode.kotakmovie.viewmodel.SearchViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 

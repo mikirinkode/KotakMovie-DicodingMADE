@@ -1,7 +1,5 @@
 package com.mikirinkode.kotakmovie.core.data
 
-import android.util.Log
-import com.mikirinkode.kotakmovie.core.data.entity.CatalogueEntity
 import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
 import com.mikirinkode.kotakmovie.core.data.source.local.LocalDataSource
 import com.mikirinkode.kotakmovie.core.data.source.remote.ApiResponse
@@ -12,7 +10,6 @@ import com.mikirinkode.kotakmovie.core.domain.model.TrailerVideo
 import com.mikirinkode.kotakmovie.core.utils.DataMapper
 import com.mikirinkode.kotakmovie.core.vo.Resource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
@@ -111,7 +108,7 @@ class MovieRepository(
             }
 
             override suspend fun createCall(): Flow<ApiResponse<MovieListResponse>> {
-                return remoteDataSource.getPopularMovieList()
+                return remoteDataSource.getUpcomingMovieList()
             }
 
             override suspend fun saveCallResult(data: MovieListResponse) {

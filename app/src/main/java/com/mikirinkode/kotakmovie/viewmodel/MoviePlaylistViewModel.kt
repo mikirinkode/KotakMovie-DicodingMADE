@@ -1,8 +1,6 @@
 package com.mikirinkode.kotakmovie.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
