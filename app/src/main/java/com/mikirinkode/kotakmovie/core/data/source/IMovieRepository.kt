@@ -14,11 +14,11 @@ interface IMovieRepository {
 
     fun getTrendingThisWeekList(): Flow<Resource<List<Catalogue>>>
 
-    fun getMovieDetail(movie: Catalogue): Flow<Resource<Catalogue>>
+    fun getMovieDetail(movieId: Int): Flow<Resource<Catalogue>>
 
     fun getMoviePlaylist(): Flow<List<Catalogue>>
 
-    fun getMovieTrailer(movie: Catalogue): Flow<Resource<List<TrailerVideo>>>
+    fun getMovieTrailer(movieId: Int): Flow<Resource<List<TrailerVideo>>>
 
 
     suspend fun insertPlaylistItem(item: Catalogue, state: Boolean)
@@ -26,13 +26,13 @@ interface IMovieRepository {
     suspend fun removePlaylistItem(item: Catalogue)
 
 
-    fun getTvTrailer(tvShow: Catalogue): Flow<Resource<List<TrailerVideo>>>
+    fun getTvTrailer(tvShowId: Int): Flow<Resource<List<TrailerVideo>>>
 
     fun getPopularTvShows(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>>
 
     fun getTopTvShowList(): Flow<Resource<List<Catalogue>>>
 
-    fun getTvShowDetail(tvShow: Catalogue): Flow<Resource<Catalogue>>
+    fun getTvShowDetail(tvShowId: Int): Flow<Resource<Catalogue>>
 
     fun getTvShowPlaylist(): Flow<List<Catalogue>>
 }

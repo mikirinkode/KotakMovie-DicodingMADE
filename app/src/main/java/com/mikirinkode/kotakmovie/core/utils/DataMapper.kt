@@ -9,6 +9,27 @@ object DataMapper {
     /*
         Movie Response To Entity
      */
+    fun mapMovieDetailResponseToEntity(data: MovieDetailResponse): CatalogueEntity{
+        data.apply {
+            val genreList = ArrayList<String>()
+            genres.forEach { genreList.add(it.name) }
+            val genre = genreList.joinToString(separator = ", ")
+            return CatalogueEntity(
+                id,
+                title,
+                releaseDate,
+                overview,
+                tagline,
+                genre,
+                runtime,
+                voteAverage,
+                popularity,
+                posterPath,
+                backdropPath,
+            )
+        }
+    }
+
     fun mapMovieResponsesToEntities(data: MovieListResponse): List<CatalogueEntity> {
         val movieList = ArrayList<CatalogueEntity>()
         data.results.forEach {
@@ -24,6 +45,28 @@ object DataMapper {
                 it.popularity,
                 it.posterPath,
                 it.backdropPath,
+            )
+            movieList.add(movie)
+        }
+        return movieList
+    }
+
+    fun mapUpcomingToEntities(data: MovieListResponse): List<CatalogueEntity> {
+        val movieList = ArrayList<CatalogueEntity>()
+        data.results.forEach {
+            val movie = CatalogueEntity(
+                it.id,
+                it.title,
+                it.releaseDate,
+                it.overview,
+                null,
+                null,
+                null,
+                it.voteAverage,
+                it.popularity,
+                it.posterPath,
+                it.backdropPath,
+                isUpcoming = true
             )
             movieList.add(movie)
         }
@@ -55,12 +98,34 @@ object DataMapper {
         }
         return tvShowList
     }
+    fun mapTopRatedTvToEntities(data: TvShowListResponse): List<CatalogueEntity> {
+        val tvShowList = ArrayList<CatalogueEntity>()
+        data.results.forEach {
+            val tvShow = CatalogueEntity(
+                it.id,
+                it.name,
+                it.firstAirDate,
+                it.overview,
+                null,
+                null,
+                null,
+                it.voteAverage,
+                it.popularity,
+                it.posterPath,
+                it.backdropPath,
+                isTvShow = true,
+                isTopTv = true
+            )
+            tvShowList.add(tvShow)
+        }
+        return tvShowList
+    }
 
 
     /*
        Entities To Domain
      */
-    private fun mapEntityToDomain(data: CatalogueEntity): Catalogue {
+    fun mapEntityToDomain(data: CatalogueEntity): Catalogue {
         return Catalogue(
             id = data.id,
             title = data.title,
@@ -109,9 +174,9 @@ object DataMapper {
     /*
         Response To Domain
      */
-    fun mapMultiResponsesToDomain(data: MultiResponse): List<Catalogue> {
+    fun mapMultiResponsesToEntities(data: MultiResponse): List<CatalogueEntity> {
         return data.results.map {
-            Catalogue(
+            CatalogueEntity(
                 id = it.id,
                 title = if(it.mediaType == "tv") it.name else it.title,
                 releaseDate = if(it.mediaType == "tv") it.firstAirDate else it.releaseDate,
@@ -124,6 +189,25 @@ object DataMapper {
                 popularity = it.popularity,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
+            )
+        }
+    }
+    fun mapTrendingToEntities(data: MultiResponse): List<CatalogueEntity> {
+        return data.results.map {
+            CatalogueEntity(
+                id = it.id,
+                title = if(it.mediaType == "tv") it.name else it.title,
+                releaseDate = if(it.mediaType == "tv") it.firstAirDate else it.releaseDate,
+                isTvShow = it.mediaType == "tv",
+                overview = it.overview,
+                tagline = null,
+                genres = null,
+                runtime = null,
+                voteAverage = it.voteAverage,
+                popularity = it.popularity,
+                posterPath = it.posterPath,
+                backdropPath = it.backdropPath,
+                isTrending = true,
             )
         }
     }
@@ -192,6 +276,27 @@ object DataMapper {
             genres.forEach { genreList.add(it.name) }
             val genre = genreList.joinToString(separator = ", ")
             return Catalogue(
+                id,
+                name,
+                firstAirDate,
+                overview,
+                tagline,
+                genre,
+                if (episodeRunTime.isEmpty()) 0 else episodeRunTime[0],
+                voteAverage,
+                popularity,
+                posterPath,
+                backdropPath,
+                isTvShow = true
+            )
+        }
+    }
+    fun mapDetailTvResponseToEntity(data: TvShowDetailResponse): CatalogueEntity {
+        data.apply {
+            val genreList = ArrayList<String>()
+            genres.forEach { genreList.add(it.name) }
+            val genre = genreList.joinToString(separator = ", ")
+            return CatalogueEntity(
                 id,
                 name,
                 firstAirDate,

@@ -4,30 +4,30 @@ import com.mikirinkode.kotakmovie.core.data.source.remote.ApiResponse
 import com.mikirinkode.kotakmovie.core.vo.Resource
 import kotlinx.coroutines.flow.*
 
-abstract class NetworkBoundResource<ResultType, RequestType>{
+abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private val result: Flow<Resource<ResultType>> = flow {
+        emit(Resource.Loading())
+        val dbSource = loadFromDB().first()
+        if (shouldFetch(dbSource)) {
             emit(Resource.Loading())
-            val dbSource = loadFromDB().first()
-            if (shouldFetch(dbSource)){
-                emit(Resource.Loading())
-                when (val apiResponse = createCall().first()){
-                    is ApiResponse.Success -> {
-                        saveCallResult(apiResponse.data)
-                        emitAll(loadFromDB().map { Resource.Success(it) })
-                    }
-                    is ApiResponse.Empty -> {
-                        emitAll(loadFromDB().map { Resource.Success(it) })
-                    }
-                    is ApiResponse.Error -> {
-                        onFetchFailed()
-                        emit(Resource.Error(apiResponse.errorMessage))
-                    }
+            when (val apiResponse = createCall().first()) {
+                is ApiResponse.Success -> {
+                    saveCallResult(apiResponse.data)
+                    emitAll(loadFromDB().map { Resource.Success(it) })
                 }
-            } else {
-                emitAll(loadFromDB().map { Resource.Success(it) })
+                is ApiResponse.Empty -> {
+                    emitAll(loadFromDB().map { Resource.Success(it) })
+                }
+                is ApiResponse.Error -> {
+                    onFetchFailed()
+                    emit(Resource.Error(apiResponse.errorMessage))
+                }
             }
+        } else {
+            emitAll(loadFromDB().map { Resource.Success(it) })
         }
+    }
 
 
     private fun onFetchFailed() {}

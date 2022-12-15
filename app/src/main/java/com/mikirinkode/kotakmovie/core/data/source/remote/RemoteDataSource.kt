@@ -7,9 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val api: ApiService) {
+class RemoteDataSource(private val api: ApiService) {
 
     private val apiKey = Constants.API_KEY
 
