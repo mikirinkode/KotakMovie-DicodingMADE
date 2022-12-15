@@ -1,16 +1,29 @@
-package com.mikirinkode.kotakmovie.ui.main.movie
+package com.mikirinkode.kotakmovie.viewmodel
 
 import androidx.lifecycle.*
+import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.domain.model.TrailerVideo
-import com.mikirinkode.kotakmovie.core.domain.usecase.MovieUseCase
 import com.mikirinkode.kotakmovie.core.vo.Resource
+import com.mikirinkode.kotakmovie.ui.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
+class MovieViewModel(private val repository: IMovieRepository) : ViewModel() {
+
+    /**
+     * UI STATE
+     */
+    private val _uiState: MutableStateFlow<UiState<List<Catalogue>>> = MutableStateFlow(UiState.Loading)
+    val uiState: StateFlow<UiState<List<Catalogue>>>
+        get() = _uiState
+
+    // changed
+
 
     private val selectedMovie = MutableLiveData<Catalogue>()
 
@@ -21,24 +34,21 @@ class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase)
 
     var movieDetail: LiveData<Resource<Catalogue>> =
         Transformations.switchMap(selectedMovie) { movie ->
-            movieUseCase.getMovieDetail(movie).asLiveData()
+            repository.getMovieDetail(movie).asLiveData()
         }
 
-    fun getPopularMoviesList(sort: String, shouldFetchAgain: Boolean): LiveData<Resource<List<Catalogue>>> {
-        return movieUseCase.getPopularMovies(sort, shouldFetchAgain).asLiveData()
-    }
 
     fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
-        return movieUseCase.getMovieTrailer(movie).asLiveData()
+        return repository.getMovieTrailer(movie).asLiveData()
     }
 
     fun insertMovieToPlaylist(item: Catalogue, newState: Boolean) {
         viewModelScope.launch {
-            movieUseCase.insertPlaylistItem(item, newState)
+            repository.insertPlaylistItem(item, newState)
         }
     }
 
     fun removeMovieFromPlaylist(item: Catalogue){
-        viewModelScope.launch { movieUseCase.removePlaylistItem(item) }
+        viewModelScope.launch { repository.removePlaylistItem(item) }
     }
 }

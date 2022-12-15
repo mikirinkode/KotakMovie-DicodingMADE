@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikirinkode.kotakmovie.databinding.FragmentTvShowPlaylistBinding
 import com.mikirinkode.kotakmovie.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakmovie.ui.main.home.CatalogueAdapter
-import com.mikirinkode.kotakmovie.ui.main.playlist.PlaylistViewModel
+import com.mikirinkode.kotakmovie.viewmodel.PlaylistViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

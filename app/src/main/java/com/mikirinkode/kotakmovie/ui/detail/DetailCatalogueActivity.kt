@@ -19,8 +19,8 @@ import com.mikirinkode.kotakmovie.core.utils.Constants.Companion.IMAGE_BASE_URL
 import com.mikirinkode.kotakmovie.core.vo.Resource
 import com.mikirinkode.kotakmovie.databinding.ActivityDetailCatalogueBinding
 import com.mikirinkode.kotakmovie.databinding.YoutubePlayerPopupBinding
-import com.mikirinkode.kotakmovie.ui.main.movie.MovieViewModel
-import com.mikirinkode.kotakmovie.ui.main.tvshow.TvShowViewModel
+import com.mikirinkode.kotakmovie.viewmodel.MovieViewModel
+import com.mikirinkode.kotakmovie.viewmodel.TvShowViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener

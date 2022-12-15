@@ -14,6 +14,7 @@ import com.mikirinkode.kotakmovie.core.vo.Resource
 import com.mikirinkode.kotakmovie.databinding.FragmentTvShowBinding
 import com.mikirinkode.kotakmovie.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakmovie.ui.main.home.CatalogueAdapter
+import com.mikirinkode.kotakmovie.viewmodel.TvShowViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,7 +69,7 @@ class TvShowFragment : Fragment() {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularTvShowsList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, tvShowObserver)
+//            viewModel.getPopularTvShowsList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, tvShowObserver)
         }
     }
 
@@ -110,7 +111,7 @@ class TvShowFragment : Fragment() {
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         binding.apply {
-            viewModel.getPopularTvShowsList(sort, false).observe(viewLifecycleOwner, tvShowObserver)
+//            viewModel.getPopularTvShowsList(sort, false).observe(viewLifecycleOwner, tvShowObserver)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)

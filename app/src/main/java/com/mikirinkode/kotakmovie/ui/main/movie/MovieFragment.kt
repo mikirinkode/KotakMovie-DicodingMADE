@@ -14,6 +14,7 @@ import com.mikirinkode.kotakmovie.core.vo.Resource
 import com.mikirinkode.kotakmovie.databinding.FragmentMovieBinding
 import com.mikirinkode.kotakmovie.ui.detail.DetailCatalogueActivity
 import com.mikirinkode.kotakmovie.ui.main.home.CatalogueAdapter
+import com.mikirinkode.kotakmovie.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,7 +69,7 @@ class MovieFragment : Fragment() {
             icLoading.visibility = View.VISIBLE
             btnTryAgain.visibility = View.GONE
             onFailMsg.visibility = View.GONE
-            viewModel.getPopularMoviesList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, movieObserver)
+//            viewModel.getPopularMoviesList(SortUtils.POPULAR, shouldFetchAgain).observe(viewLifecycleOwner, movieObserver)
         }
     }
 
@@ -110,7 +111,7 @@ class MovieFragment : Fragment() {
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         binding.apply {
-            viewModel.getPopularMoviesList(sort, false).observe(viewLifecycleOwner, movieObserver)
+//            viewModel.getPopularMoviesList(sort, false).observe(viewLifecycleOwner, movieObserver)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)
