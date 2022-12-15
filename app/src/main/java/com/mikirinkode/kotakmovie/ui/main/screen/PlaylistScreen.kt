@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PlaylistScreen(
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -34,19 +35,20 @@ fun PlaylistScreen(
             )
         }
     ) { innerPadding ->
-        TabLayout(modifier = Modifier.padding(innerPadding))
+        TabLayout(navigateToDetail = navigateToDetail, modifier = Modifier.padding(innerPadding), )
     }
 }
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabLayout(
-    modifier: Modifier = Modifier
+    navigateToDetail: (Boolean, Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = 2)
-    Column(){
+    Column() {
         Tabs(pagerState = pagerState)
-        TabsContent(pagerState = pagerState)
+        TabsContent(pagerState = pagerState, navigateToDetail = navigateToDetail)
     }
 }
 
@@ -77,7 +79,7 @@ fun Tabs(pagerState: PagerState) {
                 icon = {
                     Icon(
                         painter = painterResource(id = list[index].second),
-                        tint = if(pagerState.currentPage == index) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
+                        tint = if (pagerState.currentPage == index) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface,
                         contentDescription = null,
                         modifier = Modifier.size(22.dp)
                     )
@@ -101,11 +103,14 @@ fun Tabs(pagerState: PagerState) {
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState) {
+fun TabsContent(
+    pagerState: PagerState,
+    navigateToDetail: (Boolean, Int) -> Unit,
+) {
     HorizontalPager(state = pagerState) { page ->
         when (page) {
-            0 -> MoviePlaylistScreen()
-            1 -> TvShowPlaylistScreen()
+            0 -> MoviePlaylistScreen(navigateToDetail)
+            1 -> TvShowPlaylistScreen(navigateToDetail)
         }
     }
 }
@@ -115,6 +120,6 @@ fun TabsContent(pagerState: PagerState) {
 @Composable
 fun PlaylistScreenPreview() {
     KotakMovieTheme {
-        PlaylistScreen()
+//        PlaylistScreen()
     }
 }

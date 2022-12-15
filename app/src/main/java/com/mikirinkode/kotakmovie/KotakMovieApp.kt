@@ -1,5 +1,7 @@
 package com.mikirinkode.kotakmovie
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -7,16 +9,19 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mikirinkode.kotakmovie.ui.main.screen.*
 import com.mikirinkode.kotakmovie.ui.navigation.NavigationItem
 import com.mikirinkode.kotakmovie.ui.navigation.Screen
@@ -44,39 +49,85 @@ fun KotakMovieApp(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-//                    navigateToDetail = { movieId ->
-//                        navController.navigate(Screen.DetailMovie.createRoute(movieId))
-//                    }
+                    navigateToDetail = { isTvShow, movieId ->
+                        navController.navigate(
+                            Screen.DetailMovie.createRoute(
+                                isTvShow = isTvShow,
+                                movieId = movieId
+                            )
+                        )
+                    }
                 )
             }
             composable(Screen.Search.route) {
-                SearchScreen()
+                SearchScreen(
+                    navigateToDetail = { isTvShow, movieId ->
+                        navController.navigate(
+                            Screen.DetailMovie.createRoute(
+                                isTvShow = isTvShow,
+                                movieId = movieId
+                            )
+                        )
+                    })
             }
             composable(Screen.Movie.route) {
-                MovieListScreen()
+                MovieListScreen(
+                    navigateToDetail = { isTvShow, movieId ->
+                        navController.navigate(
+                            Screen.DetailMovie.createRoute(
+                                isTvShow = isTvShow,
+                                movieId = movieId
+                            )
+                        )
+                    })
             }
             composable(Screen.TvShow.route) {
-                TvShowListScreen()
+                TvShowListScreen(
+                    navigateToDetail = { isTvShow, movieId ->
+                        navController.navigate(
+                            Screen.DetailMovie.createRoute(
+                                isTvShow = isTvShow,
+                                movieId = movieId
+                            )
+                        )
+                    })
             }
             composable(Screen.Playlist.route) {
-                PlaylistScreen()
+                PlaylistScreen(
+                    navigateToDetail = { isTvShow, movieId ->
+                        navController.navigate(
+                            Screen.DetailMovie.createRoute(
+                                isTvShow = isTvShow,
+                                movieId = movieId
+                            )
+                        )
+                    })
             }
 
-//            composable(
-//                route = Screen.DetailMovie.route,
-//                arguments = listOf(navArgument("movieId") { type = NavType.IntType }),
-//            ) {
-//                val id = it.arguments?.getInt("movieId") ?: 1
-//                DetailScreen(
-//                    movieId = id,
-//                    navigateBack = {
-//                        navController.navigateUp()
-//                    },
-//                    navigateToTrailerScreen = {
-//
-//                    }
-//                )
-//            }
+            composable(
+                route = Screen.DetailMovie.route,
+                arguments = listOf(
+                    navArgument("isTvShow") { type = NavType.BoolType },
+                    navArgument("movieId") { type = NavType.IntType }),
+            ) {
+                val id = it.arguments?.getInt("movieId") ?: 1
+                val isTvShow = it.arguments?.getBoolean("isTvShow") ?: false
+                val context = LocalContext.current
+
+                DetailScreen(
+                    movieId = id,
+                    isTvShow = isTvShow,
+                    navigateBack = {
+                        navController.navigateUp()
+                    },
+                    navigateToTrailerScreen = {
+
+                    },
+                    onShareButtonClicked = { title ->
+                        shareMovie(context, title)
+                    }
+                )
+            }
         }
     }
 }
@@ -162,6 +213,21 @@ fun BottomBar(
             }
         }
     }
+}
+
+private fun shareMovie(context: Context, movieTitle: String){
+    val shareIntent = Intent()
+    val appName = context.getString(R.string.app_name)
+    val appPlayStoreLink = context.getString(R.string.app_link)
+    shareIntent.action = Intent.ACTION_SEND
+    shareIntent.putExtra(Intent.EXTRA_TEXT, "Watch $movieTitle on $appName \n$appPlayStoreLink")
+    shareIntent.type = "text/plain"
+    context.startActivity(
+        Intent.createChooser(
+            shareIntent,
+            context.getString(R.string.share_to)
+        )
+    )
 }
 
 @Preview

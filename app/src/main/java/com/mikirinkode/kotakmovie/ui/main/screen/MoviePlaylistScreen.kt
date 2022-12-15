@@ -22,6 +22,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
 fun MoviePlaylistScreen(
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -47,7 +48,7 @@ fun MoviePlaylistScreen(
                             modifier = Modifier.align(Alignment.Center)
                         )
                     } else {
-                        MovieListComponent(list = uiState.data)
+                        MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                     }
                 }
                 is UiState.Error -> {
@@ -62,6 +63,6 @@ fun MoviePlaylistScreen(
 @Composable
 fun MoviePlaylistPreview() {
     KotakMovieTheme {
-        MoviePlaylistScreen()
+//        MoviePlaylistScreen()
     }
 }

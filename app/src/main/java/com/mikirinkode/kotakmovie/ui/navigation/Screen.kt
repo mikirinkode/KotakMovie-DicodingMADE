@@ -8,8 +8,8 @@ sealed class Screen(val route: String) {
     object Playlist: Screen("playlist")
     object MoviePlaylist: Screen("movieplaylist")
     object TvShowPlaylist: Screen("tvshowplaylist")
-    object DetailMovie: Screen("home/{movieId}") {
-        fun createRoute(movieId: Int) = "home/$movieId"
+    object DetailMovie: Screen("home/{isTvShow}/{movieId}") {
+        fun createRoute(isTvShow: Boolean, movieId: Int) = "home/$isTvShow/$movieId"
     }
     object Trailer: Screen("trailer")
 }

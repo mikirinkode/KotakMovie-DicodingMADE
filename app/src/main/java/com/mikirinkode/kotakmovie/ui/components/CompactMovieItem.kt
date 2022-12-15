@@ -2,6 +2,7 @@ package com.mikirinkode.kotakmovie.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -29,6 +30,7 @@ import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 fun CompactMovieItem(
     imageUrl: String,
     rating: Double,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val gradient = Brush.verticalGradient(
@@ -42,6 +44,7 @@ fun CompactMovieItem(
         modifier = modifier
             .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
             .wrapContentSize()
+            .clickable { onClick() }
     ) {
         Box(modifier = Modifier){
             AsyncImage(// TODO: LOADING IMAGE
@@ -82,7 +85,8 @@ fun CompactMovieItemPreview() {
     KotakMovieTheme {
         CompactMovieItem(
             "",
-            8.0
+            8.0,
+            {}
         )
     }
 }

@@ -192,83 +192,83 @@ class DetailCatalogueActivity : AppCompatActivity() {
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             movie?.let { movieViewModel.setSelectedMovie(it) }
-            movieViewModel.movieDetail.observe(this@DetailCatalogueActivity) { movie ->
-                if (movie != null) {
-                    when (movie) {
-                        is Resource.Loading -> {
-                            icLoading.visibility = View.VISIBLE
-                        }
-                        is Resource.Success -> {
-                            icLoading.visibility = View.GONE
-                            movie.data?.let {
-                                setData(it)
-                            }
-                        }
-                        is Resource.Error -> {
-                            icLoading.visibility = View.GONE
-                            onFailMsg.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            }
+//            movieViewModel.movieDetail.observe(this@DetailCatalogueActivity) { movie ->
+//                if (movie != null) {
+//                    when (movie) {
+//                        is Resource.Loading -> {
+//                            icLoading.visibility = View.VISIBLE
+//                        }
+//                        is Resource.Success -> {
+//                            icLoading.visibility = View.GONE
+//                            movie.data?.let {
+//                                setData(it)
+//                            }
+//                        }
+//                        is Resource.Error -> {
+//                            icLoading.visibility = View.GONE
+//                            onFailMsg.visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
     private fun observeMovieTrailer(movie: Catalogue?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
-            if (movie != null) {
-                movieViewModel.getMovieTrailer(movie)
-                    .observe(this@DetailCatalogueActivity) { trailer ->
-                        if (trailer != null) {
-                            when (trailer) {
-                                is Resource.Loading -> {
-                                    icLoading.visibility = View.VISIBLE
-                                }
-                                is Resource.Success -> {
-                                    icLoading.visibility = View.GONE
-                                    val trailerList = trailer.data
-                                    if (!trailerList.isNullOrEmpty()) {
-                                        trailerVideoKey = trailerList[0].key
-                                    }
-                                }
-                                is Resource.Error -> {
-                                    icLoading.visibility = View.GONE
-                                    onFailMsg.visibility = View.VISIBLE
-                                }
-                            }
-                        }
-                    }
-            }
+//            if (movie != null) {
+//                movieViewModel.getMovieTrailer(movie)
+//                    .observe(this@DetailCatalogueActivity) { trailer ->
+//                        if (trailer != null) {
+//                            when (trailer) {
+//                                is Resource.Loading -> {
+//                                    icLoading.visibility = View.VISIBLE
+//                                }
+//                                is Resource.Success -> {
+//                                    icLoading.visibility = View.GONE
+//                                    val trailerList = trailer.data
+//                                    if (!trailerList.isNullOrEmpty()) {
+//                                        trailerVideoKey = trailerList[0].key
+//                                    }
+//                                }
+//                                is Resource.Error -> {
+//                                    icLoading.visibility = View.GONE
+//                                    onFailMsg.visibility = View.VISIBLE
+//                                }
+//                            }
+//                        }
+//                    }
+//            }
         }
     }
 
     private fun observeTvTrailer(tvShow: Catalogue?) {
         binding.apply {
             icLoading.visibility = View.VISIBLE
-            if (tvShow != null) {
-                tvShowViewModel.getTvTrailer(tvShow)
-                    .observe(this@DetailCatalogueActivity) { trailer ->
-                        if (trailer != null) {
-                            when (trailer) {
-                                is Resource.Loading -> {
-                                    icLoading.visibility = View.VISIBLE
-                                }
-                                is Resource.Success -> {
-                                    icLoading.visibility = View.GONE
-                                    val trailerList = trailer.data
-                                    if (!trailerList.isNullOrEmpty()) {
-                                        trailerVideoKey = trailerList[0].key
-                                    }
-                                }
-                                is Resource.Error -> {
-                                    icLoading.visibility = View.GONE
-                                    onFailMsg.visibility = View.VISIBLE
-                                }
-                            }
-                        }
-                    }
-            }
+//            if (tvShow != null) {
+//                tvShowViewModel.getTvTrailer(tvShow)
+//                    .observe(this@DetailCatalogueActivity) { trailer ->
+//                        if (trailer != null) {
+//                            when (trailer) {
+//                                is Resource.Loading -> {
+//                                    icLoading.visibility = View.VISIBLE
+//                                }
+//                                is Resource.Success -> {
+//                                    icLoading.visibility = View.GONE
+//                                    val trailerList = trailer.data
+//                                    if (!trailerList.isNullOrEmpty()) {
+//                                        trailerVideoKey = trailerList[0].key
+//                                    }
+//                                }
+//                                is Resource.Error -> {
+//                                    icLoading.visibility = View.GONE
+//                                    onFailMsg.visibility = View.VISIBLE
+//                                }
+//                            }
+//                        }
+//                    }
+//            }
         }
     }
 
@@ -282,25 +282,25 @@ class DetailCatalogueActivity : AppCompatActivity() {
             icLoading.visibility = View.VISIBLE
             onFailMsg.visibility = View.GONE
             tvShow?.let { tvShowViewModel.setSelectedTvShow(it) }
-            tvShowViewModel.tvShowDetail.observe(this@DetailCatalogueActivity) { tvShow ->
-                if (tvShow != null) {
-                    when (tvShow) {
-                        is Resource.Loading -> {
-                            icLoading.visibility = View.VISIBLE
-                        }
-                        is Resource.Success -> {
-                            icLoading.visibility = View.GONE
-                            tvShow.data?.let {
-                                setData(it)
-                            }
-                        }
-                        is Resource.Error -> {
-                            icLoading.visibility = View.GONE
-                            onFailMsg.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            }
+//            tvShowViewModel.tvShowDetail.observe(this@DetailCatalogueActivity) { tvShow ->
+//                if (tvShow != null) {
+//                    when (tvShow) {
+//                        is Resource.Loading -> {
+//                            icLoading.visibility = View.VISIBLE
+//                        }
+//                        is Resource.Success -> {
+//                            icLoading.visibility = View.GONE
+//                            tvShow.data?.let {
+//                                setData(it)
+//                            }
+//                        }
+//                        is Resource.Error -> {
+//                            icLoading.visibility = View.GONE
+//                            onFailMsg.visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 

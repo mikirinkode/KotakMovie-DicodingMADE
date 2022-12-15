@@ -18,6 +18,7 @@ import com.mikirinkode.kotakmovie.core.utils.Constants
 @Composable
 fun MovieListComponent(
     list: List<Catalogue>,
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -29,7 +30,10 @@ fun MovieListComponent(
                 imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}" ?: "",
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 releaseDate = movie.releaseDate ?: stringResource(id = R.string.no_data),
-                rating = movie.voteAverage
+                rating = movie.voteAverage,
+                onClick = {
+                    navigateToDetail(movie.isTvShow ,movie.id)
+                }
             )
         }
     }

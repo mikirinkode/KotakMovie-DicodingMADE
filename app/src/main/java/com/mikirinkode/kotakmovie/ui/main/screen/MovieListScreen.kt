@@ -29,6 +29,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
 fun MovieListScreen(
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showMenu by remember {
@@ -75,7 +76,7 @@ fun MovieListScreen(
                         MyDropDownItem(selected = selected, title = item, onClick = {
                             selected = item
                             showMenu = false
-                            viewModel.getPopularMoviesList(selected, true)
+                            viewModel.getPopularMoviesList(selected, false)
                         })
                     }
                 }
@@ -87,7 +88,7 @@ fun MovieListScreen(
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {
-                        viewModel.getPopularMoviesList(selected, true)
+                        viewModel.getPopularMoviesList(selected, false)
                         // TODO LATER
                     }
                     is UiState.Success -> {
@@ -95,7 +96,7 @@ fun MovieListScreen(
                             if (uiState.data.isEmpty()) {
                                 // TODO LATER
                             } else {
-                                MovieListComponent(list = uiState.data)
+                                MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                             }
                         }
                     }

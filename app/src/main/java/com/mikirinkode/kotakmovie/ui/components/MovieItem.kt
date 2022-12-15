@@ -1,6 +1,7 @@
 package com.mikirinkode.kotakmovie.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -32,6 +33,7 @@ fun MovieItem(
     title: String,
     releaseDate: String,
     rating: Double,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val gradient = Brush.verticalGradient(
@@ -46,6 +48,7 @@ fun MovieItem(
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .fillMaxWidth()
             .wrapContentHeight()
+            .clickable { onClick() }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -67,7 +70,7 @@ fun MovieItem(
                     .height(150.dp)
                     .padding(start = 16.dp),
             ) {
-                Text(
+                Text( // TODO year only
                     text = releaseDate,
                     fontSize = 16.sp,
                     fontStyle = FontStyle.Italic
@@ -104,7 +107,8 @@ fun MovieItemPreview() {
             "R.drawable.poster_alita",
             "Alita Battle Angle",
             "2019",
-            8.0
+            8.0,
+            {}
         )
     }
 }

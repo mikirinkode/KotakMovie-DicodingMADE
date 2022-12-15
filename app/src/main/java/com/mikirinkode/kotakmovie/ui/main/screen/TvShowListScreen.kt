@@ -26,6 +26,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
 fun TvShowListScreen(
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showMenu by remember {
@@ -94,7 +95,7 @@ fun TvShowListScreen(
                             if (uiState.data.isEmpty()) {
                                 // TODO LATER
                             } else {
-                                MovieListComponent(list = uiState.data)
+                                MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                             }
                         }
                     }

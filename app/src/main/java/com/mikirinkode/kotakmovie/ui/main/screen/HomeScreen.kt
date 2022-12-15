@@ -36,7 +36,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-//    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Boolean, Int) -> Unit
 ) {
     val context = LocalContext.current
     val viewModel: HomeViewModel =
@@ -85,7 +85,10 @@ fun HomeScreen(
                                         .padding(16.dp)
                                 )
                             } else {
-                                TrendingCardRow(list = uiState.data)
+                                TrendingCardRow(
+                                    list = uiState.data,
+                                    navigateToDetail = navigateToDetail
+                                )
                             }
                         }
                         is UiState.Error -> {
@@ -114,7 +117,8 @@ fun HomeScreen(
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
-                                CompactCardRow(list = uiState.data)
+                                CompactCardRow(list = uiState.data,
+                                    navigateToDetail = navigateToDetail)
                             }
                         }
                         is UiState.Error -> {// TODO LATER
@@ -133,7 +137,8 @@ fun HomeScreen(
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
-                                CompactCardRow(list = uiState.data)
+                                CompactCardRow(list = uiState.data,
+                                    navigateToDetail = navigateToDetail)
                             }
                         }
                         is UiState.Error -> {// TODO LATER
@@ -148,6 +153,7 @@ fun HomeScreen(
 @Composable
 fun TrendingCardRow(
     list: List<Catalogue>,
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -156,11 +162,11 @@ fun TrendingCardRow(
     ) {
         items(list) { movie ->
             TrendingMovieItem(
-                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}" ?: "",
+                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.backdropPath}" ?: "",
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 rating = movie.voteAverage,
                 onClick = {
-//                                navigateToDetail(movie.id)
+                    navigateToDetail(movie.isTvShow ,movie.id)
                 }
             )
         }
@@ -170,6 +176,7 @@ fun TrendingCardRow(
 @Composable
 fun CompactCardRow(
     list: List<Catalogue>,
+    navigateToDetail: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -179,7 +186,10 @@ fun CompactCardRow(
         items(list) { movie ->
             CompactMovieItem(
                 imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}" ?: "",
-                rating = movie.voteAverage
+                rating = movie.voteAverage,
+                onClick = {
+                    navigateToDetail(movie.isTvShow, movie.id)
+                }
             )
         }
     }
