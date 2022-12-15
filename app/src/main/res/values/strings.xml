@@ -69,4 +69,28 @@
     <string name="movie_tv_show_poster">movie / tv show poster</string>
     <string name="title">Title</string>
     <string name="star_symbol">star symbol</string>
+    <string name="rating_icon">Rating Icon</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_movie">Movie</string>
+    <string name="menu_tv_show">TV Show</string>
+    <string name="menu_playlist">Playlist</string>
+    <string name="empty_playlist_description">You have not added an item to playlist.</string>
+    <string name="empty_playlist_title">Empty Playlist.</string>
+    <string name="no_internet_illustration">No Internet Illustration</string>
+    <string name="no_internet_title">No Internet Connection</string>
+    <string name="no_internet_description">You are Offline. Please check your internet connection</string>
+    <string name="initial_state_illustration">Initial Search State Illustration</string>
+    <string name="empty_search_result_title">Sorry we couldn\'t find any matching data</string>
+    <string name="initial_search_title">What movie are you looking for?</string>
+    <string name="initial_search_desc">You can search your favorite movies or find similar results.</string>
+    <string name="empty_search_result_illustration">Search Empty State Illustration</string>
+    <string name="empty_search_result_desc">Please try searching with another term</string>
+    <string name="error_illustration">Error Illustration</string>
+    <string name="error_title">Oops… An Error Occurred.</string>
+    <string name="error_desc">Please check your internet connection and wait for a while. If the problem persists please contact our developer. Thank You.</string>
+    <string name="play_trailer_button">Play Trailer Button</string>
+    <string name="add_to_playlist_button">Add To Playlist Button</string>
+    <string name="share_button">Share Button</string>
 </resources>
