@@ -2,6 +2,9 @@ package com.mikirinkode.kotakmovie
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,7 +39,7 @@ fun KotakMovieApp(
     val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.DetailMovie.route) {
+            if (currentRoute == Screen.Home.route || currentRoute == Screen.Search.route || currentRoute == Screen.Movie.route || currentRoute == Screen.TvShow.route|| currentRoute == Screen.Playlist.route) {
                 BottomBar(navController)
             }
         },
@@ -47,6 +50,7 @@ fun KotakMovieApp(
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            // route: /home
             composable(Screen.Home.route) {
                 HomeScreen(
                     navigateToDetail = { isTvShow, movieId ->
@@ -104,6 +108,7 @@ fun KotakMovieApp(
                     })
             }
 
+            //route: /home/{isTvShow}/{movieId}/detail
             composable(
                 route = Screen.DetailMovie.route,
                 arguments = listOf(
@@ -120,14 +125,32 @@ fun KotakMovieApp(
                     navigateBack = {
                         navController.navigateUp()
                     },
-                    navigateToTrailerScreen = {
-
+                    navigateToTrailerScreen = { videoKey ->
+                        openYoutube(context, videoKey)
                     },
                     onShareButtonClicked = { title ->
                         shareMovie(context, title)
                     }
                 )
             }
+
+            //route: /home/{isTvShow}/{movieId}/detail/trailer
+//            composable(
+//                route = Screen.Trailer.route,
+//                arguments = listOf(
+//                    navArgument("isTvShow") { type = NavType.BoolType },
+//                    navArgument("movieId") { type = NavType.IntType }),
+//            ) {
+//                val id = it.arguments?.getInt("movieId") ?: 1
+//                val isTvShow = it.arguments?.getBoolean("isTvShow") ?: false
+//                TrailerScreen(
+//                    movieId = id,
+//                    isTvShow = isTvShow,
+//                    navigateUp = {
+//                        navController.navigateUp()
+//                    }
+//                )
+//            }
         }
     }
 }
@@ -215,7 +238,7 @@ fun BottomBar(
     }
 }
 
-private fun shareMovie(context: Context, movieTitle: String){
+private fun shareMovie(context: Context, movieTitle: String) {
     val shareIntent = Intent()
     val appName = context.getString(R.string.app_name)
     val appPlayStoreLink = context.getString(R.string.app_link)
@@ -228,6 +251,17 @@ private fun shareMovie(context: Context, movieTitle: String){
             context.getString(R.string.share_to)
         )
     )
+}
+private fun openYoutube(context: Context, videoKey: String) {
+    if (videoKey == ""){
+        Toast.makeText(context, "-No Data Available-", Toast.LENGTH_SHORT).show()
+    } else {
+    val link = "https://youtu.be/$videoKey"
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.setPackage("com.google.android.youtube")
+    context.startActivity(intent)
+    }
 }
 
 @Preview

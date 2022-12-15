@@ -1,7 +1,6 @@
 package com.mikirinkode.kotakmovie.ui.main.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,8 +26,7 @@ import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.utils.Constants
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
-import com.mikirinkode.kotakmovie.ui.components.CompactMovieItem
-import com.mikirinkode.kotakmovie.ui.components.TrendingMovieItem
+import com.mikirinkode.kotakmovie.ui.components.*
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.HomeViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
@@ -61,29 +59,15 @@ fun HomeScreen(
                     when (uiState) {
                         is UiState.Loading -> {
                             viewModel.getTrendingThisWeekList()
-                            // TODO LATER
-                            Text(
-                                text = "TRENDING LOADING",
-                                fontSize = 22.sp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                                    .background(Color.Red)
-                                    .padding(16.dp)
-                            )
+                            ShimmerTrendingCardRow()
                         }
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {
-                                // TODO LATER
-                                Text(
-                                    text = "TRENDING EMPTY",
-                                    fontSize = 22.sp,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
-                                        .background(Color.Red)
-                                        .padding(16.dp)
-                                )
+                                NoInternetCard(onClick = {
+                                    viewModel.getTrendingThisWeekList()
+                                    viewModel.getUpcomingMovies()
+                                    viewModel.getTopTvShowList()
+                                })
                             } else {
                                 TrendingCardRow(
                                     list = uiState.data,
@@ -93,15 +77,7 @@ fun HomeScreen(
                         }
                         is UiState.Error -> {
                             // TODO LATER
-                            Text(
-                                text = "TRENDING ERROR",
-                                fontSize = 22.sp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                                    .background(Color.Red)
-                                    .padding(16.dp)
-                            )
+
                         }
                     }
                 }
@@ -111,8 +87,7 @@ fun HomeScreen(
                     when (uiState) {
                         is UiState.Loading -> {
                             viewModel.getUpcomingMovies()
-                            // TODO LATER
-
+                            ShimmerCompactCardRow()
                         }
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
@@ -132,7 +107,7 @@ fun HomeScreen(
                     when (uiState) {
                         is UiState.Loading -> {// TODO LATER
                             viewModel.getTopTvShowList()
-
+                            ShimmerCompactCardRow()
                         }
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
@@ -172,6 +147,21 @@ fun TrendingCardRow(
         }
     }
 }
+@Composable
+fun ShimmerTrendingCardRow(
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(end = 16.dp)
+    ) {
+        item {
+            repeat(3){
+                ShimmerTrendingMovieItem()
+            }
+        }
+    }
+}
 
 @Composable
 fun CompactCardRow(
@@ -191,6 +181,20 @@ fun CompactCardRow(
                     navigateToDetail(movie.isTvShow, movie.id)
                 }
             )
+        }
+    }
+}
+@Composable
+fun ShimmerCompactCardRow(
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        contentPadding = PaddingValues(end = 16.dp)
+    ) {
+        item {
+            repeat(5){
+                ShimmerCompactMovieItem()
+            }
         }
     }
 }

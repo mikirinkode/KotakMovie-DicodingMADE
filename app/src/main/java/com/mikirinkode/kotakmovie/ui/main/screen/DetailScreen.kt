@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -34,10 +35,14 @@ import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.DetailMovieViewModel
+import com.mikirinkode.kotakmovie.viewmodel.TrailerViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Composable
@@ -45,7 +50,7 @@ fun DetailScreen(
     movieId: Int,
     isTvShow: Boolean,
     navigateBack: () -> Unit,
-    navigateToTrailerScreen: () -> Unit,
+    navigateToTrailerScreen: (String) -> Unit,
     onShareButtonClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -58,7 +63,30 @@ fun DetailScreen(
     val context = LocalContext.current
     val viewModel: DetailMovieViewModel =
         viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
+    val trailerViewModel: TrailerViewModel =
+        viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
 
+    var trailerKey by remember {
+        mutableStateOf("")
+    }
+
+    trailerViewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                if (isTvShow) {
+                    trailerViewModel.getTvShowTrailer(movieId)
+                } else {
+                    trailerViewModel.getMovieTrailer(movieId)
+                }
+            }
+            is UiState.Success -> {
+                if (uiState.data.isNotEmpty()){
+                    trailerKey = uiState.data[0].key
+                }
+            }
+            is UiState.Error -> {}
+        }
+    }
 
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -68,15 +96,16 @@ fun DetailScreen(
                 } else {
                     viewModel.getMovieDetail(movieId = movieId)
                 }
-                // TODO LATER
-                Box(modifier = Modifier.fillMaxSize().background(Color.Gray)){
-                    Text(text = "LOADING", modifier = Modifier.align(Alignment.Center))
-                }
+                ShimmerDetailScreen(
+                    navigateBack = navigateBack
+                )
             }
             is UiState.Success -> {
                 val data = uiState.data
 
                 DetailMovieContent(
+                    id = data.id,
+                    isTvShow = data.isTvShow,
                     title = data.title ?: stringResource(id = R.string.no_data),
                     posterUrl = "${Constants.IMAGE_BASE_URL}${data.posterPath}",
                     backdropUrl = "${Constants.IMAGE_BASE_URL}${data.backdropPath}",
@@ -88,6 +117,7 @@ fun DetailScreen(
                     overview = data.overview ?: stringResource(id = R.string.no_data),
                     isOnPlaylist = data.isOnPlaylist,
                     navigateBack = navigateBack,
+                    navigateToTrailerScreen = { navigateToTrailerScreen(trailerKey) },
                     onPlaylistIconClicked = { addToPlaylist ->
                         if (addToPlaylist) {
                             if (isTvShow) {
@@ -95,14 +125,22 @@ fun DetailScreen(
                             } else {
                                 viewModel.insertMovieToPlaylist(data, addToPlaylist)
                             }
-                            Toast.makeText(context, context.getString(R.string.added_to_playlist), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.added_to_playlist),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             if (isTvShow) {
                                 viewModel.removeTvShowFromPlaylist(data)
                             } else {
                                 viewModel.removeMovieFromPlaylist(data)
                             }
-                            Toast.makeText(context, context.getString(R.string.removed_from_playlist), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.removed_from_playlist),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     },
                     onShareButtonClicked = onShareButtonClicked
@@ -110,7 +148,11 @@ fun DetailScreen(
             }
             is UiState.Error -> {
                 //TODO LATER
-                Box(modifier = Modifier.fillMaxSize().background(Color.Red)){
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Red)
+                ) {
                     Text(text = "ERROR", modifier = Modifier.align(Alignment.Center))
                 }
             }
@@ -121,6 +163,8 @@ fun DetailScreen(
 
 @Composable
 fun DetailMovieContent(
+    id: Int,
+    isTvShow: Boolean,
     title: String,
     posterUrl: String,
     backdropUrl: String,
@@ -132,6 +176,7 @@ fun DetailMovieContent(
     overview: String,
     isOnPlaylist: Boolean,
     navigateBack: () -> Unit,
+    navigateToTrailerScreen: (String) -> Unit,
     onPlaylistIconClicked: (newState: Boolean) -> Unit,
     onShareButtonClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -140,6 +185,26 @@ fun DetailMovieContent(
     val state = rememberCollapsingToolbarScaffoldState()
     var isAddedPlaylist by rememberSaveable {
         mutableStateOf(isOnPlaylist)
+    }
+    val df = DecimalFormat("#.#")
+    val formattedVote = df.format(voteAverage)
+    var dateFormatted = ""
+
+    val duration = if (!isTvShow){
+        val hours = runtime.div(60)
+        val minutes = runtime.rem(60)
+        "${hours}h ${minutes}m"
+    } else {
+        "${runtime}min"
+    }
+
+    if (releaseDate != ""){
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val date = releaseDate.let { dateFormat.parse(it) }
+        if (date != null) {
+            dateFormatted = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
+        }
+
     }
 
     Box() {
@@ -235,7 +300,9 @@ fun DetailMovieContent(
                                         iconId = R.drawable.ic_play_trailer,
                                         iconDesc = stringResource(R.string.play_trailer_button),
                                         buttonText = stringResource(R.string.play_trailer),
-                                        onClick = { /*TODO*/ })
+                                        onClick = {
+                                            navigateToTrailerScreen("")
+                                        })
                                     DetailAdditionalButton(
                                         iconId = if (isAddedPlaylist) R.drawable.ic_added_to_playlist else R.drawable.ic_add_to_playlist,
                                         iconDesc = stringResource(R.string.add_to_playlist_button),
@@ -271,12 +338,16 @@ fun DetailMovieContent(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 16.dp),
+                                    .padding(vertical = 8.dp),
                                 horizontalArrangement = Arrangement.SpaceAround
-                            ) { // TODO LATER: FORMAT
-                                DetailInfoItem(R.drawable.ic_time, "runtime", runtime.toString())
-                                DetailInfoItem(R.drawable.ic_star_outlined, "vote average", voteAverage.toString())
-                                DetailInfoItem(R.drawable.ic_date, "release date", releaseDate)
+                            ) {
+                                DetailInfoItem(R.drawable.ic_time, "runtime", duration)
+                                DetailInfoItem(
+                                    R.drawable.ic_star_outlined,
+                                    "vote average",
+                                    formattedVote.toString()
+                                )
+                                DetailInfoItem(R.drawable.ic_date, "release date", dateFormatted)
                             }
                             Spacer(
                                 Modifier
@@ -311,8 +382,13 @@ fun DetailMovieContent(
             }
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .background(
+                    MaterialTheme.colors.secondaryVariant,
+                    shape = CircleShape
+                )
         ) {
             IconButton(onClick = navigateBack) {
                 Icon(
@@ -324,10 +400,6 @@ fun DetailMovieContent(
                     modifier = Modifier.size(24.dp)
                 )
             }
-            Text(
-                text = "Category: MOVIE",
-                color = Color.White,
-            )
         }
     }
 }
@@ -351,7 +423,7 @@ fun DetailInfoItem(
                 .size(20.dp)
                 .padding(end = 4.dp)
         )
-        Text(text = data)
+        Text(text = data, fontSize = 14.sp)
     }
 }
 
@@ -396,6 +468,6 @@ fun DetailContentPreview() {
 @Composable
 fun DetailScreenPreview() {
     KotakMovieTheme {
-        DetailScreen(1, false, {}, {}, {})
+//        DetailScreen(1, false, {}, {1; false}, {})
     }
 }

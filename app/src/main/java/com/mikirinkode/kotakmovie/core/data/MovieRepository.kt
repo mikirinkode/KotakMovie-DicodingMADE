@@ -126,18 +126,15 @@ class MovieRepository(
     override fun getMovieDetail(movieId: Int): Flow<Resource<Catalogue>> {
         return object : NetworkBoundResource<Catalogue, MovieDetailResponse>() {
             override fun loadFromDB(): Flow<Catalogue> {
-                Log.e("Repo-MovieDetail", "loadFromDB Called, id: $movieId")
                 return localDataSource.getMovieDetail(movieId)
                     .map { DataMapper.mapEntityToDomain(it) }
             }
 
             override fun shouldFetch(data: Catalogue?): Boolean {
-                Log.e("Repo-MovieDetail", "shouldFetch Called, id: $movieId")
-                return data == null || data.tagline == null || data.genres == null || data.runtime == null
+               return data == null || data.tagline == null || data.genres == null || data.runtime == null
             }
 
             override suspend fun createCall(): Flow<ApiResponse<MovieDetailResponse>> {
-                Log.e("Repo-MovieDetail", "shouldFetch Called, id: $movieId")
                 return remoteDataSource.getMovieDetail(movieId)
             }
 

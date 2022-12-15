@@ -21,6 +21,7 @@ import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.NoInternetCard
+import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.viewmodel.MovieViewModel
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
@@ -89,12 +90,14 @@ fun MovieListScreen(
                 when (uiState) {
                     is UiState.Loading -> {
                         viewModel.getPopularMoviesList(selected, false)
-                        // TODO LATER
+                        ShimmerMovieListComponent()
                     }
                     is UiState.Success -> {
                         Box(modifier = Modifier.fillMaxSize()) {
                             if (uiState.data.isEmpty()) {
-                                // TODO LATER
+                                NoInternetCard(onClick = {
+                                    viewModel.getPopularMoviesList(selected, false)
+                                })
                             } else {
                                 MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                             }

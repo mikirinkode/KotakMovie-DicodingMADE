@@ -41,7 +41,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNewPlaylistItem(catalogueItem: CatalogueEntity)
 
-    @Delete
+    @Update
     suspend fun removePlaylistItem(catalogueItem: CatalogueEntity)
 
 

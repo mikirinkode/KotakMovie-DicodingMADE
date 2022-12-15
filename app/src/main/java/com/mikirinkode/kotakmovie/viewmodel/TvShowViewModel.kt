@@ -46,14 +46,14 @@ class TvShowViewModel(private val repository: IMovieRepository) : ViewModel() {
     }
 
 
-    var tvShowDetail: LiveData<Resource<Catalogue>> =
-        Transformations.switchMap(selectedTvShow) { tvShow ->
-            repository.getTvShowDetail(tvShow).asLiveData()
-        }
+//    var tvShowDetail: LiveData<Resource<Catalogue>> =
+//        Transformations.switchMap(selectedTvShow) { tvShow ->
+//            repository.getTvShowDetail(tvShow).asLiveData()
+//        }
 
-    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
-        return repository.getTvTrailer(tvShow).asLiveData()
-    }
+//    fun getTvTrailer(tvShow: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
+//        return repository.getTvTrailer(tvShow).asLiveData()
+//    }
 
     fun insertTvShowToPlaylist(item: Catalogue, newState: Boolean) {
         viewModelScope.launch {

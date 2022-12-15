@@ -26,15 +26,10 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-//        buildConfigField("String", "HOSTNAME", "\"${properties.getProperty('HOSTNAME')}\"")
-//        buildConfigField("String", "BASE_URL", "\"${properties.getProperty('BASE_URL')}\"")
-//        buildConfigField("String", "IMAGE_BASE_URL", "\"${properties.getProperty('IMAGE_BASE_URL')}\"")
-//        buildConfigField("String", "API_KEY", "\"${properties.getProperty('API_KEY')}\"")
-//        buildConfigField("String", "DB_NAME", "\"${properties.getProperty('DB_NAME')}\"")
-//        buildConfigField("String", "PASSPHRASE", "\"${properties.getProperty('PASSPHRASE')}\"")
-//        buildConfigField("String", "CERTIFICATE_PIN_1", "\"${properties.getProperty('CERTIFICATE_PIN_1')}\"")
-//        buildConfigField("String", "CERTIFICATE_PIN_2", "\"${properties.getProperty('CERTIFICATE_PIN_3')}\"")
-//        buildConfigField("String", "CERTIFICATE_PIN_3", "\"${properties.getProperty('CERTIFICATE_PIN_3')}\"")
+        buildConfigField("String", "BASE_URL", "\"${properties.getProperty('BASE_URL')}\"")
+        buildConfigField("String", "IMAGE_BASE_URL", "\"${properties.getProperty('IMAGE_BASE_URL')}\"")
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty('API_KEY')}\"")
+        buildConfigField("String", "DB_NAME", "\"${properties.getProperty('DB_NAME')}\"")
 
     }
 
@@ -141,4 +136,12 @@ dependencies {
     implementation "me.onebone:toolbar-compose:2.3.5"
 
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    implementation "androidx.media3:media3-exoplayer:1.0.0-beta02"
+    implementation "androidx.media3:media3-ui:1.0.0-beta02"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha01"
+    implementation "com.google.accompanist:accompanist-insets:0.18.0"
 }

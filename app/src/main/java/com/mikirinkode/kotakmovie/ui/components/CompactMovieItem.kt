@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
+import java.text.DecimalFormat
 
 @Composable
 fun CompactMovieItem(
@@ -37,6 +38,8 @@ fun CompactMovieItem(
         0f to Color.Transparent,
         1000f to MaterialTheme.colors.background
     )
+    val df = DecimalFormat("#.#")
+    val formattedVote = df.format(rating)
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -71,7 +74,7 @@ fun CompactMovieItem(
                         .size(15.dp)
                 )
                 Text(
-                    text = rating.toString(),
+                    text = formattedVote.toString(),
                     fontSize = 14.sp
                 )
             }

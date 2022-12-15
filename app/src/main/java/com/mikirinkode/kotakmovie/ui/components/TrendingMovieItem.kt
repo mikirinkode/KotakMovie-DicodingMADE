@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -83,14 +84,36 @@ fun TrendingMovieItem(
                         .weight(1f)
                         .padding(end = 8.dp)
                 )
-                Row(
-                ) {
-                    Icon( // TODO: RATING BAR
-                        imageVector = Icons.Rounded.Star,
-                        contentDescription = stringResource(R.string.rating_icon),
-                        tint = MaterialTheme.colors.primary
-                    )
-                }
+                RatingBar(rating)
+            }
+        }
+    }
+}
+
+@Composable
+fun RatingBar(
+    rating: Double,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier){
+        Row() {
+            repeat(5) {
+                Icon(
+                    imageVector = Icons.Rounded.Star,
+                    contentDescription = stringResource(R.string.rating_icon),
+                    tint = MaterialTheme.colors.secondary,
+                    modifier = Modifier.size(15.dp)
+                )
+            }
+        }
+        Row() {
+            repeat((rating/2).toInt()) {
+                Icon(
+                    imageVector = Icons.Rounded.Star,
+                    contentDescription = stringResource(R.string.rating_icon),
+                    tint = MaterialTheme.colors.primary,
+                    modifier = Modifier.size(15.dp)
+                )
             }
         }
     }

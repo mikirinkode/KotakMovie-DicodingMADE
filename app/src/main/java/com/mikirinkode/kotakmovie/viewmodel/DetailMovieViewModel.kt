@@ -20,7 +20,6 @@ class DetailMovieViewModel(private val repository: IMovieRepository): ViewModel(
         get() = _uiState
 
     fun getMovieDetail(movieId: Int){
-        Log.e("DetailMovieViewModel", "Called, id: $movieId")
         viewModelScope.launch {
             repository.getMovieDetail(movieId)
                 .catch {

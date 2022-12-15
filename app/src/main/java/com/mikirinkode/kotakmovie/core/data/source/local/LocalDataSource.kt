@@ -28,6 +28,7 @@ class LocalDataSource(private val mMovieDao: MovieDao) {
     }
 
     suspend fun removeItemFromPlaylist(item: CatalogueEntity){
+        item.isOnPlaylist = false
         mMovieDao.removePlaylistItem(item)
     }
 

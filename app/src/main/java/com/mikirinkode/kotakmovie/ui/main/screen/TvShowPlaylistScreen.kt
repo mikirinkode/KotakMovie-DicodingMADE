@@ -13,6 +13,7 @@ import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
+import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.MoviePlaylistViewModel
@@ -33,7 +34,7 @@ fun TvShowPlaylistScreen(
             when (uiState){
                 is UiState.Loading -> {
                     viewModel.getTvShowPlaylist()
-                    // TODO LATER
+                    ShimmerMovieListComponent()
                 }
                 is UiState.Success -> {
                     if (uiState.data.isEmpty()){
@@ -51,7 +52,15 @@ fun TvShowPlaylistScreen(
                     }
                 }
                 is UiState.Error -> {
-                    // TODO LATER
+                    StateMessageComponent(
+                        drawableId = R.drawable.ic_error_state,
+                        drawableDesc = R.string.error_illustration,
+                        imageWidth = 187,
+                        imageHeight = 178,
+                        titleStringId = R.string.error_title,
+                        descriptionStringId = R.string.error_desc,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
             }
         }

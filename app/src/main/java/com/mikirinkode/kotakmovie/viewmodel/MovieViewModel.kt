@@ -32,15 +32,15 @@ class MovieViewModel(private val repository: IMovieRepository) : ViewModel() {
     }
 
 
-    var movieDetail: LiveData<Resource<Catalogue>> =
-        Transformations.switchMap(selectedMovie) { movie ->
-            repository.getMovieDetail(movie).asLiveData()
-        }
+//    var movieDetail: LiveData<Resource<Catalogue>> =
+//        Transformations.switchMap(selectedMovie) { movie ->
+//            repository.getMovieDetail(movie).asLiveData()
+//        }
 
 
-    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
-        return repository.getMovieTrailer(movie).asLiveData()
-    }
+//    fun getMovieTrailer(movie: Catalogue): LiveData<Resource<List<TrailerVideo>>> {
+//        return repository.getMovieTrailer(movie).asLiveData()
+//    }
 
     fun insertMovieToPlaylist(item: Catalogue, newState: Boolean) {
         viewModelScope.launch {

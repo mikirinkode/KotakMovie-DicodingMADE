@@ -18,6 +18,8 @@ import com.mikirinkode.kotakmovie.core.utils.SortUtils
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.MovieListComponent
+import com.mikirinkode.kotakmovie.ui.components.NoInternetCard
+import com.mikirinkode.kotakmovie.ui.components.ShimmerMovieListComponent
 import com.mikirinkode.kotakmovie.ui.components.StateMessageComponent
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.TvShowListViewModel
@@ -75,7 +77,7 @@ fun TvShowListScreen(
                         MyDropDownItem(selected = selected, title = item, onClick = {
                             selected = item
                             showMenu = false
-                            viewModel.getPopularTvShowsList(selected, true)
+                            viewModel.getPopularTvShowsList(selected, false)
                         })
                     }
                 }
@@ -87,13 +89,15 @@ fun TvShowListScreen(
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {
-                        viewModel.getPopularTvShowsList(selected, true)
-                        // TODO LATER
+                        viewModel.getPopularTvShowsList(selected, false)
+                        ShimmerMovieListComponent()
                     }
                     is UiState.Success -> {
                         Box(modifier = Modifier.fillMaxSize()) {
                             if (uiState.data.isEmpty()) {
-                                // TODO LATER
+                                NoInternetCard(onClick = {
+                                    viewModel.getPopularTvShowsList(selected, false)
+                                })
                             } else {
                                 MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                             }

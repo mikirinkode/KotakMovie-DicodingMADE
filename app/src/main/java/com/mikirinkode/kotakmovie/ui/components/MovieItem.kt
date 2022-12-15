@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.R
+import java.text.DecimalFormat
 
 @Composable
 fun MovieItem(
@@ -40,6 +41,11 @@ fun MovieItem(
         0f to Color.Transparent,
         1000f to MaterialTheme.colors.background
     )
+
+    val df = DecimalFormat("#.#")
+    val formattedVote = df.format(rating)
+    val date: List<String> = releaseDate.split("-")
+    val year = date[0]
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -70,8 +76,8 @@ fun MovieItem(
                     .height(150.dp)
                     .padding(start = 16.dp),
             ) {
-                Text( // TODO year only
-                    text = releaseDate,
+                Text(
+                    text = year,
                     fontSize = 16.sp,
                     fontStyle = FontStyle.Italic
                 )
@@ -91,7 +97,7 @@ fun MovieItem(
                         tint = MaterialTheme.colors.primary
                     )
                     Text(
-                        text = rating.toString()
+                        text = formattedVote.toString()
                     )
                 }
             }
