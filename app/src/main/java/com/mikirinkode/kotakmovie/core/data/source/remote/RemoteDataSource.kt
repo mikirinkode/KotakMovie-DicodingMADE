@@ -249,4 +249,16 @@ class RemoteDataSource @Inject constructor(private val api: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    companion object {
+        @Volatile
+        private var instance: RemoteDataSource? = null
+
+        fun getInstance(api: ApiService): RemoteDataSource =
+            instance ?: synchronized(this) {
+                RemoteDataSource(api).apply {
+                    instance = this
+                }
+            }
+    }
 }
