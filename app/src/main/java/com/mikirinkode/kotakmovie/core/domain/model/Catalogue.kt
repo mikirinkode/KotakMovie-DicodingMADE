@@ -17,7 +17,10 @@ data class Catalogue(
     val posterPath: String?,
     val backdropPath: String?,
     var isOnPlaylist: Boolean = false,
-    var isTvShow: Boolean = false
+    var isTvShow: Boolean = false,
+    var isTrending: Boolean = false,
+    var isUpcoming: Boolean = false,
+    var isTopTv: Boolean = false,
 
 ): Parcelable
 

@@ -49,7 +49,15 @@ data class CatalogueEntity(
     var isOnPlaylist: Boolean = false,
 
     @ColumnInfo(name = "isTvShow")
-    var isTvShow: Boolean = false
+    var isTvShow: Boolean = false,
 
+    @ColumnInfo(name = "isTrending")
+    var isTrending: Boolean = false,
+
+    @ColumnInfo(name = "isUpcoming")
+    var isUpcoming: Boolean = false,
+
+    @ColumnInfo(name = "isTopTv")
+    var isTopTv: Boolean = false,
 ): Parcelable
 
