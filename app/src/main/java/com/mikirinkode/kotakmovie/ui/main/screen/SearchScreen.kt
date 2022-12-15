@@ -3,6 +3,8 @@ package com.mikirinkode.kotakmovie.ui.main.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -11,9 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,25 +33,21 @@ import com.mikirinkode.kotakmovie.viewmodel.SearchViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    navigateToDetail: (Boolean, Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val viewModel: SearchViewModel =
         viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
 
-    var query by remember {
-        mutableStateOf("")
-    }
+    val query by viewModel.query
 
     Column {
         SearchBar(
             inputValue = query,
-            onValueChange = { newValue ->
-                query = newValue
-                viewModel.searchMovies(query)
-            },
-            onClickTrailingIcon = {
-                query = ""
-            }
+            onValueChange = viewModel::searchMovies,
+            onClickTrailingIcon = viewModel::clearQuery
         )
 
         Box(modifier = Modifier.fillMaxSize()){
@@ -78,7 +79,7 @@ fun SearchScreen() {
                                     modifier = Modifier.align(Alignment.Center)
                                 )
                             } else {
-                                MovieListComponent(list = uiState.data)
+                                MovieListComponent(list = uiState.data, navigateToDetail = navigateToDetail)
                             }
                         }
                         is UiState.Error -> {
@@ -107,6 +108,7 @@ fun SearchBar(
     modifier: Modifier = Modifier
 ) {
 
+    val focusRequester = remember { FocusRequester() }
     TextField(
         value = inputValue,
         textStyle = TextStyle(
@@ -144,8 +146,14 @@ fun SearchBar(
             .background(MaterialTheme.colors.secondaryVariant)
             .padding(8.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp)),
+            .clip(RoundedCornerShape(16.dp))
+            .focusRequester(focusRequester),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions()
     )
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 }
 
 
@@ -153,6 +161,6 @@ fun SearchBar(
 @Composable
 fun SearchScreenPreview() {
     KotakMovieTheme {
-        SearchScreen()
+//        SearchScreen({})
     }
 }

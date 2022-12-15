@@ -1,5 +1,7 @@
 package com.mikirinkode.kotakmovie.viewmodel
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
@@ -22,19 +24,16 @@ class SearchViewModel(private val repository: IMovieRepository) : ViewModel() {
     val uiState: StateFlow<UiState<List<Catalogue>>>
         get() = _uiState
 
-//    private val searchQuery = MutableLiveData<String>()
-//
-//    fun setSearchQuery(query: String) {
-//        this.searchQuery.value = query
-//    }
-//
-//    var searchResult: LiveData<Resource<List<Catalogue>>> =
-//        Transformations.switchMap(searchQuery) { query ->
-//            repository.searchMovies(query).asLiveData()
-//        }
+    private val _query = mutableStateOf("")
+    val query: State<String> get() = _query
+
+    fun clearQuery(){
+        _query.value = ""
+    }
 
     fun searchMovies(query: String){
         viewModelScope.launch {
+            _query.value = query
             repository.searchMovies(query)
                 .catch {
                     _uiState.value = UiState.Error(it.message.toString())
