@@ -32,5 +32,16 @@ class LocalDataSource @Inject constructor(private val mMovieDao: MovieDao) {
 
     suspend fun insertTvShowList(tvShows: List<CatalogueEntity>) = mMovieDao.insertCatalogueList(tvShows)
 
+    companion object {
+        @Volatile
+        private var instance: LocalDataSource? = null
+
+        fun getInstance(dao: MovieDao): LocalDataSource =
+            instance ?: synchronized(this) {
+                LocalDataSource(dao).apply {
+                    instance = this
+                }
+            }
+    }
 }
 

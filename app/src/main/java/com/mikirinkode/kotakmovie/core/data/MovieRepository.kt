@@ -6,7 +6,7 @@ import com.mikirinkode.kotakmovie.core.data.source.remote.RemoteDataSource
 import com.mikirinkode.kotakmovie.core.data.source.remote.response.*
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.domain.model.TrailerVideo
-import com.mikirinkode.kotakmovie.core.domain.repository.IMovieRepository
+import com.mikirinkode.kotakmovie.core.data.source.IMovieRepository
 import com.mikirinkode.kotakmovie.core.utils.DataMapper
 import com.mikirinkode.kotakmovie.core.vo.Resource
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +24,7 @@ class MovieRepository @Inject constructor(
 
     override fun getPopularMovies(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkBoundResource<List<Catalogue>, MovieListResponse>() {
+            NetworkBoundResource<List<Catalogue>, MovieListResponse>() {
             override fun loadFromDB(): Flow<List<Catalogue>> {
                 return localDataSource.getMovieList(sort).map {
                     DataMapper.mapEntitiesToDomain(it)
@@ -48,7 +48,7 @@ class MovieRepository @Inject constructor(
 
     override fun searchMovies(query: String): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
+            NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<MultiResponse>> {
                 return remoteDataSource.searchMovies(query)
             }
@@ -62,7 +62,7 @@ class MovieRepository @Inject constructor(
 
     override fun getTrendingThisWeekList(): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
+            NetworkOnlyResource<List<Catalogue>, MultiResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<MultiResponse>> {
                 return remoteDataSource.getTrendingThisWeekList()
             }
@@ -76,7 +76,7 @@ class MovieRepository @Inject constructor(
 
     override fun getUpcomingMovies(): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<Catalogue>, MovieListResponse>() {
+            NetworkOnlyResource<List<Catalogue>, MovieListResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<MovieListResponse>> {
                 return remoteDataSource.getUpcomingMovieList()
             }
@@ -89,7 +89,7 @@ class MovieRepository @Inject constructor(
 
 
     override fun getMovieDetail(movie: Catalogue): Flow<Resource<Catalogue>> {
-        return object : com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<Catalogue, MovieDetailResponse>() {
+        return object : NetworkOnlyResource<Catalogue, MovieDetailResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<MovieDetailResponse>> {
                 return remoteDataSource.getMovieDetail(movie.id)
             }
@@ -102,7 +102,7 @@ class MovieRepository @Inject constructor(
 
     override fun getMovieTrailer(movie: Catalogue): Flow<Resource<List<TrailerVideo>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
+            NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getMovieTrailer(movie.id)
             }
@@ -115,7 +115,7 @@ class MovieRepository @Inject constructor(
 
     override fun getTvTrailer(tvShow: Catalogue): Flow<Resource<List<TrailerVideo>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
+            NetworkOnlyResource<List<TrailerVideo>, TrailerVideoResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<TrailerVideoResponse>> {
                 return remoteDataSource.getTvTrailer(tvShow.id)
             }
@@ -145,7 +145,7 @@ class MovieRepository @Inject constructor(
 
     override fun getPopularTvShows(sort: String, shouldFetchAgain: Boolean): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkBoundResource<List<Catalogue>, TvShowListResponse>() {
+            NetworkBoundResource<List<Catalogue>, TvShowListResponse>() {
             override fun loadFromDB(): Flow<List<Catalogue>> {
                 return localDataSource.getTvShowList(sort).map {
                     DataMapper.mapEntitiesToDomain(it)
@@ -168,7 +168,7 @@ class MovieRepository @Inject constructor(
 
     override fun getTopTvShowList(): Flow<Resource<List<Catalogue>>> {
         return object :
-            com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<List<Catalogue>, TvShowListResponse>() {
+            NetworkOnlyResource<List<Catalogue>, TvShowListResponse>() {
             override suspend fun loadFromNetwork(data: TvShowListResponse): Flow<List<Catalogue>> {
                 return flowOf(DataMapper.mapTvResponsesToDomain(data))
             }
@@ -182,7 +182,7 @@ class MovieRepository @Inject constructor(
 
 
     override fun getTvShowDetail(tvShow: Catalogue): Flow<Resource<Catalogue>> {
-        return object : com.mikirinkode.kotakmovie.core.data.NetworkOnlyResource<Catalogue, TvShowDetailResponse>() {
+        return object : NetworkOnlyResource<Catalogue, TvShowDetailResponse>() {
             override suspend fun createCall(): Flow<ApiResponse<TvShowDetailResponse>> {
                 return remoteDataSource.getTvShowDetail(tvShow.id)
             }
@@ -199,4 +199,15 @@ class MovieRepository @Inject constructor(
         }
     }
 
+    companion object {
+        @Volatile
+        private var instance: IMovieRepository? = null
+
+        fun getInstance(remote: RemoteDataSource, local: LocalDataSource): IMovieRepository =
+            instance ?: synchronized(this) {
+                MovieRepository(remote, local).apply {
+                    instance = this
+                }
+            }
+    }
 }

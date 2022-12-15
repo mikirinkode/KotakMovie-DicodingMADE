@@ -1,4 +1,4 @@
-package com.mikirinkode.kotakmovie.core.domain.repository
+package com.mikirinkode.kotakmovie.core.data.source
 
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.domain.model.TrailerVideo
