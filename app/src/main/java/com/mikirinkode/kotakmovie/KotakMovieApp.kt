@@ -17,10 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.mikirinkode.kotakmovie.ui.main.screen.HomeScreen
-import com.mikirinkode.kotakmovie.ui.main.screen.MovieListScreen
-import com.mikirinkode.kotakmovie.ui.main.screen.SearchScreen
-import com.mikirinkode.kotakmovie.ui.main.screen.TvShowListScreen
+import com.mikirinkode.kotakmovie.ui.main.screen.*
 import com.mikirinkode.kotakmovie.ui.navigation.NavigationItem
 import com.mikirinkode.kotakmovie.ui.navigation.Screen
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
@@ -62,7 +59,7 @@ fun KotakMovieApp(
                 TvShowListScreen()
             }
             composable(Screen.Playlist.route) {
-                HomeScreen()
+                PlaylistScreen()
             }
 
 //            composable(

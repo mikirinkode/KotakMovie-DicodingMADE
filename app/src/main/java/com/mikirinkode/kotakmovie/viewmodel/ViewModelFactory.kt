@@ -20,6 +20,10 @@ class ViewModelFactory @Inject constructor(private val repository: IMovieReposit
             return HomeViewModel(repository) as T
         }else if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
             return SearchViewModel(repository) as T
+        }else if (modelClass.isAssignableFrom(MoviePlaylistViewModel::class.java)) {
+            return MoviePlaylistViewModel(repository) as T
+        }else if (modelClass.isAssignableFrom(TvShowPlaylistViewModel::class.java)) {
+            return TvShowPlaylistViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

@@ -61,6 +61,7 @@ fun HomeScreen(
                     when (uiState) {
                         is UiState.Loading -> {
                             viewModel.getTrendingThisWeekList()
+                            // TODO LATER
                             Text(
                                 text = "TRENDING LOADING",
                                 fontSize = 22.sp,
@@ -73,6 +74,7 @@ fun HomeScreen(
                         }
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {
+                                // TODO LATER
                                 Text(
                                     text = "TRENDING EMPTY",
                                     fontSize = 22.sp,
@@ -87,6 +89,7 @@ fun HomeScreen(
                             }
                         }
                         is UiState.Error -> {
+                            // TODO LATER
                             Text(
                                 text = "TRENDING ERROR",
                                 fontSize = 22.sp,
@@ -105,15 +108,16 @@ fun HomeScreen(
                     when (uiState) {
                         is UiState.Loading -> {
                             viewModel.getUpcomingMovies()
+                            // TODO LATER
 
                         }
                         is UiState.Success -> {
-                            if (uiState.data.isEmpty()) {
+                            if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
                                 CompactCardRow(list = uiState.data)
                             }
                         }
-                        is UiState.Error -> {
+                        is UiState.Error -> {// TODO LATER
                         }
                     }
                 }
@@ -122,17 +126,17 @@ fun HomeScreen(
                 SectionTitle(title = stringResource(R.string.top_rated_tv_shows))
                 viewModel.topTvState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                     when (uiState) {
-                        is UiState.Loading -> {
+                        is UiState.Loading -> {// TODO LATER
                             viewModel.getTopTvShowList()
 
                         }
                         is UiState.Success -> {
-                            if (uiState.data.isEmpty()) {
+                            if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
                                 CompactCardRow(list = uiState.data)
                             }
                         }
-                        is UiState.Error -> {
+                        is UiState.Error -> {// TODO LATER
                         }
                     }
                 }
