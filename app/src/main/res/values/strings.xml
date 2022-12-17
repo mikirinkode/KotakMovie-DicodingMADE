@@ -94,4 +94,6 @@
     <string name="add_to_playlist_button">Add To Playlist Button</string>
     <string name="share_button">Share Button</string>
     <string name="share_to">Share To</string>
+    <string name="loading_desc">Gathering all data, Please wait...</string>
+    <string name="loading_title">Loading</string>
 </resources>

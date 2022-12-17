@@ -71,7 +71,8 @@ fun TrendingMovieItem(
                     .align(Alignment.BottomStart)
                     .width(320.dp)
                     .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = title,
@@ -100,7 +101,7 @@ fun RatingBar(
                 Icon(
                     imageVector = Icons.Rounded.Star,
                     contentDescription = stringResource(R.string.rating_icon),
-                    tint = MaterialTheme.colors.secondary,
+                    tint = Color.DarkGray,
                     modifier = Modifier.size(15.dp)
                 )
             }
@@ -126,7 +127,7 @@ fun TrendingMovieItemPreview() {
         TrendingMovieItem(
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xRWht48C2V8XNfzvPehyClOvDni.jpg",
             "Alita: Battle Angle",
-            20.0,
+            3.0,
             {}
         )
     }

@@ -37,11 +37,11 @@ interface MovieDao {
     /**
      * Playlist
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewPlaylistItem(catalogueItem: CatalogueEntity)
+    @Query("UPDATE CatalogueEntities SET isOnPlaylist = 1 WHERE id = :catalogueId")
+    suspend fun insertNewPlaylistItem(catalogueId: Int)
 
-    @Update
-    suspend fun removePlaylistItem(catalogueItem: CatalogueEntity)
+    @Query("UPDATE CatalogueEntities SET isOnPlaylist = 0 WHERE id = :catalogueId")
+    suspend fun removePlaylistItem(catalogueId: Int)
 
 
     @RawQuery(observedEntities = [CatalogueEntity::class])

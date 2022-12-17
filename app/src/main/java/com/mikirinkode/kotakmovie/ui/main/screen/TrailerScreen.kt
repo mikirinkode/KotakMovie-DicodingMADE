@@ -7,7 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,15 +24,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
+import com.mikirinkode.kotakmovie.ui.components.ShimmerTrailer
 import com.mikirinkode.kotakmovie.ui.theme.KotakMovieTheme
 import com.mikirinkode.kotakmovie.viewmodel.TrailerViewModel
 import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController
 
 @Composable
 fun TrailerScreen(
@@ -84,18 +83,12 @@ fun TrailerScreen(
                         } else {
                             viewModel.getMovieTrailer(movieId)
                         }
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            modifier = Modifier
-                                .padding(24.dp)
-                                .align(Alignment.Center)
-                                .background(MaterialTheme.colors.secondaryVariant)
-                                .padding(16.dp)
-                        ) {
-                            Text(
-                                text = "Gathering all data, Please wait...",
-                                fontSize = 18.sp
-                            )
+                        LazyColumn(){
+                            item {
+                                repeat(3){
+                                    ShimmerTrailer()
+                                }
+                            }
                         }
                     }
                     is UiState.Success -> {

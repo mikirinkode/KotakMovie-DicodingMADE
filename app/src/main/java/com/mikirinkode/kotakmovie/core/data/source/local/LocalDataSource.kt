@@ -24,12 +24,12 @@ class LocalDataSource(private val mMovieDao: MovieDao) {
 
     suspend fun insertPlaylistItem(item: CatalogueEntity, newState: Boolean) {
         item.isOnPlaylist = newState
-        mMovieDao.insertNewPlaylistItem(item)
+        mMovieDao.insertNewPlaylistItem(item.id)
     }
 
     suspend fun removeItemFromPlaylist(item: CatalogueEntity){
         item.isOnPlaylist = false
-        mMovieDao.removePlaylistItem(item)
+        mMovieDao.removePlaylistItem(item.id)
     }
 
     suspend fun insertCatalogue(catalogueEntity: CatalogueEntity){

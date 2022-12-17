@@ -23,13 +23,21 @@ fun MovieListComponent(
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         items(list) { movie ->
+            var status = MovieStatus.NORMAL
+            if (movie.isTrending){
+                status = MovieStatus.TRENDING
+            } else if (movie.isUpcoming){
+                status = MovieStatus.UPCOMING
+            } else if (movie.isTopTv){
+                status = MovieStatus.TOPRATED
+            }
             MovieItem(
                 imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 releaseDate = movie.releaseDate ?: stringResource(id = R.string.no_data),
                 rating = movie.voteAverage,
                 onClick = {
-                    navigateToDetail(MovieStatus.NORMAL, movie.isTvShow ,movie.id)
+                    navigateToDetail(status, movie.isTvShow ,movie.id)
                 }
             )
         }
