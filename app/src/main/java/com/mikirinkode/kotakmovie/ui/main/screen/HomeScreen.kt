@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.utils.Constants
+import com.mikirinkode.kotakmovie.core.utils.MovieStatus
 import com.mikirinkode.kotakmovie.di.Injection
 import com.mikirinkode.kotakmovie.ui.common.UiState
 import com.mikirinkode.kotakmovie.ui.components.*
@@ -32,7 +33,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToDetail: (Boolean, Int) -> Unit
+    navigateToDetail: (String, Boolean, Int) -> Unit
 ) {
     val context = LocalContext.current
     val viewModel: HomeViewModel =
@@ -90,7 +91,7 @@ fun HomeScreen(
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
-                                CompactCardRow(list = uiState.data,
+                                UpcomingCompactCardRow(list = uiState.data,
                                     navigateToDetail = navigateToDetail)
                             }
                         }
@@ -110,7 +111,7 @@ fun HomeScreen(
                         is UiState.Success -> {
                             if (uiState.data.isEmpty()) {// TODO LATER
                             } else {
-                                CompactCardRow(list = uiState.data,
+                                TopCompactCardRow(list = uiState.data,
                                     navigateToDetail = navigateToDetail)
                             }
                         }
@@ -126,7 +127,7 @@ fun HomeScreen(
 @Composable
 fun TrendingCardRow(
     list: List<Catalogue>,
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -139,7 +140,7 @@ fun TrendingCardRow(
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 rating = movie.voteAverage,
                 onClick = {
-                    navigateToDetail(movie.isTvShow ,movie.id)
+                    navigateToDetail(MovieStatus.TRENDING, movie.isTvShow ,movie.id)
                 }
             )
         }
@@ -162,9 +163,9 @@ fun ShimmerTrendingCardRow(
 }
 
 @Composable
-fun CompactCardRow(
+fun UpcomingCompactCardRow(
     list: List<Catalogue>,
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -176,12 +177,34 @@ fun CompactCardRow(
                 imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
                 rating = movie.voteAverage,
                 onClick = {
-                    navigateToDetail(movie.isTvShow, movie.id)
+                    navigateToDetail(MovieStatus.UPCOMING, movie.isTvShow, movie.id)
                 }
             )
         }
     }
 }
+@Composable
+fun TopCompactCardRow(
+    list: List<Catalogue>,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(end = 16.dp)
+    ) {
+        items(list) { movie ->
+            CompactMovieItem(
+                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
+                rating = movie.voteAverage,
+                onClick = {
+                    navigateToDetail(MovieStatus.TOPRATED, movie.isTvShow, movie.id)
+                }
+            )
+        }
+    }
+}
+
 @Composable
 fun ShimmerCompactCardRow(
     modifier: Modifier = Modifier

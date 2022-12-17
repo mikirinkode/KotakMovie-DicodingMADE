@@ -120,7 +120,7 @@ class MovieRepository(
     }
 
 
-    override fun getMovieDetail(movieId: Int): Flow<Resource<Catalogue>> {
+    override fun getMovieDetail(status: String, movieId: Int): Flow<Resource<Catalogue>> {
         return object : NetworkBoundResource<Catalogue, MovieDetailResponse>() {
             override fun loadFromDB(): Flow<Catalogue> {
                 return localDataSource.getMovieDetail(movieId)
@@ -136,7 +136,7 @@ class MovieRepository(
             }
 
             override suspend fun saveCallResult(data: MovieDetailResponse) {
-                val movie = DataMapper.mapMovieDetailResponseToEntity(data)
+                val movie = DataMapper.mapMovieDetailResponseToEntity(status, data)
                 localDataSource.insertCatalogue(movie)
             }
 
@@ -238,7 +238,7 @@ class MovieRepository(
     }
 
 
-    override fun getTvShowDetail(tvShowId: Int): Flow<Resource<Catalogue>> {
+    override fun getTvShowDetail(status: String, tvShowId: Int): Flow<Resource<Catalogue>> {
         return object : NetworkBoundResource<Catalogue, TvShowDetailResponse>() {
             override fun loadFromDB(): Flow<Catalogue> {
                 return localDataSource.getTvShowDetail(tvShowId)
@@ -254,7 +254,7 @@ class MovieRepository(
             }
 
             override suspend fun saveCallResult(data: TvShowDetailResponse) {
-                val movie = DataMapper.mapDetailTvResponseToEntity(data)
+                val movie = DataMapper.mapDetailTvResponseToEntity(status, data)
                 localDataSource.insertCatalogue(movie)
             }
 

@@ -9,11 +9,14 @@ object DataMapper {
     /*
         Movie Response To Entity
      */
-    fun mapMovieDetailResponseToEntity(data: MovieDetailResponse): CatalogueEntity{
+    fun mapMovieDetailResponseToEntity(status: String, data: MovieDetailResponse): CatalogueEntity{
         data.apply {
             val genreList = ArrayList<String>()
             genres.forEach { genreList.add(it.name) }
             val genre = genreList.joinToString(separator = ", ")
+            val trending = status == MovieStatus.TRENDING
+            val upcoming = status == MovieStatus.UPCOMING
+            val top = status == MovieStatus.TOPRATED
             return CatalogueEntity(
                 id,
                 title,
@@ -26,6 +29,9 @@ object DataMapper {
                 popularity,
                 posterPath,
                 backdropPath,
+                isTrending = trending,
+                isUpcoming = upcoming,
+                isTopTv = top
             )
         }
     }
@@ -291,11 +297,15 @@ object DataMapper {
             )
         }
     }
-    fun mapDetailTvResponseToEntity(data: TvShowDetailResponse): CatalogueEntity {
+    fun mapDetailTvResponseToEntity(status: String, data: TvShowDetailResponse): CatalogueEntity {
         data.apply {
             val genreList = ArrayList<String>()
             genres.forEach { genreList.add(it.name) }
             val genre = genreList.joinToString(separator = ", ")
+
+            val trending = status == MovieStatus.TRENDING
+            val upcoming = status == MovieStatus.UPCOMING
+            val top = status == MovieStatus.TOPRATED
             return CatalogueEntity(
                 id,
                 name,
@@ -308,7 +318,10 @@ object DataMapper {
                 popularity,
                 posterPath,
                 backdropPath,
-                isTvShow = true
+                isTvShow = true,
+                isTrending = trending,
+                isUpcoming = upcoming,
+                isTopTv = top
             )
         }
     }
@@ -319,7 +332,7 @@ object DataMapper {
     fun mapTrailerResponseToDomain(data: TrailerVideoResponse): List<TrailerVideo> {
         val trailerList = ArrayList<TrailerVideo>()
         data.results.map {
-            if (it.site == "YouTube" && it.type == "Trailer") {
+            if (it.site == "YouTube" && trailerList.size <= 2) {
                 trailerList.add(
                     TrailerVideo(
                         it.key,

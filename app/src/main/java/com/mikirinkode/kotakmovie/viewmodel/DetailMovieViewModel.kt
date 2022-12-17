@@ -18,9 +18,9 @@ class DetailMovieViewModel(private val repository: IMovieRepository): ViewModel(
     val uiState: StateFlow<UiState<Catalogue>>
         get() = _uiState
 
-    fun getMovieDetail(movieId: Int){
+    fun getMovieDetail(status: String, movieId: Int){
         viewModelScope.launch {
-            repository.getMovieDetail(movieId)
+            repository.getMovieDetail(status, movieId)
                 .catch {
                     _uiState.value = UiState.Error(it.message.toString())
                 }
@@ -53,9 +53,9 @@ class DetailMovieViewModel(private val repository: IMovieRepository): ViewModel(
         viewModelScope.launch { repository.removePlaylistItem(item) }
     }
 
-    fun getTvShowDetail(tvShowId: Int){
+    fun getTvShowDetail(status: String, tvShowId: Int){
         viewModelScope.launch {
-            repository.getTvShowDetail(tvShowId)
+            repository.getTvShowDetail(status, tvShowId)
                 .catch {
                     _uiState.value = UiState.Error(it.message.toString())
                 }

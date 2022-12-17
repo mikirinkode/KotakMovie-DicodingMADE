@@ -10,11 +10,12 @@ import androidx.compose.ui.unit.dp
 import com.mikirinkode.kotakmovie.R
 import com.mikirinkode.kotakmovie.core.domain.model.Catalogue
 import com.mikirinkode.kotakmovie.core.utils.Constants
+import com.mikirinkode.kotakmovie.core.utils.MovieStatus
 
 @Composable
 fun MovieListComponent(
     list: List<Catalogue>,
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -23,12 +24,12 @@ fun MovieListComponent(
     ) {
         items(list) { movie ->
             MovieItem(
-                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}" ?: "",
+                imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath}",
                 title = movie.title ?: stringResource(id = R.string.no_data),
                 releaseDate = movie.releaseDate ?: stringResource(id = R.string.no_data),
                 rating = movie.voteAverage,
                 onClick = {
-                    navigateToDetail(movie.isTvShow ,movie.id)
+                    navigateToDetail(MovieStatus.NORMAL, movie.isTvShow ,movie.id)
                 }
             )
         }

@@ -6,10 +6,10 @@ sealed class Screen(val route: String) {
     object Movie: Screen("movie")
     object TvShow: Screen("tvshow")
     object Playlist: Screen("playlist")
-    object DetailMovie: Screen("home/{isTvShow}/{movieId}/detail") {
-        fun createRoute(isTvShow: Boolean, movieId: Int) = "home/$isTvShow/$movieId/detail"
+    object DetailMovie: Screen("home/{status}/{isTvShow}/{movieId}/detail") {
+        fun createRoute(status: String, isTvShow: Boolean, movieId: Int) = "home/$status/$isTvShow/$movieId/detail"
     }
-    object Trailer: Screen("home/{isTvShow}/{movieId}/detail/trailer"){
-        fun createRoute(isTvShow: Boolean, movieId: Int) = "home/$isTvShow/$movieId/detail/trailer"
+    object Trailer: Screen("home/{status}/{isTvShow}/{movieId}/detail/trailer"){
+        fun createRoute(status: String, isTvShow: Boolean, movieId: Int) = "home/$status/$isTvShow/$movieId/detail/trailer"
     }
 }

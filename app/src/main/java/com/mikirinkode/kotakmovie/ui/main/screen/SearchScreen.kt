@@ -34,7 +34,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
 fun SearchScreen(
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current

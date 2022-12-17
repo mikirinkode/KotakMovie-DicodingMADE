@@ -47,10 +47,6 @@ fun TrailerScreen(
     val viewModel: TrailerViewModel =
         viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
 
-    var youTubePlayer: YouTubePlayer? by remember {
-        mutableStateOf(null)
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -59,9 +55,6 @@ fun TrailerScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (youTubePlayer != null){
-                            youTubePlayer!!.pause()
-                        }
                         navigateUp()
                     }) {
                         Icon(
@@ -121,11 +114,12 @@ fun TrailerScreen(
                                 )
                             }
                         } else {
+
                             LazyColumn(modifier = Modifier) {
-                                items(uiState.data) { videos ->
-                                    VideoScreen(lifecycle = lifecycle, trailerVideoKey = videos.key, controlYoutubePlayer = {
-                                        youTubePlayer = it
-                                    })
+                                items(uiState.data) { video ->
+                                    VideoScreen(
+                                        lifecycle = lifecycle,
+                                    trailerVideoKey = video.key)
                                     Spacer(modifier = Modifier.height(64.dp))
                                 }
                             }
@@ -145,7 +139,6 @@ fun TrailerScreen(
 fun VideoScreen(
     lifecycle: Lifecycle,
     trailerVideoKey: String,
-    controlYoutubePlayer: (player: YouTubePlayer) -> Unit
 ) {
     AndroidView(
         factory = {
@@ -154,23 +147,21 @@ fun VideoScreen(
         },
         modifier = Modifier.wrapContentSize(),
         update = {
+
             val youTubePlayerView =
                 it.findViewById<YouTubePlayerView>(R.id.you_tube_player_view)
             lifecycle.addObserver(youTubePlayerView)
-            val listener: YouTubePlayerListener =
+            youTubePlayerView.enableAutomaticInitialization = true
+            youTubePlayerView.addYouTubePlayerListener(
                 object : AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
                         super.onReady(youTubePlayer)
-                        val defaultPlayerUiController =
-                            DefaultPlayerUiController(youTubePlayerView, youTubePlayer)
-                        youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
                         youTubePlayer.cueVideo(trailerVideoKey, 0f)
-                        controlYoutubePlayer(youTubePlayer)
                     }
                 }
-
-            val options = IFramePlayerOptions.Builder().controls(0).build()
-            youTubePlayerView.initialize(listener, options)
+            )
+//            val options = IFramePlayerOptions.Builder().controls(0).build()
+//            youTubePlayerView.initialize(listener, options)
         }
     )
 }

@@ -9,22 +9,25 @@ import com.mikirinkode.kotakmovie.core.utils.Constants
 
 @Database(
     entities = [CatalogueEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
-abstract class MovieDatabase: RoomDatabase() {
+abstract class MovieDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
 
     companion object {
         @Volatile
         private var INSTANCE: MovieDatabase? = null
+
         @JvmStatic
         fun getDatabase(context: Context): MovieDatabase {
             if (INSTANCE == null) {
                 synchronized(MovieDatabase::class.java) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        MovieDatabase::class.java, Constants.DB_NAME)
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        MovieDatabase::class.java, Constants.DB_NAME
+                    )
                         .build()
                 }
             }

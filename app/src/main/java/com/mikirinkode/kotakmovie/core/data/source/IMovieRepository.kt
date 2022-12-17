@@ -14,7 +14,7 @@ interface IMovieRepository {
 
     fun getTrendingThisWeekList(): Flow<Resource<List<Catalogue>>>
 
-    fun getMovieDetail(movieId: Int): Flow<Resource<Catalogue>>
+    fun getMovieDetail(status: String, movieId: Int): Flow<Resource<Catalogue>>
 
     fun getMoviePlaylist(): Flow<List<Catalogue>>
 
@@ -32,7 +32,7 @@ interface IMovieRepository {
 
     fun getTopTvShowList(): Flow<Resource<List<Catalogue>>>
 
-    fun getTvShowDetail(tvShowId: Int): Flow<Resource<Catalogue>>
+    fun getTvShowDetail(status: String, tvShowId: Int): Flow<Resource<Catalogue>>
 
     fun getTvShowPlaylist(): Flow<List<Catalogue>>
 }

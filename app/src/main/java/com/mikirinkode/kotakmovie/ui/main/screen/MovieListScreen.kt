@@ -27,7 +27,7 @@ import com.mikirinkode.kotakmovie.viewmodel.ViewModelFactory
 
 @Composable
 fun MovieListScreen(
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showMenu by remember {

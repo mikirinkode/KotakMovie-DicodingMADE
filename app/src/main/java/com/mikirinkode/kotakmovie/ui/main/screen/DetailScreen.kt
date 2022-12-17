@@ -46,10 +46,11 @@ import java.util.*
 
 @Composable
 fun DetailScreen(
+    status: String,
     movieId: Int,
     isTvShow: Boolean,
     navigateBack: () -> Unit,
-    navigateToTrailerScreen: (String) -> Unit,
+    navigateToTrailerScreen: () -> Unit,
     onShareButtonClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -62,38 +63,14 @@ fun DetailScreen(
     val context = LocalContext.current
     val viewModel: DetailMovieViewModel =
         viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
-    val trailerViewModel: TrailerViewModel =
-        viewModel(factory = ViewModelFactory(Injection.provideRepository(context)))
-
-    var trailerKey by remember {
-        mutableStateOf("")
-    }
-
-    trailerViewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-        when (uiState) {
-            is UiState.Loading -> {
-                if (isTvShow) {
-                    trailerViewModel.getTvShowTrailer(movieId)
-                } else {
-                    trailerViewModel.getMovieTrailer(movieId)
-                }
-            }
-            is UiState.Success -> {
-                if (uiState.data.isNotEmpty()){
-                    trailerKey = uiState.data[0].key
-                }
-            }
-            is UiState.Error -> {}
-        }
-    }
 
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
                 if (isTvShow) {
-                    viewModel.getTvShowDetail(tvShowId = movieId)
+                    viewModel.getTvShowDetail(status = status, tvShowId = movieId)
                 } else {
-                    viewModel.getMovieDetail(movieId = movieId)
+                    viewModel.getMovieDetail(status = status, movieId = movieId)
                 }
                 ShimmerDetailScreen(
                     navigateBack = navigateBack
@@ -116,7 +93,7 @@ fun DetailScreen(
                     overview = data.overview ?: stringResource(id = R.string.no_data),
                     isOnPlaylist = data.isOnPlaylist,
                     navigateBack = navigateBack,
-                    navigateToTrailerScreen = { navigateToTrailerScreen(trailerKey) },
+                    navigateToTrailerScreen = { navigateToTrailerScreen() },
                     onPlaylistIconClicked = { addToPlaylist ->
                         if (addToPlaylist) {
                             if (isTvShow) {
@@ -175,7 +152,7 @@ fun DetailMovieContent(
     overview: String,
     isOnPlaylist: Boolean,
     navigateBack: () -> Unit,
-    navigateToTrailerScreen: (String) -> Unit,
+    navigateToTrailerScreen: () -> Unit,
     onPlaylistIconClicked: (newState: Boolean) -> Unit,
     onShareButtonClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -300,7 +277,7 @@ fun DetailMovieContent(
                                         iconDesc = stringResource(R.string.play_trailer_button),
                                         buttonText = stringResource(R.string.play_trailer),
                                         onClick = {
-                                            navigateToTrailerScreen("")
+                                            navigateToTrailerScreen()
                                         })
                                     DetailAdditionalButton(
                                         iconId = if (isAddedPlaylist) R.drawable.ic_added_to_playlist else R.drawable.ic_add_to_playlist,

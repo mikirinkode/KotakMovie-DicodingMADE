@@ -52,9 +52,10 @@ fun KotakMovieApp(
             // route: /home
             composable(Screen.Home.route) {
                 HomeScreen(
-                    navigateToDetail = { isTvShow, movieId ->
+                    navigateToDetail = { status, isTvShow, movieId ->
                         navController.navigate(
                             Screen.DetailMovie.createRoute(
+                                status = status,
                                 isTvShow = isTvShow,
                                 movieId = movieId
                             )
@@ -64,9 +65,10 @@ fun KotakMovieApp(
             }
             composable(Screen.Search.route) {
                 SearchScreen(
-                    navigateToDetail = { isTvShow, movieId ->
+                    navigateToDetail = { status, isTvShow, movieId ->
                         navController.navigate(
                             Screen.DetailMovie.createRoute(
+                                status = status,
                                 isTvShow = isTvShow,
                                 movieId = movieId
                             )
@@ -75,9 +77,10 @@ fun KotakMovieApp(
             }
             composable(Screen.Movie.route) {
                 MovieListScreen(
-                    navigateToDetail = { isTvShow, movieId ->
+                    navigateToDetail = { status, isTvShow, movieId ->
                         navController.navigate(
                             Screen.DetailMovie.createRoute(
+                                status = status,
                                 isTvShow = isTvShow,
                                 movieId = movieId
                             )
@@ -86,9 +89,10 @@ fun KotakMovieApp(
             }
             composable(Screen.TvShow.route) {
                 TvShowListScreen(
-                    navigateToDetail = { isTvShow, movieId ->
+                    navigateToDetail = { status, isTvShow, movieId ->
                         navController.navigate(
                             Screen.DetailMovie.createRoute(
+                                status = status,
                                 isTvShow = isTvShow,
                                 movieId = movieId
                             )
@@ -97,9 +101,10 @@ fun KotakMovieApp(
             }
             composable(Screen.Playlist.route) {
                 PlaylistScreen(
-                    navigateToDetail = { isTvShow, movieId ->
+                    navigateToDetail = { status, isTvShow, movieId ->
                         navController.navigate(
                             Screen.DetailMovie.createRoute(
+                                status = status,
                                 isTvShow = isTvShow,
                                 movieId = movieId
                             )
@@ -111,21 +116,30 @@ fun KotakMovieApp(
             composable(
                 route = Screen.DetailMovie.route,
                 arguments = listOf(
+                    navArgument("status") { type = NavType.StringType },
                     navArgument("isTvShow") { type = NavType.BoolType },
                     navArgument("movieId") { type = NavType.IntType }),
             ) {
+                val status = it.arguments?.getString("status") ?: ""
                 val id = it.arguments?.getInt("movieId") ?: 1
                 val isTvShow = it.arguments?.getBoolean("isTvShow") ?: false
                 val context = LocalContext.current
 
                 DetailScreen(
+                    status = status,
                     movieId = id,
                     isTvShow = isTvShow,
                     navigateBack = {
                         navController.navigateUp()
                     },
-                    navigateToTrailerScreen = { videoKey ->
-                        openYoutube(context, videoKey)
+                    navigateToTrailerScreen = {
+                        navController.navigate(
+                            Screen.Trailer.createRoute(
+                                status = status,
+                                isTvShow = isTvShow,
+                                movieId = id
+                            )
+                        )
                     },
                     onShareButtonClicked = { title ->
                         shareMovie(context, title)
@@ -134,22 +148,22 @@ fun KotakMovieApp(
             }
 
             //route: /home/{isTvShow}/{movieId}/detail/trailer
-//            composable(
-//                route = Screen.Trailer.route,
-//                arguments = listOf(
-//                    navArgument("isTvShow") { type = NavType.BoolType },
-//                    navArgument("movieId") { type = NavType.IntType }),
-//            ) {
-//                val id = it.arguments?.getInt("movieId") ?: 1
-//                val isTvShow = it.arguments?.getBoolean("isTvShow") ?: false
-//                TrailerScreen(
-//                    movieId = id,
-//                    isTvShow = isTvShow,
-//                    navigateUp = {
-//                        navController.navigateUp()
-//                    }
-//                )
-//            }
+            composable(
+                route = Screen.Trailer.route,
+                arguments = listOf(
+                    navArgument("isTvShow") { type = NavType.BoolType },
+                    navArgument("movieId") { type = NavType.IntType }),
+            ) {
+                val id = it.arguments?.getInt("movieId") ?: 1
+                val isTvShow = it.arguments?.getBoolean("isTvShow") ?: false
+                TrailerScreen(
+                    movieId = id,
+                    isTvShow = isTvShow,
+                    navigateUp = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }

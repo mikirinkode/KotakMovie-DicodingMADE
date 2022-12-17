@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PlaylistScreen(
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -41,7 +41,7 @@ fun PlaylistScreen(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabLayout(
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = 2)
@@ -104,7 +104,7 @@ fun Tabs(pagerState: PagerState) {
 @Composable
 fun TabsContent(
     pagerState: PagerState,
-    navigateToDetail: (Boolean, Int) -> Unit,
+    navigateToDetail: (String, Boolean, Int) -> Unit,
 ) {
     HorizontalPager(state = pagerState) { page ->
         when (page) {
